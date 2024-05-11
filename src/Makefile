@@ -39,7 +39,8 @@ BUILD = ./../bin
 
 #==================================== FLAGS ===================================#
 # MAIN FLAGS FOR COMPILER
-CFLAGS = -Wall -Werror -Wextra -pedantic -std=c11
+CFLAGS = -Wall -Wextra -pedantic -std=c11 -g
+# CFLAGS = -Wall -Werror -Wextra -pedantic -std=c11
 
 # CHECK LIBRARY FOR LINKING
 LDFLAGS = -lcheck -lsubunit -lm
@@ -231,7 +232,8 @@ run:
 	@./$(BUILD)/$(PROJECT_NAME)
 
 debug:
-	
+	@$(CC) $(CFLAGS) debug.c $(MODULES_C) -o main
+	@./main
 
 clang_fix:
 	clang-format -style=Google -i $(ALL_FILES)
