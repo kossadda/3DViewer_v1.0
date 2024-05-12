@@ -77,8 +77,8 @@ MODULES_C = $(shell find $(MODULES_DIR) -type f -name "*.c")
 MODULES_H = $(shell find $(MODULES_DIR) -type f -name "*.h")
 MODULES_O = $(notdir $(MODULES_C:%.c=%.o))
 MODULES_OBJ_PATH = $(addprefix $(OBJ_DIR)/, $(MODULES_O))
-GUI_MODULES = $(shell find $(GUI_MODULES_DIR) -type f -name "*.cpp")
-GUI_HEADERS = $(shell find $(GUI_MODULES_DIR) -type f -name "*.h")
+GUI_MODULES = $(shell find $(GUI_DIR) -type f -name "*.cpp")
+GUI_HEADERS = $(shell find $(GUI_DIR) -type f -name "*.h")
 #==============================================================================#
 
 
@@ -115,6 +115,10 @@ vpath %.o $(OBJ_DIR)
 #                                   |___/                                      #
 ################################################################################
 
+temp: uninstall $(LIBRARY)
+	@mkdir -p $(BUILD)
+	@cd $(BUILD) && cmake ./../src/gui && make	
+	@./$(BUILD)/3DViewer
 
 #================================= MAIN TARGETS ===============================#
 .PHONY: $(LIBRARY) $(TARGET) $(GCOV)
@@ -123,7 +127,7 @@ all: install run
 
 install: uninstall $(LIBRARY)
 	@mkdir -p $(BUILD)
-	cd $(BUILD) && cmake ./../src && make	
+	cd $(BUILD) && cmake ./../src/gui && make	
 
 uninstall: clean
 	@rm -f ./brick_game/tetris/modules/score.txt
@@ -159,22 +163,16 @@ dist: uninstall
 	@rm -rf $(DIST_DIR)/$(PROJECT_NAME)
 
 clean:
-	rm -rf $(OBJ_DIR)
-	rm -rf $(REPORT_DIR)
-	rm -rf $(DVI_DIR)
-	rm -rf $(DIST_DIR)
-	rm -rf $(GCOV)
-	rm -f $(TARGET)
-	rm -f *.a *.o
-	rm -f *.gc*
-	rm -f $(GUI_MODULES_DIR)/*.o
-	rm -f $(GUI_MODULES_DIR)/*.user
-	rm -f $(GUI_MODULES_DIR)/*.cpp
-	rm -f $(GUI_MODULES_DIR)/*.h
-	rm -f $(GUI_MODULES_DIR)/Makefile
-	rm -f $(GUI_MODULES_DIR)/$(PROJECT_NAME)
-	rm -f main
-	rm -f val.txt
+	@rm -rf $(OBJ_DIR)
+	@rm -rf $(REPORT_DIR)
+	@rm -rf $(DVI_DIR)
+	@rm -rf $(DIST_DIR)
+	@rm -rf $(GCOV)
+	@rm -rf $(GUI_DIR)/build*
+	@rm -f $(TARGET)
+	@rm -f *.a *.o
+	@rm -f *.gc*
+	@rm -f main
 
 rebuild: uninstall install
 #==============================================================================#

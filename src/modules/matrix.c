@@ -9,7 +9,7 @@
  * 
  */
 
-#include "./matrix.h"
+#include "./include/matrix.h"
 
 matrix_t mx_create(int rows, int cols) {
   matrix_t create;

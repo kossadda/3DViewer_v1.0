@@ -9,12 +9,28 @@
  * 
  */
 
-#include "./modules/common.h"
+#include "./modules/include/common.h"
 
-#define OBJECT "/home/kossadda/desktop/data-samples/dragon.obj"
+#define OBJECT "/home/kossadda/develop/3DViewer_v1.0/data-samples/cube.obj"
 
 int main() {
-  parse(OBJECT);
-  // data_t data = parse(OBJECT);
-  // printf("Vertexes: %d\nFacets: %d\n", data.vertex_count, data.facet_count);
+  data_t data = parse(OBJECT);
+
+  for(int i = 1; i < data.vertex_count; i++) {
+    for(int j = 0; j < V_DOTS_CNT; j++) {
+      printf("%.12f ", data.vertexes.matrix[i][j]);
+    }
+    printf("\n");
+  }
+
+  printf("\n\nFacets:\n\n");
+
+  for(int i = 1; i < data.facet_count; i++) {
+    for(int j = 0; j < (data.facets + i)->count; j++) {
+      printf("%d ", *((data.facets + i)->vertexes + j));
+    }
+    printf("\n");
+  }
+
+  remove_data(&data);
 }

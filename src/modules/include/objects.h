@@ -13,6 +13,8 @@
 #define _OBJECTS_H_
 
 #include "./matrix.h"
+#include <stdio.h>
+#include <string.h>
 
 #define V_DOTS_CNT 3
 

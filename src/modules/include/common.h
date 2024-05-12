@@ -12,15 +12,11 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
-#define _GNU_SOURCE
-
 #include "./objects.h"
-#include <stdio.h>
-#include <string.h>
 
 data_t parse(char *filename);
 void init_data(data_t *data, FILE *obj);
-void remove_data(data_t *data, FILE *obj);
+void remove_data(data_t *data);
 void get_data(data_t *data, FILE *obj);
 
 #endif // _COMMON_H_

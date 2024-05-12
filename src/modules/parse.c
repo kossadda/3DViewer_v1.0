@@ -9,32 +9,24 @@
  * 
  */
 
-#include "./common.h"
+#define _GNU_SOURCE
+
+#include "./include/common.h"
 
 data_t parse(char *filename) {
   FILE *obj = fopen(filename, "r");
   data_t data;
 
-  init_data(&data, obj);
-  get_data(&data, obj);
+  if(obj) {
+    init_data(&data, obj);
 
-  // for(int i = 1; i < data.vertex_count; i++) {
-  //   for(int j = 0; j < V_DOTS_CNT; j++) {
-  //     printf("%.12f ", data.vertexes.matrix[i][j]);
-  //   }
-  //   printf("\n");
-  // }
+    get_data(&data, obj);
+    
+    fclose(obj);
+  } else {
 
-  // printf("\n\nFacets:\n\n");
+  }
 
-  // for(int i = 1; i < data.facet_count; i++) {
-  //   for(int j = 0; j < (data.facets + i)->count; j++) {
-  //     printf("%d ", *((data.facets + i)->vertexes + j));
-  //   }
-  //   printf("\n");
-  // }
-
-  remove_data(&data, obj);
   return data;
 }
 
@@ -67,7 +59,7 @@ void init_data(data_t *data, FILE *obj) {
   rewind(obj);
 }
 
-void remove_data(data_t *data, FILE *obj) {
+void remove_data(data_t *data) {
   mx_remove(&data->vertexes);
 
   if(data->facets) {
@@ -80,8 +72,6 @@ void remove_data(data_t *data, FILE *obj) {
     free(data->facets);
     data->facets = NULL;
   }
-
-  fclose(obj);
 }
 
 void get_data(data_t *data, FILE *obj) {
