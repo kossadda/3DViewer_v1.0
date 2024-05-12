@@ -11,9 +11,10 @@
 
 #include "./modules/common.h"
 
-#define OBJECT "/home/kossadda/develop/3DViewer_v1.0/data-samples/cube.obj"
+#define OBJECT "/home/kossadda/desktop/data-samples/dragon.obj"
 
 int main() {
-  data_t data = parse(OBJECT);
-  printf("Vertexes: %d\nFacets: %d\n", data.vertex_count, data.facet_count);
+  parse(OBJECT);
+  // data_t data = parse(OBJECT);
+  // printf("Vertexes: %d\nFacets: %d\n", data.vertex_count, data.facet_count);
 }

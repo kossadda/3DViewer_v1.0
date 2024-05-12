@@ -16,9 +16,9 @@ matrix_t mx_create(int rows, int cols) {
 
   create.rows = rows;
   create.cols = cols;
-  create.matrix = (float **)calloc(rows, sizeof(float *));
+  create.matrix = (double **)calloc(rows, sizeof(double *));
   for (int i = 0; i < rows; i++) {
-    create.matrix[i] = (float *)calloc(cols, sizeof(float));
+    create.matrix[i] = (double *)calloc(cols, sizeof(double));
   }
 
   return create;
@@ -26,7 +26,7 @@ matrix_t mx_create(int rows, int cols) {
 
 void mx_remove(matrix_t *mx) {
   if(mx->matrix) {
-    for(int i = 0; i < mx->cols; i++) {
+    for(int i = 0; i < mx->rows; i++) {
       if(mx->matrix[i]) {
         free(mx->matrix[i]);
         mx->matrix[i] = NULL;

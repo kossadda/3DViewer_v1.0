@@ -19,7 +19,7 @@
 #define FAILURE 0
 
 typedef struct {
-  float **matrix;
+  double **matrix;
   int rows;
   int cols;
 } matrix_t;

@@ -205,6 +205,9 @@ clang_check:
 cppcheck:
 	$@ $(CPPCHECK) $(MODULES_C) $(MODULES_H)
 
+val: debug
+	@valgrind $(VAL) ./main
+
 valgrind: $(TARGET)
 	@printf '\033[1;33m\n\t\t\t\t                   _            _           _   _            _   _             \n'
 	@printf '\t\t\t\t                  | |          (_)         | | | |          | | (_)            \n'
