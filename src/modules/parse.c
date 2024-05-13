@@ -13,7 +13,7 @@
 
 #include "./include/common.h"
 
-data_t parse(char *filename) {
+data_t parse(const char *filename) {
   FILE *obj = fopen(filename, "r");
   data_t data;
 
@@ -32,7 +32,7 @@ data_t parse(char *filename) {
 
 void init_data(data_t *data, FILE *obj) {
   data->vertex_count = 1;
-  data->facet_count = 1;
+  data->facet_count = 0;
   char *line = NULL;
   size_t n = 0;
   ssize_t len;
@@ -80,7 +80,7 @@ void get_data(data_t *data, FILE *obj) {
   size_t n = 0;
   ssize_t len;
   int v_cnt = 1;
-  int f_cnt = 1;
+  int f_cnt = 0;
 
   while ((len = getline(&line, &n, obj)) != -1) {
     if(*line == 'v' && *(line + 1) == ' ') {
@@ -88,7 +88,7 @@ void get_data(data_t *data, FILE *obj) {
 
       for(int j = 0; j < V_DOTS_CNT; j++) {
         token = strtok((token) ? NULL : tmp_ptr, " ");
-        data->vertexes.matrix[v_cnt][j] = atof(token);
+        data->vertexes.matrix[v_cnt * j + j] = atof(token);
       }
 
       v_cnt++;

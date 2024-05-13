@@ -14,7 +14,7 @@
 
 #include "./objects.h"
 
-data_t parse(char *filename);
+data_t parse(const char *filename);
 void init_data(data_t *data, FILE *obj);
 void remove_data(data_t *data);
 void get_data(data_t *data, FILE *obj);
