@@ -18,14 +18,14 @@ int main() {
 
   for(int i = 1; i < data.vertex_count; i++) {
     for(int j = 0; j < V_DOTS_CNT; j++) {
-      printf("%.12f ", data.vertexes.matrix[i][j]);
+      printf("%.12f ", data.vertexes.matrix[i * j + j]);
     }
     printf("\n");
   }
 
   printf("\n\nFacets:\n\n");
 
-  for(int i = 1; i < data.facet_count; i++) {
+  for(int i = 0; i < data.facet_count; i++) {
     for(int j = 0; j < (data.facets + i)->count; j++) {
       printf("%d ", *((data.facets + i)->vertexes + j));
     }

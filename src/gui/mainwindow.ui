@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>908</width>
+    <height>565</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>3DViewer</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="GLWidget" name="GL" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="5" column="2">
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
+           <widget class="QPushButton" name="upYplus">
+            <property name="text">
+             <string>upY ++</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="upYminus">
+            <property name="text">
+             <string>upY --</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="2">
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QPushButton" name="centerYplus">
+            <property name="text">
+             <string>centerY ++</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="centerYminus">
+            <property name="text">
+             <string>centerY --</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="1">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QPushButton" name="eyeYplus">
+            <property name="text">
+             <string>eyeY ++</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="eyeYminus">
+            <property name="text">
+             <string>eyeY --</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="3">
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QPushButton" name="centerZplus">
+            <property name="text">
+             <string>centerZ ++</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="centerZminus">
+            <property name="text">
+             <string>centerZ --</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="5" column="1">
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <widget class="QPushButton" name="upXplus">
+            <property name="text">
+             <string>upX ++</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="upXminus">
+            <property name="text">
+             <string>upX --</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="1">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QPushButton" name="eyeXplus">
+            <property name="text">
+             <string>eyeX ++</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="eyeXminus">
+            <property name="text">
+             <string>eyeX --</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="5" column="3">
+         <layout class="QVBoxLayout" name="verticalLayout_11">
+          <item>
+           <widget class="QPushButton" name="upZplus">
+            <property name="text">
+             <string>upZ ++</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="upZminus">
+            <property name="text">
+             <string>upZ --</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="1">
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QPushButton" name="centerXplus">
+            <property name="text">
+             <string>centerX ++</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="centerXminus">
+            <property name="text">
+             <string>centerX --</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="3">
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QPushButton" name="eyeZplus">
+            <property name="text">
+             <string>eyeZ ++</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="eyeZminus">
+            <property name="text">
+             <string>eyeZ --</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="4" column="1">
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="1">
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="6" column="1">
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Quit</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GLWidget</class>
+   <extends>QWidget</extends>
+   <header>glwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>858</x>
+     <y>554</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>825</x>
+     <y>389</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
