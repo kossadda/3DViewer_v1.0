@@ -18,5 +18,6 @@ data_t parse(const char *filename);
 void init_data(data_t *data, FILE *obj);
 void remove_data(data_t *data);
 void get_data(data_t *data, FILE *obj);
+int vert_count_in_facet(char *line);
 
 #endif // _COMMON_H_

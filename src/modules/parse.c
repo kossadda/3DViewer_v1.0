@@ -12,6 +12,8 @@
 #define _GNU_SOURCE
 
 #include "./include/common.h"
+#include <ctype.h>
+#include <stdbool.h>
 
 data_t parse(const char *filename) {
   FILE *obj = fopen(filename, "r");
@@ -49,7 +51,7 @@ void init_data(data_t *data, FILE *obj) {
   data->facets = (facet_t *)malloc(data->facet_count * sizeof(facet_t));
 
   for(int i = 0; i < data->facet_count; i++) {
-    (data->facets + i)->count = 1;
+    (data->facets + i)->count = 0;
     (data->facets + i)->vertexes = NULL;
   }
 
@@ -94,13 +96,8 @@ void get_data(data_t *data, FILE *obj) {
       v_cnt++;
       token = NULL;
     } else if(*line == 'f' && *(line + 1) == ' ') {
-      char *tmp_ptr = line + 2;
-
-      char *cnt = tmp_ptr;
-      while((cnt = strchr(cnt, ' '))) {
-        (data->facets + f_cnt)->count++;
-        cnt++;
-      }
+      char *tmp_ptr = line + 1;
+      (data->facets + f_cnt)->count = vert_count_in_facet(line);
 
       (data->facets + f_cnt)->vertexes = (int *)malloc((data->facets + f_cnt)->count * sizeof(int));
 
@@ -116,4 +113,20 @@ void get_data(data_t *data, FILE *obj) {
 
   free(line);
   line = NULL;
+}
+
+int vert_count_in_facet(char *line) {
+  char *token = NULL;
+  int count = 0;
+
+  char str[strlen(line) + 1];
+  sprintf(str, "%s", line + 1);
+
+  for(char *ptr  = str + strlen(str) - 1; isdigit(*ptr) == 0; ptr--) {
+    *ptr = '\0';
+  }
+
+  while ((token = strtok((token) ? NULL : str, " ")) != NULL) count++;
+
+  return count;
 }

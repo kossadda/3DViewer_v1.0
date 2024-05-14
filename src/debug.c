@@ -11,7 +11,7 @@
 
 #include "./modules/include/common.h"
 
-#define OBJECT "/home/kossadda/develop/3DViewer_v1.0/data-samples/sphere.obj"
+#define OBJECT "/home/kossadda/desktop/3DViewer_v1.0/src/_objfiles/1000 Glass.obj"
 
 int main() {
   data_t data = parse(OBJECT);
