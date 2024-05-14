@@ -1,7 +1,8 @@
 #include "glwidget.h"
 
-GLWidget::GLWidget(QWidget *parent) :
-    QOpenGLWidget(parent)
+GLWidget::GLWidget(QWidget *parent)
+    : QOpenGLWidget(parent)
+    , data(parse("/home/kossadda/develop/3DViewer_v1.0/data-samples/cube.obj"))
 {
     for(int i = 0; i < 9; i++) {
         if(i == 2) camera[i] = 5.0f;
@@ -36,45 +37,12 @@ void GLWidget::paintGL() {
 
     glPointSize(10.0f);
 
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(-1.0f, -1.0f,  1.0f);
-    glVertex3f( 1.0f, -1.0f,  1.0f);
-    glVertex3f( 1.0f,  1.0f,  1.0f);
-    glVertex3f(-1.0f,  1.0f,  1.0f);
-    glEnd();
-
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f( 1.0f, -1.0f, -1.0f);
-    glVertex3f( 1.0f,  1.0f, -1.0f);
-    glVertex3f(-1.0f,  1.0f, -1.0f);
-    glEnd();
-
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(-1.0f, -1.0f,  1.0f);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f(-1.0f,  1.0f, -1.0f);
-    glVertex3f(-1.0f,  1.0f,  1.0f);
-    glEnd();
-
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(1.0f, -1.0f, -1.0f); 
-    glVertex3f(1.0f, -1.0f,  1.0f); 
-    glVertex3f(1.0f,  1.0f,  1.0f); 
-    glVertex3f(1.0f,  1.0f, -1.0f); 
-    glEnd();
-
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(-1.0f,  1.0f, -1.0f);
-    glVertex3f( 1.0f,  1.0f, -1.0f);
-    glVertex3f( 1.0f,  1.0f,  1.0f);
-    glVertex3f(-1.0f,  1.0f,  1.0f);
-    glEnd();
-
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(-1.0f, -1.0f, -1.0f);
-    glVertex3f( 1.0f, -1.0f, -1.0f);
-    glVertex3f( 1.0f, -1.0f,  1.0f);
-    glVertex3f(-1.0f, -1.0f,  1.0f);
-    glEnd();
+    for(int i = 0; i < data.facet_count; i++) {
+        glBegin(GL_LINE_LOOP);
+        int *ptr = data.facets[i].vertexes;
+        for(int j = 0; j < data.facets[i].count; j++) {
+            glVertex3f(data.vertexes.matrix[ptr[j]][0], data.vertexes.matrix[ptr[j]][1], data.vertexes.matrix[ptr[j]][2]);
+        }
+        glEnd();
+    }
 }

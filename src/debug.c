@@ -11,14 +11,14 @@
 
 #include "./modules/include/common.h"
 
-#define OBJECT "/home/kossadda/develop/3DViewer_v1.0/data-samples/cube.obj"
+#define OBJECT "/home/kossadda/develop/3DViewer_v1.0/data-samples/sphere.obj"
 
 int main() {
   data_t data = parse(OBJECT);
 
   for(int i = 1; i < data.vertex_count; i++) {
     for(int j = 0; j < V_DOTS_CNT; j++) {
-      printf("%.12f ", data.vertexes.matrix[i * j + j]);
+      printf("%.12f ", data.vertexes.matrix[i][j]);
     }
     printf("\n");
   }

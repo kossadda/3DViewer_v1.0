@@ -169,7 +169,7 @@ clean:
 	@rm -rf $(DIST_DIR)
 	@rm -rf $(GCOV)
 	@rm -rf $(GUI_DIR)/build*
-	@rm -rf $(GUI_DIR)/build*
+	@rm -rf build*
 	@rm -f $(TARGET)
 	@rm -f *.a *.o
 	@rm -f *.gc*

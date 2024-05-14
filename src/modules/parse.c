@@ -88,7 +88,7 @@ void get_data(data_t *data, FILE *obj) {
 
       for(int j = 0; j < V_DOTS_CNT; j++) {
         token = strtok((token) ? NULL : tmp_ptr, " ");
-        data->vertexes.matrix[v_cnt * j + j] = atof(token);
+        data->vertexes.matrix[v_cnt][j] = atof(token);
       }
 
       v_cnt++;

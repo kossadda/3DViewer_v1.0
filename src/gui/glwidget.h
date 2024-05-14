@@ -6,6 +6,9 @@
 #include <GL/glu.h>
 #include <QDebug>
 
+extern "C" {
+#include "./../modules/include/common.h"
+}
 
 class GLWidget : public QOpenGLWidget
 {
@@ -13,6 +16,7 @@ class GLWidget : public QOpenGLWidget
 public:
     explicit GLWidget(QWidget *parent = 0);
     float camera[9];
+    data_t data;
 
 protected:
     void initializeGL();
