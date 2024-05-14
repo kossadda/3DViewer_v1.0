@@ -1,13 +1,20 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#define CHANGE 1.0f
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    initSlide(ui->eyeX);
+    initSlide(ui->eyeY);
+    initSlide(ui->eyeZ);
+    initSlide(ui->centerX);
+    initSlide(ui->centerY);
+    initSlide(ui->centerZ);
+    initSlide(ui->upX);
+    initSlide(ui->upY);
+    initSlide(ui->upZ);
 }
 
 MainWindow::~MainWindow()
@@ -15,146 +22,32 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_eyeXplus_clicked()
+void MainWindow::slideSlot(int value)
 {
-    float *camera = ui->GL->camera;
-    camera[0] += CHANGE;
+    if(QObject::sender() == ui->eyeX)
+        ui->GL->camera[0] = (float)ui->eyeX->value() / 1000;
+    else if(QObject::sender() == ui->eyeY)
+        ui->GL->camera[1] = (float)ui->eyeY->value() / 1000;
+    else if(QObject::sender() == ui->eyeZ)
+        ui->GL->camera[2] = (float)ui->eyeZ->value() / 1000;
+    else if(QObject::sender() == ui->centerX)
+        ui->GL->camera[3] = (float)ui->centerX->value() / 1000;
+    else if(QObject::sender() == ui->centerY)
+        ui->GL->camera[4] = (float)ui->centerY->value() / 1000;
+    else if(QObject::sender() == ui->centerZ)
+        ui->GL->camera[5] = (float)ui->centerZ->value() / 1000;
+    else if(QObject::sender() == ui->upX)
+        ui->GL->camera[6] = (float)ui->upX->value() / 1000;
+    else if(QObject::sender() == ui->upY)
+        ui->GL->camera[7] = (float)ui->upY->value() / 1000;
+    else if(QObject::sender() == ui->upZ)
+        ui->GL->camera[8] = (float)ui->upZ->value() / 1000;
     ui->GL->update();
 }
 
-
-void MainWindow::on_eyeXminus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[0] -= CHANGE;
-    ui->GL->update();
+void MainWindow::initSlide(QSlider *sl) {
+    sl->setMaximum(100000);
+    sl->setMinimum(-100000);
+    sl->setValue(0);
+    connect(sl, SIGNAL(sliderMoved(int)), this, SLOT(slideSlot(int)));
 }
-
-
-void MainWindow::on_eyeYplus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[1] += CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_eyeYminus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[1] -= CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_eyeZplus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[2] += CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_eyeZminus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[2] -= CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_centerXplus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[3] += CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_centerXminus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[3] -= CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_centerYplus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[4] += CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_centerYminus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[4] -= CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_centerZplus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[5] += CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_centerZminus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[5] -= CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_upXplus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[6] += CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_upXminus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[6] -= CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_upYplus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[7] += CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_upYminus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[7] -= CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_upZplus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[8] += CHANGE;
-    ui->GL->update();
-}
-
-
-void MainWindow::on_upZminus_clicked()
-{
-    float *camera = ui->GL->camera;
-    camera[8] -= CHANGE;
-    ui->GL->update();
-}
-

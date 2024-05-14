@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSlider>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,25 +17,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_eyeXplus_clicked();
-    void on_eyeXminus_clicked();
-    void on_eyeYplus_clicked();
-    void on_eyeYminus_clicked();
-    void on_eyeZplus_clicked();
-    void on_eyeZminus_clicked();
-    void on_centerXplus_clicked();
-    void on_centerXminus_clicked();
-    void on_centerYplus_clicked();
-    void on_centerYminus_clicked();
-    void on_centerZplus_clicked();
-    void on_centerZminus_clicked();
-    void on_upXplus_clicked();
-    void on_upXminus_clicked();
-    void on_upYplus_clicked();
-    void on_upYminus_clicked();
-    void on_upZplus_clicked();
-    void on_upZminus_clicked();
-
+    void initSlide(QSlider *sl);
+    void slideSlot(int value);
 private:
     Ui::MainWindow *ui;
 };

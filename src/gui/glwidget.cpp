@@ -2,7 +2,7 @@
 
 GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
-    , data(parse("/home/kossadda/develop/3DViewer_v1.0/data-samples/cube.obj"))
+    , data(parse("/home/kossadda/desktop/3DViewer_v1.0/src/_objfiles/_cube.obj"))
 {
     for(int i = 0; i < 9; i++) {
         if(i == 2) camera[i] = 5.0f;
@@ -26,16 +26,9 @@ void GLWidget::resizeGL(int w, int h) {
 }
 
 void GLWidget::paintGL() {
+    updateCamera();
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    gluLookAt(camera[0], camera[1], camera[2],
-              camera[3], camera[4], camera[5],
-              camera[6], camera[7], camera[8]);
-
-    glPointSize(10.0f);
 
     for(int i = 0; i < data.facet_count; i++) {
         glBegin(GL_LINE_LOOP);
@@ -45,4 +38,12 @@ void GLWidget::paintGL() {
         }
         glEnd();
     }
+}
+
+void GLWidget::updateCamera() {
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(camera[0], camera[1], camera[2],
+              camera[3], camera[4], camera[5],
+              camera[6], camera[7], camera[8]);
 }
