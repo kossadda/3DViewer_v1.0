@@ -11,26 +11,30 @@
 
 #include "./modules/include/common.h"
 
-#define OBJECT "/home/kossadda/desktop/3DViewer_v1.0/src/_objfiles/1000 Glass.obj"
+#define OBJECT "/home/kossadda/desktop/3DViewer_v1.0/src/_objfiles/1000000 tree.obj"
 
 int main() {
   data_t data = parse(OBJECT);
 
-  for(int i = 1; i < data.vertex_count; i++) {
+  for(int i = 0; i < data.vertex_count; i++) {
     for(int j = 0; j < V_DOTS_CNT; j++) {
-      printf("%.12f ", data.vertexes.matrix[i][j]);
+      printf("%.12f ", data.vertexes.matrix[i * data.vertexes.cols + j]);
     }
     printf("\n");
   }
 
   printf("\n\nFacets:\n\n");
 
-  for(int i = 0; i < data.facet_count; i++) {
-    for(int j = 0; j < (data.facets + i)->count; j++) {
-      printf("%d ", *((data.facets + i)->vertexes + j));
+  for(int i = 0, j = 0, *ptr = data.v_in_facet; i < data.full_cnt; i++, j++) {
+    if(j >= *ptr) {
+      printf("\n");
+      j = 0;
+      ptr++;
     }
-    printf("\n");
+    printf("%d ", data.facets[i]);
   }
+
+  printf("\n\n");
 
   remove_data(&data);
 }

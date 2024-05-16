@@ -33,8 +33,9 @@ data_t parse(const char *filename) {
 }
 
 void init_data(data_t *data, FILE *obj) {
-  data->vertex_count = 1;
+  data->vertex_count = 0;
   data->facet_count = 0;
+  data->full_cnt = 0;
   char *line = NULL;
   size_t n = 0;
   ssize_t len;
@@ -48,12 +49,20 @@ void init_data(data_t *data, FILE *obj) {
   }
 
   data->vertexes = mx_create(data->vertex_count, V_DOTS_CNT);
-  data->facets = (facet_t *)malloc(data->facet_count * sizeof(facet_t));
+  data->v_in_facet = (int *)calloc(data->facet_count, sizeof(int));
 
-  for(int i = 0; i < data->facet_count; i++) {
-    (data->facets + i)->count = 0;
-    (data->facets + i)->vertexes = NULL;
+  rewind(obj);
+
+  int *ptr = data->v_in_facet;
+
+  while ((len = getline(&line, &n, obj)) != -1) {
+    if(*line == 'f' && *(line + 1) == ' ') {
+      *ptr++ = vert_count_in_facet(line + 1);
+      data->full_cnt += *(ptr - 1);
+    }
   }
+
+  data->facets = (int *)calloc(data->full_cnt, sizeof(int));
 
   free(line);
   line = NULL;
@@ -64,13 +73,12 @@ void init_data(data_t *data, FILE *obj) {
 void remove_data(data_t *data) {
   mx_remove(&data->vertexes);
 
+  if(data->v_in_facet) {
+    free(data->v_in_facet);
+    data->v_in_facet = NULL;
+  }
+
   if(data->facets) {
-    for(int i = 0; i < data->facet_count; i++) {
-      if((data->facets + i) && (data->facets + i)->vertexes) {
-        free((data->facets + i)->vertexes);
-        (data->facets + i)->vertexes = NULL;
-      }
-    }
     free(data->facets);
     data->facets = NULL;
   }
@@ -81,29 +89,22 @@ void get_data(data_t *data, FILE *obj) {
   char *line = NULL;
   size_t n = 0;
   ssize_t len;
-  int v_cnt = 1;
-  int f_cnt = 0;
+  double *v_ptr = data->vertexes.matrix;
+  int *f_ptr = data->facets;
+  int *f_cnt = data->v_in_facet;
 
   while ((len = getline(&line, &n, obj)) != -1) {
     if(*line == 'v' && *(line + 1) == ' ') {
-      char *tmp_ptr = line + 2;
-
       for(int j = 0; j < V_DOTS_CNT; j++) {
-        token = strtok((token) ? NULL : tmp_ptr, " ");
-        data->vertexes.matrix[v_cnt][j] = atof(token);
+        token = strtok((token) ? NULL : (line + 1), " ");
+        *v_ptr++ = atof(token);
       }
 
-      v_cnt++;
       token = NULL;
     } else if(*line == 'f' && *(line + 1) == ' ') {
-      char *tmp_ptr = line + 1;
-      (data->facets + f_cnt)->count = vert_count_in_facet(line);
-
-      (data->facets + f_cnt)->vertexes = (int *)malloc((data->facets + f_cnt)->count * sizeof(int));
-
-      for(int j = 0; j < (data->facets + f_cnt)->count; j++) {
-        token = strtok((token) ? NULL : tmp_ptr, " ");
-        *((data->facets + f_cnt)->vertexes + j) = atoi(token);
+      for(int j = 0; j < *f_cnt; j++) {
+        token = strtok((token) ? NULL : (line + 1), " ");
+        *f_ptr++ = atoi(token);
       }
 
       f_cnt++;

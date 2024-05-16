@@ -19,15 +19,12 @@
 #define V_DOTS_CNT 3
 
 typedef struct {
-  int *vertexes;
-  int count;
-} facet_t;
-
-typedef struct {
-  matrix_t vertexes;
   int vertex_count;
-  facet_t *facets;
+  matrix_t vertexes;
   int facet_count;
+  int *v_in_facet;
+  int *facets;
+  int full_cnt;
 } data_t;
 
 #endif // _OBJECTS_H_

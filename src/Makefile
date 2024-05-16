@@ -115,7 +115,7 @@ vpath %.o $(OBJ_DIR)
 #                                   |___/                                      #
 ################################################################################
 
-temp: uninstall $(LIBRARY)
+temp: $(LIBRARY)
 	@mkdir -p $(BUILD)
 	@cd $(BUILD) && cmake ./../src/gui && make	
 	@./$(BUILD)/3DViewer
