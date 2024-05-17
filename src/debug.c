@@ -11,7 +11,7 @@
 
 #include "./modules/include/common.h"
 
-#define OBJECT "/home/kossadda/desktop/3DViewer_v1.0/src/_objfiles/1000000 tree.obj"
+#define OBJECT "/home/kossadda/desktop/data-samples/dragon.obj"
 
 int main() {
   data_t data = parse(OBJECT);
@@ -26,7 +26,7 @@ int main() {
   printf("\n\nFacets:\n\n");
 
   for(int i = 0, j = 0, *ptr = data.v_in_facet; i < data.full_cnt; i++, j++) {
-    if(j >= *ptr) {
+    if(j >= *ptr * 2) {
       printf("\n");
       j = 0;
       ptr++;

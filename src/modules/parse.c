@@ -58,7 +58,7 @@ void init_data(data_t *data, FILE *obj) {
   while ((len = getline(&line, &n, obj)) != -1) {
     if(*line == 'f' && *(line + 1) == ' ') {
       *ptr++ = vert_count_in_facet(line + 1);
-      data->full_cnt += *(ptr - 1);
+      data->full_cnt += *(ptr - 1) * 2;
     }
   }
 
@@ -102,9 +102,23 @@ void get_data(data_t *data, FILE *obj) {
 
       token = NULL;
     } else if(*line == 'f' && *(line + 1) == ' ') {
+      int *begin = f_ptr;
+
       for(int j = 0; j < *f_cnt; j++) {
         token = strtok((token) ? NULL : (line + 1), " ");
-        *f_ptr++ = atoi(token);
+        if(f_ptr == begin) {
+          *f_ptr = atoi(token);
+          f_ptr++;
+        } else {
+          *f_ptr = atoi(token);
+          f_ptr++;
+          *f_ptr = *(f_ptr - 1);
+          f_ptr++;
+          if (j == *f_cnt - 1) {
+            *f_ptr = *begin;
+            f_ptr++;
+          }
+        }
       }
 
       f_cnt++;
