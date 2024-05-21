@@ -10,11 +10,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(OpenGL_GL_PREFERENCE "GLVND")
-find_package(GLU REQUIRED)
-find_package(OpenGL REQUIRED)
-include_directories(${OPENGL_INCLUDE_DIRS})
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
-include_directories(${Qt5Widgets_INCLUDE_DIRS})
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGL)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGLWidgets)
 
 set(VIEWER_LIB /home/kossadda/develop/3DViewer_v1.0/src/viewer.a)
 
@@ -33,7 +32,10 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
 
 add_executable(3DViewer ${PROJECT_SOURCES})
 
-target_link_libraries(3DViewer PRIVATE Qt5::Widgets ${OPENGL_LIBRARIES} ${GLU_LIBRARY} ${VIEWER_LIB})
+target_link_libraries(3DViewer PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(3DViewer PRIVATE Qt${QT_VERSION_MAJOR}::OpenGL)
+target_link_libraries(3DViewer PRIVATE Qt${QT_VERSION_MAJOR}::OpenGLWidgets)
+target_link_libraries(3DViewer PRIVATE ${VIEWER_LIB})
 
 target_include_directories(3DViewer PRIVATE
     /home/kossadda/develop/3DViewer_v1.0/src/gui/

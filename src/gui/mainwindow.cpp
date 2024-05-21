@@ -24,25 +24,25 @@ MainWindow::~MainWindow()
 
 void MainWindow::slideSlot(int value)
 {
-    if(QObject::sender() == ui->eyeX)
-        ui->GL->camera[0] = (float)ui->eyeX->value() / 1000;
-    else if(QObject::sender() == ui->eyeY)
-        ui->GL->camera[1] = (float)ui->eyeY->value() / 1000;
-    else if(QObject::sender() == ui->eyeZ)
-        ui->GL->camera[2] = (float)ui->eyeZ->value() / 1000;
-    else if(QObject::sender() == ui->centerX)
-        ui->GL->camera[3] = (float)ui->centerX->value() / 1000;
-    else if(QObject::sender() == ui->centerY)
-        ui->GL->camera[4] = (float)ui->centerY->value() / 1000;
-    else if(QObject::sender() == ui->centerZ)
-        ui->GL->camera[5] = (float)ui->centerZ->value() / 1000;
-    else if(QObject::sender() == ui->upX)
-        ui->GL->camera[6] = (float)ui->upX->value() / 1000;
-    else if(QObject::sender() == ui->upY)
-        ui->GL->camera[7] = (float)ui->upY->value() / 1000;
-    else if(QObject::sender() == ui->upZ)
-        ui->GL->camera[8] = (float)ui->upZ->value() / 1000;
-    ui->GL->update();
+//    if(QObject::sender() == ui->eyeX)
+//        ui->GL->camera[0] = (float)ui->eyeX->value() / 1000;
+//    else if(QObject::sender() == ui->eyeY)
+//        ui->GL->camera[1] = (float)ui->eyeY->value() / 1000;
+//    else if(QObject::sender() == ui->eyeZ)
+//        ui->GL->camera[2] = (float)ui->eyeZ->value() / 1000;
+//    else if(QObject::sender() == ui->centerX)
+//        ui->GL->camera[3] = (float)ui->centerX->value() / 1000;
+//    else if(QObject::sender() == ui->centerY)
+//        ui->GL->camera[4] = (float)ui->centerY->value() / 1000;
+//    else if(QObject::sender() == ui->centerZ)
+//        ui->GL->camera[5] = (float)ui->centerZ->value() / 1000;
+//    else if(QObject::sender() == ui->upX)
+//        ui->GL->camera[6] = (float)ui->upX->value() / 1000;
+//    else if(QObject::sender() == ui->upY)
+//        ui->GL->camera[7] = (float)ui->upY->value() / 1000;
+//    else if(QObject::sender() == ui->upZ)
+//        ui->GL->camera[8] = (float)ui->upZ->value() / 1000;
+//    ui->GL->update();
 }
 
 void MainWindow::initSlide(QSlider *sl) {
