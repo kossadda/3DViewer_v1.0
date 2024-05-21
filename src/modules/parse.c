@@ -89,7 +89,7 @@ void get_data(data_t *data, FILE *obj) {
   char *line = NULL;
   size_t n = 0;
   ssize_t len;
-  double *v_ptr = data->vertexes.matrix;
+  float *v_ptr = data->vertexes.matrix;
   int *f_ptr = data->facets;
   int *f_cnt = data->v_in_facet;
 
@@ -107,16 +107,13 @@ void get_data(data_t *data, FILE *obj) {
       for(int j = 0; j < *f_cnt; j++) {
         token = strtok((token) ? NULL : (line + 1), " ");
         if(f_ptr == begin) {
-          *f_ptr = atoi(token);
-          f_ptr++;
+          *f_ptr++ = atoi(token) - 1;
         } else {
-          *f_ptr = atoi(token);
-          f_ptr++;
+          *f_ptr++ = atoi(token) - 1;
           *f_ptr = *(f_ptr - 1);
           f_ptr++;
           if (j == *f_cnt - 1) {
-            *f_ptr = *begin;
-            f_ptr++;
+            *f_ptr++ = *begin;
           }
         }
       }

@@ -16,7 +16,7 @@ matrix_t mx_create(int rows, int cols) {
 
   create.rows = rows;
   create.cols = cols;
-  create.matrix = (double *)calloc(rows * cols, sizeof(double));
+  create.matrix = (float *)calloc(rows * cols, sizeof(float));
 
   return create;
 }

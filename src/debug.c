@@ -11,7 +11,7 @@
 
 #include "./modules/include/common.h"
 
-#define OBJECT "/home/kossadda/desktop/data-samples/dragon.obj"
+#define OBJECT "/home/kossadda/desktop/3DViewer_v1.0/src/_objfiles/in cube 2.obj"
 
 int main() {
   data_t data = parse(OBJECT);
