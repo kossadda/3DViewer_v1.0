@@ -51,3 +51,42 @@ void MainWindow::initSlide(QSlider *sl) {
     sl->setValue(0);
     connect(sl, SIGNAL(sliderMoved(int)), this, SLOT(slideSlot(int)));
 }
+
+void MainWindow::on_x_plus_clicked()
+{
+    move_model(&ui->GL->data, 1, 0, 0);
+    ui->GL->update();
+}
+
+void MainWindow::on_x_minus_clicked()
+{
+    move_model(&ui->GL->data, -1, 0, 0);
+    ui->GL->update();
+}
+
+void MainWindow::on_y_plus_clicked()
+{
+    move_model(&ui->GL->data, 0, 1, 0);
+    ui->GL->update();
+}
+
+void MainWindow::on_y_minus_clicked()
+{
+    move_model(&ui->GL->data, 0, -1, 0);
+    ui->GL->update();
+}
+
+
+void MainWindow::on_z_plus_clicked()
+{
+    move_model(&ui->GL->data, 0, 0, 1);
+    ui->GL->update();
+}
+
+
+void MainWindow::on_z_minus_clicked()
+{
+    move_model(&ui->GL->data, 0, 0, -1);
+    ui->GL->update();
+}
+

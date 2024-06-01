@@ -19,6 +19,13 @@ public:
 private slots:
     void initSlide(QSlider *sl);
     void slideSlot(int value);
+    void on_x_plus_clicked();
+    void on_x_minus_clicked();
+    void on_y_plus_clicked();
+    void on_y_minus_clicked();
+    void on_z_plus_clicked();
+    void on_z_minus_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -1,32 +1,32 @@
 /**
  * @file parse.c
  * @author kossadda (https://github.com/kossadda)
- * @brief 
+ * @brief
  * @version 1.0
  * @date 2024-05-11
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  */
 
 #define _GNU_SOURCE
 
-#include "./include/common.h"
 #include <ctype.h>
 #include <stdbool.h>
+
+#include "./include/common.h"
 
 data_t parse(const char *filename) {
   FILE *obj = fopen(filename, "r");
   data_t data;
 
-  if(obj) {
+  if (obj) {
     init_data(&data, obj);
 
     get_data(&data, obj);
-    
+
     fclose(obj);
   } else {
-
   }
 
   return data;
@@ -41,10 +41,10 @@ void init_data(data_t *data, FILE *obj) {
   ssize_t len;
 
   while ((len = getline(&line, &n, obj)) != -1) {
-    if(*line == 'v' && *(line + 1) == ' ') {
-      data->vertex_count++; 
-    } else if(*line == 'f' && *(line + 1) == ' ') {
-      data->facet_count++; 
+    if (*line == 'v' && *(line + 1) == ' ') {
+      data->vertex_count++;
+    } else if (*line == 'f' && *(line + 1) == ' ') {
+      data->facet_count++;
     }
   }
 
@@ -56,7 +56,7 @@ void init_data(data_t *data, FILE *obj) {
   int *ptr = data->v_in_facet;
 
   while ((len = getline(&line, &n, obj)) != -1) {
-    if(*line == 'f' && *(line + 1) == ' ') {
+    if (*line == 'f' && *(line + 1) == ' ') {
       *ptr++ = vert_count_in_facet(line + 1);
       data->full_cnt += *(ptr - 1) * 2;
     }
@@ -73,12 +73,12 @@ void init_data(data_t *data, FILE *obj) {
 void remove_data(data_t *data) {
   mx_remove(&data->vertexes);
 
-  if(data->v_in_facet) {
+  if (data->v_in_facet) {
     free(data->v_in_facet);
     data->v_in_facet = NULL;
   }
 
-  if(data->facets) {
+  if (data->facets) {
     free(data->facets);
     data->facets = NULL;
   }
@@ -94,19 +94,19 @@ void get_data(data_t *data, FILE *obj) {
   int *f_cnt = data->v_in_facet;
 
   while ((len = getline(&line, &n, obj)) != -1) {
-    if(*line == 'v' && *(line + 1) == ' ') {
-      for(int j = 0; j < V_DOTS_CNT; j++) {
+    if (*line == 'v' && *(line + 1) == ' ') {
+      for (int j = 0; j < V_DOTS_CNT; j++) {
         token = strtok((token) ? NULL : (line + 1), " ");
         *v_ptr++ = atof(token);
       }
 
       token = NULL;
-    } else if(*line == 'f' && *(line + 1) == ' ') {
+    } else if (*line == 'f' && *(line + 1) == ' ') {
       int *begin = f_ptr;
 
-      for(int j = 0; j < *f_cnt; j++) {
+      for (int j = 0; j < *f_cnt; j++) {
         token = strtok((token) ? NULL : (line + 1), " ");
-        if(f_ptr == begin) {
+        if (f_ptr == begin) {
           *f_ptr++ = atoi(token) - 1;
         } else {
           *f_ptr++ = atoi(token) - 1;
@@ -134,7 +134,7 @@ int vert_count_in_facet(char *line) {
   char str[strlen(line) + 1];
   sprintf(str, "%s", line + 1);
 
-  for(char *ptr  = str + strlen(str) - 1; isdigit(*ptr) == 0; ptr--) {
+  for (char *ptr = str + strlen(str) - 1; isdigit(*ptr) == 0; ptr--) {
     *ptr = '\0';
   }
 
