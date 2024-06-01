@@ -31,21 +31,19 @@ void mx_remove(matrix_t *mx) {
   mx->cols = 0;
 }
 
-// matrix_t mx_mult(matrix_t *mx_1, matrix_t *mx_2) {
-//     matrix_t res = mx_create(mx_2->rows, mx_2->cols);
+void mx_mult(float *vertexes, float *vector, int rows) {
+  for (int k = 0; k < rows; k++, vertexes += 3) {
+    float vx[4] = {vertexes[0], vertexes[1], vertexes[2], 1.0f};
+    float *vr = vector;
 
-//     for(int i = 0; i < mx_2->rows; i++) {
-//         for(int j = 0; j < mx_1->cols; j++) {
-//             res.matrix[i] += mx_1->matrix[i * mx_1->cols + j] *
-//             mx_2->matrix[j];
-//         }
-//     }
+    for (int i = 0; i < 3; i++, vr += 4) {
+      float tmp = 0;
 
-//     return res;
-// }
+      for (int j = 0; j < 4; j++) {
+        tmp += vr[j] * vx[j];
+      }
 
-void mx_mult(float *data, float *move) {
-  for (int i = 0; i < 3; i++, move += 4) {
-    *(data + i) = (*move + *(move + 1) + *(move + 2)) * *(data + i) + *(move + 3);
+      vertexes[i] = tmp;
+    }
   }
 }

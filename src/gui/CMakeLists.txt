@@ -15,7 +15,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGL)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGLWidgets)
 
-set(VIEWER_LIB /home/kossadda/develop/3DViewer_v1.0/src/viewer.a)
+set(VIEWER_LIB ${CMAKE_CURRENT_SOURCE_DIR}/../viewer.a)
 
 set(PROJECT_SOURCES
   ./main.cpp
@@ -24,6 +24,9 @@ set(PROJECT_SOURCES
   ./mainwindow.h
   ./glwidget.cpp
   ./glwidget.h
+  ./../modules/parse.c
+  ./../modules/matrix.c
+  ./../modules/afine.c
 )
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS

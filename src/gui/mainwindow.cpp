@@ -54,39 +54,76 @@ void MainWindow::initSlide(QSlider *sl) {
 
 void MainWindow::on_x_plus_clicked()
 {
-    move_model(&ui->GL->data, 1, 0, 0);
+    move_model(&ui->GL->data, CHANGE_SIZE, 0, 0);
     ui->GL->update();
 }
 
 void MainWindow::on_x_minus_clicked()
 {
-    move_model(&ui->GL->data, -1, 0, 0);
+    move_model(&ui->GL->data, -CHANGE_SIZE, 0, 0);
     ui->GL->update();
 }
 
 void MainWindow::on_y_plus_clicked()
 {
-    move_model(&ui->GL->data, 0, 1, 0);
+    move_model(&ui->GL->data, 0, CHANGE_SIZE, 0);
     ui->GL->update();
 }
 
 void MainWindow::on_y_minus_clicked()
 {
-    move_model(&ui->GL->data, 0, -1, 0);
+    move_model(&ui->GL->data, 0, -CHANGE_SIZE, 0);
     ui->GL->update();
 }
-
 
 void MainWindow::on_z_plus_clicked()
 {
-    move_model(&ui->GL->data, 0, 0, 1);
+    move_model(&ui->GL->data, 0, 0, CHANGE_SIZE);
+    ui->GL->update();
+}
+
+void MainWindow::on_z_minus_clicked()
+{
+    move_model(&ui->GL->data, 0, 0, -CHANGE_SIZE);
+    ui->GL->update();
+}
+
+void MainWindow::on_rotate_x_clicked()
+{
+    x_rotate_model(&ui->GL->data, CHANGE_SIZE * RAD);
+    ui->GL->update();
+}
+
+void MainWindow::on_rotate_y_clicked()
+{
+    y_rotate_model(&ui->GL->data, CHANGE_SIZE * RAD);
+    ui->GL->update();
+}
+
+void MainWindow::on_rotate_z_clicked()
+{
+    z_rotate_model(&ui->GL->data, CHANGE_SIZE * RAD);
     ui->GL->update();
 }
 
 
-void MainWindow::on_z_minus_clicked()
+void MainWindow::on_rotate_x_rev_clicked()
 {
-    move_model(&ui->GL->data, 0, 0, -1);
+    x_rotate_model(&ui->GL->data, -CHANGE_SIZE * RAD);
+    ui->GL->update();
+}
+
+
+void MainWindow::on_rotate_y_rev_clicked()
+{
+    y_rotate_model(&ui->GL->data, -CHANGE_SIZE * RAD);
+    ui->GL->update();
+}
+
+
+void MainWindow::on_rotate_z_rev_clicked()
+{
+    z_rotate_model(&ui->GL->data, -CHANGE_SIZE * RAD);
     ui->GL->update();
 }
 

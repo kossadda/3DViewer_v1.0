@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QSlider>
 
+#include "./glwidget.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -25,6 +27,17 @@ private slots:
     void on_y_minus_clicked();
     void on_z_plus_clicked();
     void on_z_minus_clicked();
+    void on_rotate_x_clicked();
+    void on_rotate_y_clicked();
+
+
+    void on_rotate_z_clicked();
+
+    void on_rotate_x_rev_clicked();
+
+    void on_rotate_y_rev_clicked();
+
+    void on_rotate_z_rev_clicked();
 
 private:
     Ui::MainWindow *ui;

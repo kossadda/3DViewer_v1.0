@@ -15,6 +15,8 @@
 #include "./afine.h"
 #include "./objects.h"
 
+#define RAD 0.0174532925199433
+
 data_t parse(const char *filename);
 void init_data(data_t *data, FILE *obj);
 void remove_data(data_t *data);

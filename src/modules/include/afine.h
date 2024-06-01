@@ -14,6 +14,13 @@
 
 #include "./objects.h"
 
+// tmp
+#define CHANGE_SIZE 15
+
 void move_model(data_t *data, float x, float y, float z);
+void x_rotate_model(data_t *data, float degree);
+void y_rotate_model(data_t *data, float degree);
+void z_rotate_model(data_t *data, float degree);
+void scale_model(data_t *data, float x, float y, float z);
 
 #endif  //_AFINE_H_
