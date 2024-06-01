@@ -31,8 +31,8 @@ void mx_remove(matrix_t *mx) {
   mx->cols = 0;
 }
 
-void mx_mult(float *vertexes, float *vector, int rows) {
-  for (int k = 0; k < rows; k++, vertexes += 3) {
+void mx_mult(float *data, float *vertexes, float *vector, int rows) {
+  for (int k = 0; k < rows; k++, vertexes += 3, data += 3) {
     float vx[4] = {vertexes[0], vertexes[1], vertexes[2], 1.0f};
     float *vr = vector;
 
@@ -43,7 +43,7 @@ void mx_mult(float *vertexes, float *vector, int rows) {
         tmp += vr[j] * vx[j];
       }
 
-      vertexes[i] = tmp;
+      data[i] = tmp;
     }
   }
 }

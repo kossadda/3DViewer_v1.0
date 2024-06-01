@@ -36,6 +36,7 @@ void init_data(data_t *data, FILE *obj) {
   data->vertex_count = 0;
   data->facet_count = 0;
   data->full_cnt = 0;
+  data->max_position = 0.0;
   char *line = NULL;
   size_t n = 0;
   ssize_t len;
@@ -95,9 +96,12 @@ void get_data(data_t *data, FILE *obj) {
 
   while ((len = getline(&line, &n, obj)) != -1) {
     if (*line == 'v' && *(line + 1) == ' ') {
-      for (int j = 0; j < V_DOTS_CNT; j++) {
+      for (int j = 0; j < V_DOTS_CNT; j++, v_ptr++) {
         token = strtok((token) ? NULL : (line + 1), " ");
-        *v_ptr++ = atof(token);
+        *v_ptr = atof(token);
+        if (data->max_position < fabsf(*v_ptr)) {
+          data->max_position = fabs(*v_ptr);
+        }
       }
 
       token = NULL;
@@ -141,4 +145,23 @@ int vert_count_in_facet(char *line) {
   while ((token = strtok((token) ? NULL : str, " ")) != NULL) count++;
 
   return count;
+}
+
+data_t copy_data(data_t *object) {
+  data_t data;
+
+  data.vertex_count = object->vertex_count;
+  data.facet_count = object->facet_count;
+  data.full_cnt = object->full_cnt;
+  data.max_position = object->max_position;
+  data.v_in_facet = NULL;
+  data.facets = NULL;
+
+  data.vertexes = mx_create(data.vertex_count, V_DOTS_CNT);
+
+  for (int i = 0; i < data.vertex_count * V_DOTS_CNT; i++) {
+    data.vertexes.matrix[i] = object->vertexes.matrix[i];
+  }
+
+  return data;
 }

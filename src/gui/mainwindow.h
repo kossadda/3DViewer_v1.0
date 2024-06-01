@@ -19,25 +19,13 @@ public:
     ~MainWindow();
 
 private slots:
-    void initSlide(QSlider *sl);
-    void slideSlot(int value);
-    void on_x_plus_clicked();
-    void on_x_minus_clicked();
-    void on_y_plus_clicked();
-    void on_y_minus_clicked();
-    void on_z_plus_clicked();
-    void on_z_minus_clicked();
-    void on_rotate_x_clicked();
-    void on_rotate_y_clicked();
-
-
-    void on_rotate_z_clicked();
-
-    void on_rotate_x_rev_clicked();
-
-    void on_rotate_y_rev_clicked();
-
-    void on_rotate_z_rev_clicked();
+    void on_Zoom_sliderMoved(int position);
+    void on_X_rotate_sliderMoved(int position);
+    void on_Y_rotate_sliderMoved(int position);
+    void on_Z_rotate_sliderMoved(int position);
+    void on_X_move_sliderMoved(int position);
+    void on_Y_move_sliderMoved(int position);
+    void on_Z_move_sliderMoved(int position);
 
 private:
     Ui::MainWindow *ui;

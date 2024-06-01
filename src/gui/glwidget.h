@@ -20,6 +20,7 @@ class GLWidget : public QOpenGLWidget, public QOpenGLFunctions
 public:
     explicit GLWidget(QWidget *parent = 0);
     data_t data;
+    data_t object;
     void initBuffer();
 
 protected:

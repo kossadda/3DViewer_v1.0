@@ -26,6 +26,7 @@ typedef struct {
   int *v_in_facet;
   int *facets;
   int full_cnt;
+  float max_position;
 } data_t;
 
 #endif  // _OBJECTS_H_

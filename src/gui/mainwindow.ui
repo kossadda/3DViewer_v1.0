@@ -32,48 +32,20 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="13" column="1" colspan="3">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>center (x, y, z)</string>
+        <item row="13" column="1">
+         <widget class="QSlider" name="X_move">
+          <property name="minimum">
+           <number>-30</number>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+          <property name="maximum">
+           <number>30</number>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="rotate_x">
-          <property name="text">
-           <string>Rotate X (clockwise)</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QPushButton" name="rotate_z">
-          <property name="text">
-           <string>Rotate Z (clockwise)</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="1" colspan="3">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>eye (x, y, z)</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="3">
-         <widget class="QSlider" name="centerX">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
-        <item row="23" column="1">
+        <item row="17" column="1">
          <spacer name="verticalSpacer_4">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -86,155 +58,79 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="rotate_y">
-          <property name="text">
-           <string>Rotate Y (clockwise)</string>
+        <item row="13" column="3">
+         <widget class="QSlider" name="Z_move">
+          <property name="minimum">
+           <number>-30</number>
           </property>
-         </widget>
-        </item>
-        <item row="8" column="1">
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+          <property name="maximum">
+           <number>30</number>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="7" column="2">
-         <widget class="QPushButton" name="y_minus">
-          <property name="text">
-           <string>Down</string>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="2">
-         <widget class="QSlider" name="centerY">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="2">
-         <widget class="QSlider" name="eyeY">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="19" column="1">
-         <widget class="QSlider" name="upX">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="2">
-         <widget class="QPushButton" name="y_plus">
-          <property name="text">
-           <string>Up</string>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="3">
-         <widget class="QPushButton" name="z_minus">
-          <property name="text">
-           <string>Back</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QPushButton" name="x_minus">
-          <property name="text">
-           <string>Left</string>
           </property>
          </widget>
         </item>
         <item row="5" column="1">
-         <spacer name="verticalSpacer_5">
+         <widget class="QSlider" name="X_rotate">
+          <property name="minimum">
+           <number>-360</number>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Horizontal</enum>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
+         </widget>
         </item>
-        <item row="18" column="1" colspan="3">
-         <widget class="QLabel" name="label_3">
+        <item row="5" column="3">
+         <widget class="QSlider" name="Z_rotate">
+          <property name="minimum">
+           <number>-360</number>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1" colspan="3">
+         <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>up (x, y, z)</string>
+           <string>Zoom</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="19" column="3">
-         <widget class="QSlider" name="upZ">
+        <item row="5" column="2">
+         <widget class="QSlider" name="Y_rotate">
+          <property name="minimum">
+           <number>-360</number>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="rotate_y_rev">
+        <item row="4" column="2">
+         <widget class="QLabel" name="label">
           <property name="text">
-           <string>Rotate Y (ctr clockwise)</string>
+           <string>Rotate Y</string>
           </property>
-         </widget>
-        </item>
-        <item row="11" column="3">
-         <widget class="QSlider" name="eyeZ">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1">
-         <widget class="QPushButton" name="x_plus">
-          <property name="text">
-           <string>Right</string>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
         <item row="11" column="1">
-         <widget class="QSlider" name="eyeX">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="3">
-         <widget class="QPushButton" name="z_plus">
-          <property name="text">
-           <string>Forward</string>
-          </property>
-         </widget>
-        </item>
-        <item row="19" column="2">
-         <widget class="QSlider" name="upY">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="1">
-         <widget class="QSlider" name="centerZ">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="1">
          <spacer name="verticalSpacer_2">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -247,20 +143,38 @@
           </property>
          </spacer>
         </item>
-        <item row="0" column="1">
-         <spacer name="verticalSpacer_6">
+        <item row="8" column="1" colspan="3">
+         <widget class="QSlider" name="Zoom">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>200</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
+          </property>
+          <property name="pageStep">
+           <number>4</number>
+          </property>
+          <property name="value">
+           <number>100</number>
+          </property>
+          <property name="sliderPosition">
+           <number>100</number>
+          </property>
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Horizontal</enum>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
+          <property name="invertedAppearance">
+           <bool>false</bool>
           </property>
-         </spacer>
+          <property name="invertedControls">
+           <bool>false</bool>
+          </property>
+         </widget>
         </item>
-        <item row="12" column="1">
+        <item row="6" column="1">
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -273,17 +187,79 @@
           </property>
          </spacer>
         </item>
-        <item row="2" column="1">
-         <widget class="QPushButton" name="rotate_x_rev">
+        <item row="4" column="1">
+         <widget class="QLabel" name="label_7">
           <property name="text">
-           <string>Rotate X (ctr clockwise)</string>
+           <string>Rotate X</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="2" column="3">
-         <widget class="QPushButton" name="rotate_z_rev">
+        <item row="13" column="2">
+         <widget class="QSlider" name="Y_move">
+          <property name="minimum">
+           <number>-30</number>
+          </property>
+          <property name="maximum">
+           <number>30</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="4" column="3">
+         <widget class="QLabel" name="label_12">
           <property name="text">
-           <string>Rotate Z (ctr clockwise)</string>
+           <string>Rotate Z</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="2">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Move Y</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="1">
+         <widget class="QLabel" name="label_13">
+          <property name="text">
+           <string>Move X</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="3">
+         <widget class="QLabel" name="label_14">
+          <property name="text">
+           <string>Move Z</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>

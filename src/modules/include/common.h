@@ -18,6 +18,7 @@
 #define RAD 0.0174532925199433
 
 data_t parse(const char *filename);
+data_t copy_data(data_t *object);
 void init_data(data_t *data, FILE *obj);
 void remove_data(data_t *data);
 void get_data(data_t *data, FILE *obj);

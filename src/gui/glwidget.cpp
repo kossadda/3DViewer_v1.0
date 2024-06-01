@@ -6,7 +6,9 @@ GLWidget::GLWidget(QWidget *parent)
     , m_program(nullptr)
 {
     setlocale(LC_NUMERIC, "C");
-    data = parse("/home/kossadda/develop/3DViewer_v1.0/data-samples/cube.obj");
+    data = parse(OBJECT);
+    normalize_vertex(&data);
+    object = copy_data(&data);
 }
 
 void GLWidget::initializeGL() {
@@ -67,7 +69,7 @@ void GLWidget::resizeGL(int w, int h) {
     projectionMatrix.setToIdentity();
     
     projectionMatrix.perspective(45.0f, GLfloat(w) / h, 0.1f, 100.0f);
-    cameraMatrix.translate(0.0f, 0.0f, -10.0f);
+    cameraMatrix.translate(0.0f, 0.0f, -3.0f);
     
     m_program->setUniformValue("coeffMatrix", projectionMatrix * cameraMatrix);
 

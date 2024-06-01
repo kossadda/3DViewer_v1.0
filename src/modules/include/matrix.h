@@ -26,6 +26,6 @@ typedef struct {
 
 matrix_t mx_create(int rows, int cols);
 void mx_remove(matrix_t *mx);
-void mx_mult(float *mx, float *vector, int rows);
+void mx_mult(float *data, float *vertexes, float *vector, int rows);
 
 #endif  //_MATRIX_H_

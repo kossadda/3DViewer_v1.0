@@ -6,15 +6,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    initSlide(ui->eyeX);
-    initSlide(ui->eyeY);
-    initSlide(ui->eyeZ);
-    initSlide(ui->centerX);
-    initSlide(ui->centerY);
-    initSlide(ui->centerZ);
-    initSlide(ui->upX);
-    initSlide(ui->upY);
-    initSlide(ui->upZ);
 }
 
 MainWindow::~MainWindow()
@@ -22,108 +13,51 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::slideSlot(int value)
+void MainWindow::on_Zoom_sliderMoved(int position)
 {
-//    if(QObject::sender() == ui->eyeX)
-//        ui->GL->camera[0] = (float)ui->eyeX->value() / 1000;
-//    else if(QObject::sender() == ui->eyeY)
-//        ui->GL->camera[1] = (float)ui->eyeY->value() / 1000;
-//    else if(QObject::sender() == ui->eyeZ)
-//        ui->GL->camera[2] = (float)ui->eyeZ->value() / 1000;
-//    else if(QObject::sender() == ui->centerX)
-//        ui->GL->camera[3] = (float)ui->centerX->value() / 1000;
-//    else if(QObject::sender() == ui->centerY)
-//        ui->GL->camera[4] = (float)ui->centerY->value() / 1000;
-//    else if(QObject::sender() == ui->centerZ)
-//        ui->GL->camera[5] = (float)ui->centerZ->value() / 1000;
-//    else if(QObject::sender() == ui->upX)
-//        ui->GL->camera[6] = (float)ui->upX->value() / 1000;
-//    else if(QObject::sender() == ui->upY)
-//        ui->GL->camera[7] = (float)ui->upY->value() / 1000;
-//    else if(QObject::sender() == ui->upZ)
-//        ui->GL->camera[8] = (float)ui->upZ->value() / 1000;
-//    ui->GL->update();
-}
-
-void MainWindow::initSlide(QSlider *sl) {
-    sl->setMaximum(100000);
-    sl->setMinimum(-100000);
-    sl->setValue(0);
-    connect(sl, SIGNAL(sliderMoved(int)), this, SLOT(slideSlot(int)));
-}
-
-void MainWindow::on_x_plus_clicked()
-{
-    move_model(&ui->GL->data, CHANGE_SIZE, 0, 0);
+    float change = (float)position / 100.0f;
+    scale_model(&ui->GL->data, &ui->GL->object, change, change, change);
     ui->GL->update();
 }
 
-void MainWindow::on_x_minus_clicked()
+void MainWindow::on_X_rotate_sliderMoved(int position)
 {
-    move_model(&ui->GL->data, -CHANGE_SIZE, 0, 0);
+    float change = (float)position * RAD;
+    x_rotate_model(&ui->GL->data, &ui->GL->object, change);
     ui->GL->update();
 }
 
-void MainWindow::on_y_plus_clicked()
+void MainWindow::on_Y_rotate_sliderMoved(int position)
 {
-    move_model(&ui->GL->data, 0, CHANGE_SIZE, 0);
+    float change = (float)position * RAD;
+    y_rotate_model(&ui->GL->data, &ui->GL->object, change);
     ui->GL->update();
 }
 
-void MainWindow::on_y_minus_clicked()
+void MainWindow::on_Z_rotate_sliderMoved(int position)
 {
-    move_model(&ui->GL->data, 0, -CHANGE_SIZE, 0);
+    float change = (float)position * RAD;
+    z_rotate_model(&ui->GL->data, &ui->GL->object, change);
     ui->GL->update();
 }
 
-void MainWindow::on_z_plus_clicked()
+void MainWindow::on_X_move_sliderMoved(int position)
 {
-    move_model(&ui->GL->data, 0, 0, CHANGE_SIZE);
+    float change = (float)position / 10.0f;
+    move_model(&ui->GL->data, &ui->GL->object, change, 0.0f, 0.0f);
     ui->GL->update();
 }
 
-void MainWindow::on_z_minus_clicked()
+void MainWindow::on_Y_move_sliderMoved(int position)
 {
-    move_model(&ui->GL->data, 0, 0, -CHANGE_SIZE);
+    float change = (float)position / 10.0f;
+    move_model(&ui->GL->data, &ui->GL->object, 0.0f, change, 0.0f);
     ui->GL->update();
 }
 
-void MainWindow::on_rotate_x_clicked()
+void MainWindow::on_Z_move_sliderMoved(int position)
 {
-    x_rotate_model(&ui->GL->data, CHANGE_SIZE * RAD);
+    float change = (float)position / 10.0f;
+    move_model(&ui->GL->data, &ui->GL->object, 0.0f, 0.0f, change);
     ui->GL->update();
 }
-
-void MainWindow::on_rotate_y_clicked()
-{
-    y_rotate_model(&ui->GL->data, CHANGE_SIZE * RAD);
-    ui->GL->update();
-}
-
-void MainWindow::on_rotate_z_clicked()
-{
-    z_rotate_model(&ui->GL->data, CHANGE_SIZE * RAD);
-    ui->GL->update();
-}
-
-
-void MainWindow::on_rotate_x_rev_clicked()
-{
-    x_rotate_model(&ui->GL->data, -CHANGE_SIZE * RAD);
-    ui->GL->update();
-}
-
-
-void MainWindow::on_rotate_y_rev_clicked()
-{
-    y_rotate_model(&ui->GL->data, -CHANGE_SIZE * RAD);
-    ui->GL->update();
-}
-
-
-void MainWindow::on_rotate_z_rev_clicked()
-{
-    z_rotate_model(&ui->GL->data, -CHANGE_SIZE * RAD);
-    ui->GL->update();
-}
-
