@@ -28,7 +28,6 @@ protected:
     void resizeGL(int w, int h);
 
 private:
-    void setupProjection(int w, int h);
     int m_coeffMatrixLoc = 0;
     int m_colorLoc = 0;
     int m_rotation;

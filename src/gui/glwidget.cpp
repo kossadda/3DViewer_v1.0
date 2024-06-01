@@ -1,11 +1,12 @@
 #include "glwidget.h"
+#include <iostream>
 
 GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
-    , data(parse("/home/kossadda/desktop/3DViewer_v1.0/src/_objfiles/in cube 2.obj"))
     , m_program(nullptr)
 {
-
+    setlocale(LC_NUMERIC, "C");
+    data = parse("/home/kossadda/develop/3DViewer_v1.0/data-samples/sphere.obj");
 }
 
 void GLWidget::initializeGL() {
@@ -57,32 +58,6 @@ void GLWidget::initBuffer() {
 }
 
 void GLWidget::resizeGL(int w, int h) {
-    setupProjection(w, h);
-}
-
-void GLWidget::paintGL() {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    m_program->bind();
-
-    QMatrix4x4 modelViewMatrix;
-    modelViewMatrix.translate(0.0f, 0.0f, -10.0f);
-    modelViewMatrix.rotate(m_rotation, 0.0f, 1.0f, 0.0f);
-    QMatrix4x4 mvpMatrix = projectionMatrix * modelViewMatrix;
-    m_program->setUniformValue("coeffMatrix", mvpMatrix);
-
-    m_program->setUniformValue("color", QVector4D(1.0f, 0.0f, 0.0f, 1.0f));
-
-    vao.bind();
-    glDrawElements(GL_LINES, data.full_cnt, GL_UNSIGNED_INT, nullptr);
-    vao.release();
-    // vao.bind();
-    // glDrawArrays(GL_POINTS, 0, data.vertex_count);
-    // vao.release();
-}
-
-void GLWidget::setupProjection(int w, int h) {
     if (w < 1 || h < 1) {
         w = width();
         h = height();
@@ -91,6 +66,22 @@ void GLWidget::setupProjection(int w, int h) {
     cameraMatrix.setToIdentity();
     projectionMatrix.setToIdentity();
     
-    projectionMatrix.perspective(45.0f, GLfloat(w) / h, 0.01f, 100.0f);
-    cameraMatrix.translate(0, 0, -4);
+    projectionMatrix.perspective(45.0f, GLfloat(w) / h, 0.1f, 100.0f);
+    cameraMatrix.translate(0.0f, 0.0f, -10.0f);
+    
+    m_program->setUniformValue("coeffMatrix", projectionMatrix * cameraMatrix);
+
+    m_program->setUniformValue("color", QVector4D(1.0f, 0.0f, 0.0f, 1.0f));
+    m_program->bind();
+}
+
+void GLWidget::paintGL() {
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPointSize(4);
+
+    vao.bind();
+    glDrawElements(GL_LINES, data.full_cnt, GL_UNSIGNED_INT, nullptr);
+    glDrawArrays(GL_POINTS, 0, data.vertex_count);
+    vao.release();
 }
