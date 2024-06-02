@@ -23,7 +23,7 @@
    <string>3DViewer</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(48, 32, 49);</string>
+   <string notr="true">background-color: rgb(0, 0, 0);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QFormLayout" name="formLayout">
@@ -52,7 +52,7 @@
         <property name="minimumSize">
          <size>
           <width>390</width>
-          <height>150</height>
+          <height>170</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -77,38 +77,14 @@
            <x>10</x>
            <y>10</y>
            <width>301</width>
-           <height>131</height>
+           <height>151</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="grid_rotate">
           <property name="spacing">
            <number>0</number>
           </property>
-          <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="label_r">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel {
-	font-weight: bold;
-	background-color: rgb(31, 14, 65);
-	color: rgb(255, 255, 255);
-	font-size: 20px;
-}</string>
-            </property>
-            <property name="text">
-             <string>Rotate</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="label_zr">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -118,7 +94,7 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>20</width>
+              <width>30</width>
               <height>0</height>
              </size>
             </property>
@@ -137,65 +113,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_yr">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel {
-	background-color: rgb(31, 14, 65);
-	color: rgb(255, 255, 255);
-	font-size: 20px;
-}</string>
-            </property>
-            <property name="text">
-             <string>Y  </string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_xr">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel {
-	background-color: rgb(31, 14, 65);
-	color: rgb(255, 255, 255);
-	font-size: 20px;
-}</string>
-            </property>
-            <property name="text">
-             <string>X  </string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
            <widget class="QSlider" name="X_rotate">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -243,12 +161,15 @@ QSlider::sub-page:horizontal {
             <property name="maximum">
              <number>360</number>
             </property>
+            <property name="pageStep">
+             <number>5</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="4" column="1">
            <widget class="QSlider" name="Z_rotate">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -296,12 +217,39 @@ QSlider::sub-page:horizontal {
             <property name="maximum">
              <number>360</number>
             </property>
+            <property name="pageStep">
+             <number>5</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="0" column="1">
+           <widget class="QLabel" name="label_r">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+	font-weight: bold;
+	background-color: rgb(31, 14, 65);
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+            </property>
+            <property name="text">
+             <string>  Rotate</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
            <widget class="QSlider" name="Y_rotate">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -349,8 +297,102 @@ QSlider::sub-page:horizontal {
             <property name="maximum">
              <number>360</number>
             </property>
+            <property name="pageStep">
+             <number>5</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_xr">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+	background-color: rgb(31, 14, 65);
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+            </property>
+            <property name="text">
+             <string>X  </string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_yr">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+	background-color: rgb(31, 14, 65);
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+            </property>
+            <property name="text">
+             <string>Y  </string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(31, 14, 65);
+image: url(:rotate.png);</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLabel" name="label_6">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(31, 14, 65);</string>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -360,7 +402,7 @@ QSlider::sub-page:horizontal {
          <property name="geometry">
           <rect>
            <x>320</x>
-           <y>37</y>
+           <y>52</y>
            <width>60</width>
            <height>30</height>
           </rect>
@@ -379,7 +421,7 @@ QSlider::sub-page:horizontal {
          </property>
          <property name="maximumSize">
           <size>
-           <width>50</width>
+           <width>60</width>
            <height>30</height>
           </size>
          </property>
@@ -404,7 +446,7 @@ QSlider::sub-page:horizontal {
          <property name="geometry">
           <rect>
            <x>320</x>
-           <y>72</y>
+           <y>89</y>
            <width>60</width>
            <height>30</height>
           </rect>
@@ -423,7 +465,7 @@ QSlider::sub-page:horizontal {
          </property>
          <property name="maximumSize">
           <size>
-           <width>50</width>
+           <width>60</width>
            <height>30</height>
           </size>
          </property>
@@ -448,7 +490,7 @@ QSlider::sub-page:horizontal {
          <property name="geometry">
           <rect>
            <x>320</x>
-           <y>106</y>
+           <y>125</y>
            <width>60</width>
            <height>30</height>
           </rect>
@@ -467,7 +509,7 @@ QSlider::sub-page:horizontal {
          </property>
          <property name="maximumSize">
           <size>
-           <width>50</width>
+           <width>60</width>
            <height>30</height>
           </size>
          </property>
@@ -517,7 +559,7 @@ QSlider::sub-page:horizontal {
         <property name="minimumSize">
          <size>
           <width>390</width>
-          <height>93</height>
+          <height>100</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -542,14 +584,37 @@ QSlider::sub-page:horizontal {
            <x>10</x>
            <y>10</y>
            <width>301</width>
-           <height>73</height>
+           <height>81</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="grid_scale">
           <property name="spacing">
            <number>0</number>
           </property>
-          <item row="3" column="0" colspan="2">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(31, 14, 65);
+image: url(:zoom.png);</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="3">
            <widget class="QSlider" name="Zoom">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -598,10 +663,10 @@ QSlider::sub-page:horizontal {
              <number>300</number>
             </property>
             <property name="singleStep">
-             <number>5</number>
+             <number>1</number>
             </property>
             <property name="pageStep">
-             <number>4</number>
+             <number>5</number>
             </property>
             <property name="value">
              <number>0</number>
@@ -620,7 +685,7 @@ QSlider::sub-page:horizontal {
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="2" column="1">
            <widget class="QLabel" name="label_scale">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -637,10 +702,20 @@ QSlider::sub-page:horizontal {
 }</string>
             </property>
             <property name="text">
-             <string>Scale</string>
+             <string>   Scale</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignHCenter|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QLabel" name="label_5">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(31, 14, 65);</string>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -650,7 +725,7 @@ QSlider::sub-page:horizontal {
          <property name="geometry">
           <rect>
            <x>320</x>
-           <y>42</y>
+           <y>54</y>
            <width>60</width>
            <height>30</height>
           </rect>
@@ -669,7 +744,7 @@ QSlider::sub-page:horizontal {
          </property>
          <property name="maximumSize">
           <size>
-           <width>50</width>
+           <width>60</width>
            <height>30</height>
           </size>
          </property>
@@ -719,7 +794,7 @@ QSlider::sub-page:horizontal {
         <property name="minimumSize">
          <size>
           <width>390</width>
-          <height>150</height>
+          <height>170</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -744,7 +819,7 @@ QSlider::sub-page:horizontal {
            <x>10</x>
            <y>10</y>
            <width>301</width>
-           <height>131</height>
+           <height>151</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="grid_translate">
@@ -752,6 +827,35 @@ QSlider::sub-page:horizontal {
            <number>0</number>
           </property>
           <item row="2" column="1">
+           <widget class="QLabel" name="label_xtr">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+	background-color: rgb(31, 14, 65);
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+            </property>
+            <property name="text">
+             <string>X  </string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
            <widget class="QLabel" name="label_ytr">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -761,7 +865,7 @@ QSlider::sub-page:horizontal {
             </property>
             <property name="minimumSize">
              <size>
-              <width>20</width>
+              <width>30</width>
               <height>0</height>
              </size>
             </property>
@@ -780,60 +884,7 @@ QSlider::sub-page:horizontal {
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
-           <widget class="QSlider" name="Y_move">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>250</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QSlider {
-	background-color: rgb(31, 14, 65);
-}
-
-QSlider::groove:horizontal {
-    border: 1px solid #999999;
-    height: 8px;
-    background-color: rgb(31, 14, 65);
-    margin: 2px 0;
-}
-
-QSlider::handle:horizontal {
-    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #b4b4b4, stop:1 #8f8f8f);
-    border: 1px solid #5c5c5c;
-    width: 18px;
-    margin: -2px 0;
-    border-radius: 2px;
-}
-
-QSlider::add-page:horizontal {
-    background: #ffffff;
-}
-
-QSlider::sub-page:horizontal {
-    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #6c6c6c, stop:1 #989898);
-}</string>
-            </property>
-            <property name="minimum">
-             <number>-30</number>
-            </property>
-            <property name="maximum">
-             <number>30</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
+          <item row="4" column="2">
            <widget class="QSlider" name="Z_move">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -876,17 +927,49 @@ QSlider::sub-page:horizontal {
 }</string>
             </property>
             <property name="minimum">
-             <number>-30</number>
+             <number>-300</number>
             </property>
             <property name="maximum">
-             <number>30</number>
+             <number>300</number>
+            </property>
+            <property name="pageStep">
+             <number>5</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_ztr">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+	background-color: rgb(31, 14, 65);
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+            </property>
+            <property name="text">
+             <string>Z  </string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
            <widget class="QSlider" name="X_move">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -929,18 +1012,80 @@ QSlider::sub-page:horizontal {
 }</string>
             </property>
             <property name="minimum">
-             <number>-30</number>
+             <number>-300</number>
             </property>
             <property name="maximum">
-             <number>30</number>
+             <number>300</number>
+            </property>
+            <property name="pageStep">
+             <number>5</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_xtr">
+          <item row="3" column="2">
+           <widget class="QSlider" name="Y_move">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QSlider {
+	background-color: rgb(31, 14, 65);
+}
+
+QSlider::groove:horizontal {
+    border: 1px solid #999999;
+    height: 8px;
+    background-color: rgb(31, 14, 65);
+    margin: 2px 0;
+}
+
+QSlider::handle:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #b4b4b4, stop:1 #8f8f8f);
+    border: 1px solid #5c5c5c;
+    width: 18px;
+    margin: -2px 0;
+    border-radius: 2px;
+}
+
+QSlider::add-page:horizontal {
+    background: #ffffff;
+}
+
+QSlider::sub-page:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #6c6c6c, stop:1 #989898);
+}</string>
+            </property>
+            <property name="minimum">
+             <number>-300</number>
+            </property>
+            <property name="maximum">
+             <number>300</number>
+            </property>
+            <property name="pageStep">
+             <number>5</number>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLabel" name="label">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -949,55 +1094,20 @@ QSlider::sub-page:horizontal {
             </property>
             <property name="minimumSize">
              <size>
-              <width>20</width>
-              <height>0</height>
+              <width>30</width>
+              <height>25</height>
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">QLabel {
-	background-color: rgb(31, 14, 65);
-	color: rgb(255, 255, 255);
-	font-size: 20px;
-}</string>
+             <string notr="true">background-color: rgb(31, 14, 65);
+image: url(:move.png);</string>
             </property>
             <property name="text">
-             <string>X  </string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <string/>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_ztr">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>20</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel {
-	background-color: rgb(31, 14, 65);
-	color: rgb(255, 255, 255);
-	font-size: 20px;
-}</string>
-            </property>
-            <property name="text">
-             <string>Z  </string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="3">
+          <item row="0" column="2">
            <widget class="QLabel" name="label_tr">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -1014,10 +1124,20 @@ QSlider::sub-page:horizontal {
 }</string>
             </property>
             <property name="text">
-             <string>Translate</string>
+             <string>   Translate</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignHCenter|Qt::AlignTop</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="QLabel" name="label_4">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(31, 14, 65);</string>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -1027,7 +1147,7 @@ QSlider::sub-page:horizontal {
          <property name="geometry">
           <rect>
            <x>320</x>
-           <y>36</y>
+           <y>57</y>
            <width>60</width>
            <height>30</height>
           </rect>
@@ -1046,7 +1166,7 @@ QSlider::sub-page:horizontal {
          </property>
          <property name="maximumSize">
           <size>
-           <width>50</width>
+           <width>60</width>
            <height>30</height>
           </size>
          </property>
@@ -1071,7 +1191,7 @@ QSlider::sub-page:horizontal {
          <property name="geometry">
           <rect>
            <x>320</x>
-           <y>71</y>
+           <y>92</y>
            <width>60</width>
            <height>30</height>
           </rect>
@@ -1090,7 +1210,7 @@ QSlider::sub-page:horizontal {
          </property>
          <property name="maximumSize">
           <size>
-           <width>50</width>
+           <width>60</width>
            <height>30</height>
           </size>
          </property>
@@ -1115,7 +1235,7 @@ QSlider::sub-page:horizontal {
          <property name="geometry">
           <rect>
            <x>320</x>
-           <y>106</y>
+           <y>127</y>
            <width>60</width>
            <height>30</height>
           </rect>
@@ -1134,7 +1254,7 @@ QSlider::sub-page:horizontal {
          </property>
          <property name="maximumSize">
           <size>
-           <width>50</width>
+           <width>60</width>
            <height>30</height>
           </size>
          </property>
@@ -1192,6 +1312,7 @@ QSlider::sub-page:horizontal {
  	font-size: 18px;
 	border-radius: 20px;
 	padding: 6px 12px;
+    border: 2px solid rgb(255, 255, 255);
 }
 
 QPushButton:pressed {

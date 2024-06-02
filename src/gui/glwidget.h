@@ -9,6 +9,8 @@
 #include <QDebug>
 #include <QMatrix4x4>
 #include <QOpenGLVertexArrayObject>
+#include <QMouseEvent>
+#include <QWheelEvent>
 
 extern "C" {
 #include "./../modules/include/common.h"
@@ -25,10 +27,18 @@ public:
     afinne_t mx;
     void initBuffer();
 
+signals:
+    void mousePress(QMouseEvent *event);
+    void mouseMove(QMouseEvent *event);
+    void mouseWheel(QWheelEvent *event);
+
 protected:
     void initializeGL();
     void paintGL();
     void resizeGL(int w, int h);
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
 
 private:
     int m_coeffMatrixLoc = 0;

@@ -20,17 +20,25 @@ public:
     unsigned int check_sliders();
 
 private slots:
-    void on_Zoom_sliderMoved(int position);
-    void on_X_rotate_sliderMoved(int position);
-    void on_Y_rotate_sliderMoved(int position);
-    void on_Z_rotate_sliderMoved(int position);
-    void on_X_move_sliderMoved(int position);
-    void on_Y_move_sliderMoved(int position);
-    void on_Z_move_sliderMoved(int position);
+    void on_Zoom_valueChanged(int position);
+    void on_X_rotate_valueChanged(int position);
+    void on_Y_rotate_valueChanged(int position);
+    void on_Z_rotate_valueChanged(int position);
+    void on_X_move_valueChanged(int position);
+    void on_Y_move_valueChanged(int position);
+    void on_Z_move_valueChanged(int position);
     void on_reset_clicked();
     void update_vertex();
 
 private:
     Ui::MainWindow *ui;
+    QPoint startPos;
+    bool leftMouse = false;
+    bool rightMouse = false;
+
+public slots:
+    void slotMousePress(QMouseEvent *event);
+    void slotMouseMove(QMouseEvent *event);
+    void slotMouseWheel(QWheelEvent *event);
 };
 #endif // MAINWINDOW_H

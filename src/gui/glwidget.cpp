@@ -91,7 +91,7 @@ void GLWidget::resizeGL(int w, int h) {
 }
 
 void GLWidget::paintGL() {
-    glClearColor(0.188235f, 0.125490f, 0.192157f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // glPointSize(1);
 
@@ -103,4 +103,16 @@ void GLWidget::paintGL() {
     glDrawElements(GL_LINES, data.full_cnt, GL_UNSIGNED_INT, nullptr);
     // glDrawArrays(GL_POINTS, 0, data.vertex_count);
     vao.release();
+}
+
+void GLWidget::mousePressEvent(QMouseEvent *event) {
+    emit mousePress(event);
+}
+
+void GLWidget::mouseMoveEvent(QMouseEvent *event) {
+    emit mouseMove(event);
+}
+
+void GLWidget::wheelEvent(QWheelEvent *event) {
+    emit mouseWheel(event);
 }
