@@ -91,7 +91,7 @@ void GLWidget::resizeGL(int w, int h) {
 }
 
 void GLWidget::paintGL() {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.188235f, 0.125490f, 0.192157f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // glPointSize(1);
 

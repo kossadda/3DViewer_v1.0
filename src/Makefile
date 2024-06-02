@@ -171,6 +171,7 @@ clean:
 	@rm -rf $(GUI_DIR)/build*
 	@rm -rf build*
 	@rm -f $(TARGET)
+	@rm -f $(GUI_DIR)/CMake*.user
 	@rm -f *.a *.o
 	@rm -f *.gc*
 	@rm -f main

@@ -17,74 +17,67 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_Zoom_sliderMoved(int position)
 {
+    ui->edit_scale->setText(QString::number(position));
     ui->GL->mx.scale[0] = ui->GL->mx.scale[5] = ui->GL->mx.scale[10] = (float)(position + 100.0f) / 100.0f;
 
-    transform_mx(&ui->GL->mx, check_sliders());
-    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
-    ui->GL->update();
+    update_vertex();
 }
 
 void MainWindow::on_X_rotate_sliderMoved(int position)
 {
+    ui->edit_xr->setText(QString::number(position));
     float rt = (float)position * RAD;
     ui->GL->mx.rotate_x[5] = ui->GL->mx.rotate_x[10] = std::cos(rt);
     ui->GL->mx.rotate_x[9] = std::sin(rt);
     ui->GL->mx.rotate_x[6] = -ui->GL->mx.rotate_x[9];
 
-    transform_mx(&ui->GL->mx, check_sliders());
-    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
-    ui->GL->update();
+    update_vertex();
 }
 
 void MainWindow::on_Y_rotate_sliderMoved(int position)
 {
+    ui->edit_yr->setText(QString::number(position));
     float rt = (float)position * RAD;
     ui->GL->mx.rotate_y[0] = ui->GL->mx.rotate_y[10] = std::cos(rt);
     ui->GL->mx.rotate_y[2] = std::sin(rt);
     ui->GL->mx.rotate_y[8] = -ui->GL->mx.rotate_y[2];
 
-    transform_mx(&ui->GL->mx, check_sliders());
-    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
-    ui->GL->update();
+    update_vertex();
 }
 
 void MainWindow::on_Z_rotate_sliderMoved(int position)
 {
+    ui->edit_zr->setText(QString::number(position));
     float rt = (float)position * RAD;
     ui->GL->mx.rotate_z[0] = ui->GL->mx.rotate_z[5] = std::cos(rt);
     ui->GL->mx.rotate_z[4] = std::sin(rt);
     ui->GL->mx.rotate_z[1] = -ui->GL->mx.rotate_z[4];
 
-    transform_mx(&ui->GL->mx, check_sliders());
-    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
-    ui->GL->update();
+    update_vertex();
 }
 
 void MainWindow::on_X_move_sliderMoved(int position)
 {
-    ui->GL->mx.move[3] = position / 10.0f;
+    ui->edit_xtr->setText(QString::number(position));
+    ui->GL->mx.move[3] = (float)position / 10.0f;
 
-    transform_mx(&ui->GL->mx, check_sliders());
-    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
-    ui->GL->update();
+    update_vertex();
 }
 
 void MainWindow::on_Y_move_sliderMoved(int position)
 {
-    ui->GL->mx.move[7] = position / 10.0f;
+    ui->edit_ytr->setText(QString::number(position));
+    ui->GL->mx.move[7] = (float)position / 10.0f;
 
-    transform_mx(&ui->GL->mx, check_sliders());
-    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
-    ui->GL->update();
+    update_vertex();
 }
 
 void MainWindow::on_Z_move_sliderMoved(int position)
 {
-    ui->GL->mx.move[11] = position / 10.0f;
+    ui->edit_ztr->setText(QString::number(position));
+    ui->GL->mx.move[11] = (float)position / 10.0f;
 
-    transform_mx(&ui->GL->mx, check_sliders());
-    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
-    ui->GL->update();
+    update_vertex();
 }
 
 unsigned int MainWindow::check_sliders() {
@@ -122,6 +115,23 @@ void MainWindow::on_reset_clicked()
     ui->Y_rotate->setValue(0);
     ui->Z_rotate->setValue(0);
     ui->Zoom->setValue(0);
+    ui->GL->mx.move[3] = ui->GL->mx.move[7] = ui->GL->mx.move[11] = 0.0f;
+
+
+    ui->edit_xtr->setText("0");
+    ui->edit_ytr->setText("0");
+    ui->edit_ztr->setText("0");
+    ui->edit_xr->setText("0");
+    ui->edit_yr->setText("0");
+    ui->edit_zr->setText("0");
+    ui->edit_scale->setText("0");
+
+    transform_mx(&ui->GL->mx, check_sliders());
+    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
+    ui->GL->update();
+}
+
+void MainWindow::update_vertex() {
     transform_mx(&ui->GL->mx, check_sliders());
     mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
     ui->GL->update();

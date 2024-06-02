@@ -28,6 +28,7 @@ private slots:
     void on_Y_move_sliderMoved(int position);
     void on_Z_move_sliderMoved(int position);
     void on_reset_clicked();
+    void update_vertex();
 
 private:
     Ui::MainWindow *ui;
