@@ -13,49 +13,62 @@
 
 #include "./include/common.h"
 
-void move_model(data_t *data, data_t *object, float x, float y, float z) {
-  float move[] = {1.0f, 0.0f, 0.0f, x, 0.0f, 1.0f, 0.0f, y,
-                  0.0f, 0.0f, 1.0f, z, 0.0f, 0.0f, 0.0f, 1.0f};
+afinne_t init_afinne() {
+  afinne_t mx;
 
-  mx_mult(data->vertexes.matrix, object->vertexes.matrix, move,
-          data->vertexes.rows);
+  mx.current = (float *)calloc(4 * 4, sizeof(float));
+  mx.identity = (float *)calloc(4 * 4, sizeof(float));
+  mx.move = (float *)calloc(4 * 4, sizeof(float));
+  mx.scale = (float *)calloc(4 * 4, sizeof(float));
+  mx.rotate_x = (float *)calloc(4 * 4, sizeof(float));
+  mx.rotate_y = (float *)calloc(4 * 4, sizeof(float));
+  mx.rotate_z = (float *)calloc(4 * 4, sizeof(float));
+
+  mx.identity[0] = mx.identity[5] = mx.identity[10] = mx.identity[15] = 1.0f;
+  mx.move[0] = mx.move[5] = mx.move[10] = mx.move[15] = 1.0f;
+  mx.scale[0] = mx.scale[5] = mx.scale[10] = mx.scale[15] = 1.0f;
+  mx.rotate_x[0] = mx.rotate_x[5] = mx.rotate_x[10] = mx.rotate_x[15] = 1.0f;
+  mx.rotate_y[0] = mx.rotate_y[5] = mx.rotate_y[10] = mx.rotate_y[15] = 1.0f;
+  mx.rotate_z[0] = mx.rotate_z[5] = mx.rotate_z[10] = mx.rotate_z[15] = 1.0f;
+
+  return mx;
 }
 
-void x_rotate_model(data_t *data, data_t *object, float degree) {
-  float rotate[] = {1.0f, 0.0f,         0.0f,          0.0f,
-                    0.0f, cosf(degree), -sinf(degree), 0.0f,
-                    0.0f, sinf(degree), cosf(degree),  0.0f,
-                    0.0f, 0.0f,         0.0f,          1.0f};
+void destroy_affine(afinne_t *mx) {
+  if (mx->current) {
+    free(mx->current);
+    mx->current = NULL;
+  }
 
-  mx_mult(data->vertexes.matrix, object->vertexes.matrix, rotate,
-          data->vertexes.rows);
-}
+  if (mx->identity) {
+    free(mx->identity);
+    mx->identity = NULL;
+  }
 
-void y_rotate_model(data_t *data, data_t *object, float degree) {
-  float rotate[] = {cosf(degree), 0.0f, sinf(degree),  0.0f, 0.0f,         1.0f,
-                    0.0f,         0.0f, -sinf(degree), 0.0f, cosf(degree), 0.0f,
-                    0.0f,         0.0f, 0.0f,          1.0f};
+  if (mx->move) {
+    free(mx->move);
+    mx->move = NULL;
+  }
 
-  mx_mult(data->vertexes.matrix, object->vertexes.matrix, rotate,
-          data->vertexes.rows);
-}
+  if (mx->scale) {
+    free(mx->scale);
+    mx->scale = NULL;
+  }
 
-void z_rotate_model(data_t *data, data_t *object, float degree) {
-  float rotate[] = {cosf(degree), -sinf(degree), 0.0f, 0.0f,
-                    sinf(degree), cosf(degree),  0.0f, 0.0f,
-                    0.0f,         0.0f,          1.0f, 0.0f,
-                    0.0f,         0.0f,          0.0f, 1.0f};
+  if (mx->rotate_x) {
+    free(mx->rotate_x);
+    mx->rotate_x = NULL;
+  }
 
-  mx_mult(data->vertexes.matrix, object->vertexes.matrix, rotate,
-          data->vertexes.rows);
-}
+  if (mx->rotate_y) {
+    free(mx->rotate_y);
+    mx->rotate_y = NULL;
+  }
 
-void scale_model(data_t *data, data_t *object, float x, float y, float z) {
-  float move[] = {x,    0.0f, 0.0f, 0.0f, 0.0f, y,    0.0f, 0.0f,
-                  0.0f, 0.0f, z,    0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
-
-  mx_mult(data->vertexes.matrix, object->vertexes.matrix, move,
-          data->vertexes.rows);
+  if (mx->rotate_y) {
+    free(mx->rotate_y);
+    mx->rotate_y = NULL;
+  }
 }
 
 void normalize_vertex(data_t *data) {
@@ -65,5 +78,29 @@ void normalize_vertex(data_t *data) {
     for (int j = 0; j < 3; j++) {
       vertex[j] /= data->max_position;
     }
+  }
+}
+
+void transform_mx(afinne_t *mx, unsigned int data) {
+  mx_copy(mx->current, mx->identity);
+
+  if (data & ROTATE_X) {
+    mx_affine_mult(mx->current, mx->rotate_x);
+  }
+
+  if (data & ROTATE_Y) {
+    mx_affine_mult(mx->current, mx->rotate_y);
+  }
+
+  if (data & ROTATE_X) {
+    mx_affine_mult(mx->current, mx->rotate_z);
+  }
+
+  if (data & MOVE) {
+    mx_affine_mult(mx->current, mx->move);
+  }
+
+  if (data & SCALE) {
+    mx_affine_mult(mx->current, mx->scale);
   }
 }

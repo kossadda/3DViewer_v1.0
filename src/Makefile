@@ -234,7 +234,7 @@ run:
 	@./$(BUILD)/$(PROJECT_NAME)
 
 debug:
-	@$(CC) $(CFLAGS) debug.c $(MODULES_C) -o main
+	@$(CC) $(CFLAGS) debug.c $(MODULES_C) -lm -o main
 	@./main
 
 clang_fix:

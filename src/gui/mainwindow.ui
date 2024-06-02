@@ -146,10 +146,10 @@
         <item row="8" column="1" colspan="3">
          <widget class="QSlider" name="Zoom">
           <property name="minimum">
-           <number>1</number>
+           <number>-100</number>
           </property>
           <property name="maximum">
-           <number>200</number>
+           <number>100</number>
           </property>
           <property name="singleStep">
            <number>5</number>
@@ -158,10 +158,10 @@
            <number>4</number>
           </property>
           <property name="value">
-           <number>100</number>
+           <number>0</number>
           </property>
           <property name="sliderPosition">
-           <number>100</number>
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>

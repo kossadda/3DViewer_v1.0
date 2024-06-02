@@ -4,11 +4,24 @@
 GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
     , m_program(nullptr)
+    , mx(init_afinne())
 {
     setlocale(LC_NUMERIC, "C");
     data = parse(OBJECT);
     normalize_vertex(&data);
     object = copy_data(&data);
+}
+
+GLWidget::~GLWidget()
+{
+    remove_data(&data);
+    remove_data(&object);
+    destroy_affine(&mx);
+
+    makeCurrent();
+    vao.destroy();
+    vbo.destroy();
+    ebo.destroy();
 }
 
 void GLWidget::initializeGL() {

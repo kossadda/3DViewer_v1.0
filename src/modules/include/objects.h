@@ -12,6 +12,7 @@
 #ifndef _OBJECTS_H_
 #define _OBJECTS_H_
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -28,5 +29,15 @@ typedef struct {
   int full_cnt;
   float max_position;
 } data_t;
+
+typedef struct {
+  float *current;
+  float *identity;
+  float *move;
+  float *rotate_x;
+  float *rotate_y;
+  float *rotate_z;
+  float *scale;
+} afinne_t;
 
 #endif  // _OBJECTS_H_

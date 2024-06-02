@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    unsigned int check_sliders();
 
 private slots:
     void on_Zoom_sliderMoved(int position);
