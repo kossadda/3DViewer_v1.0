@@ -27,6 +27,12 @@ set(PROJECT_SOURCES
   ./../modules/parse.c
   ./../modules/matrix.c
   ./../modules/afine.c
+  ./../modules/include/parse.h
+  ./../modules/include/matrix.h
+  ./../modules/include/afine.h
+  ./../modules/include/common.h
+  ./../modules/include/objects.h
+  ./../resources/resource.qrc
 )
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS

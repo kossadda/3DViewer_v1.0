@@ -93,7 +93,7 @@ void GLWidget::resizeGL(int w, int h) {
 void GLWidget::paintGL() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    glPointSize(4);
+    // glPointSize(1);
 
     vbo.bind();
     vbo.write(0, data.vertexes.matrix, data.vertex_count * 3 * sizeof(GLfloat));
@@ -101,6 +101,6 @@ void GLWidget::paintGL() {
 
     vao.bind();
     glDrawElements(GL_LINES, data.full_cnt, GL_UNSIGNED_INT, nullptr);
-//    glDrawArrays(GL_POINTS, 0, data.vertex_count);
+    // glDrawArrays(GL_POINTS, 0, data.vertex_count);
     vao.release();
 }

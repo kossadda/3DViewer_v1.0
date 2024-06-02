@@ -92,7 +92,7 @@ void transform_mx(afinne_t *mx, unsigned int data) {
     mx_affine_mult(mx->current, mx->rotate_y);
   }
 
-  if (data & ROTATE_X) {
+  if (data & ROTATE_Z) {
     mx_affine_mult(mx->current, mx->rotate_z);
   }
 

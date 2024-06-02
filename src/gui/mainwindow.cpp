@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    QIcon icon(":icon.png");
+    this->setWindowIcon(icon);
     ui->setupUi(this);
 }
 
@@ -110,3 +112,18 @@ unsigned int MainWindow::check_sliders() {
 
     return res;
 }
+
+void MainWindow::on_reset_clicked()
+{
+    ui->X_move->setValue(0);
+    ui->Y_move->setValue(0);
+    ui->Z_move->setValue(0);
+    ui->X_rotate->setValue(0);
+    ui->Y_rotate->setValue(0);
+    ui->Z_rotate->setValue(0);
+    ui->Zoom->setValue(0);
+    transform_mx(&ui->GL->mx, check_sliders());
+    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
+    ui->GL->update();
+}
+

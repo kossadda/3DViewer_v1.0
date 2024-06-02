@@ -17,98 +17,92 @@
    <string>3DViewer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="GLWidget" name="GL" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <layout class="QVBoxLayout" name="menu_layout">
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="13" column="1">
-         <widget class="QSlider" name="X_move">
-          <property name="minimum">
-           <number>-30</number>
+       <spacer name="space1">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="grid_rotate">
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_xr">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="maximum">
-           <number>30</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="17" column="1">
-         <spacer name="verticalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
+          <property name="minimumSize">
            <size>
             <width>20</width>
-            <height>40</height>
+            <height>0</height>
            </size>
           </property>
-         </spacer>
-        </item>
-        <item row="13" column="3">
-         <widget class="QSlider" name="Z_move">
-          <property name="minimum">
-           <number>-30</number>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
           </property>
-          <property name="maximum">
-           <number>30</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QSlider" name="X_rotate">
-          <property name="minimum">
-           <number>-360</number>
-          </property>
-          <property name="maximum">
-           <number>360</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="3">
-         <widget class="QSlider" name="Z_rotate">
-          <property name="minimum">
-           <number>-360</number>
-          </property>
-          <property name="maximum">
-           <number>360</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="1" colspan="3">
-         <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Zoom</string>
+           <string>X</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="5" column="2">
+        <item row="0" column="0" colspan="2">
+         <widget class="QLabel" name="label_r">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	font-weight: bold;
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Rotate</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
          <widget class="QSlider" name="Y_rotate">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="minimum">
            <number>-360</number>
           </property>
@@ -120,31 +114,169 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="2">
-         <widget class="QLabel" name="label">
+        <item row="1" column="1">
+         <widget class="QSlider" name="X_rotate">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="minimum">
+           <number>-360</number>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_yr">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>20</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+          </property>
           <property name="text">
-           <string>Rotate Y</string>
+           <string>Y</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="11" column="1">
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_zr">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="sizeHint" stdset="0">
+          <property name="minimumSize">
            <size>
             <width>20</width>
-            <height>40</height>
+            <height>0</height>
            </size>
           </property>
-         </spacer>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Z</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
         </item>
-        <item row="8" column="1" colspan="3">
+        <item row="3" column="1">
+         <widget class="QSlider" name="Z_rotate">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="minimum">
+           <number>-360</number>
+          </property>
+          <property name="maximum">
+           <number>360</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="space3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="grid_scale">
+        <item row="2" column="0" colspan="2">
+         <widget class="QLabel" name="label_scale">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	font-weight: bold;
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+          </property>
+          <property name="text">
+           <string>Scale</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="2">
          <widget class="QSlider" name="Zoom">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="minimum">
            <number>-100</number>
           </property>
@@ -174,31 +306,40 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="1">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+       </layout>
+      </item>
+      <item>
+       <spacer name="space2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="grid_translate">
+        <item row="1" column="1">
+         <widget class="QSlider" name="X_move">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="sizeHint" stdset="0">
+          <property name="minimumSize">
            <size>
-            <width>20</width>
-            <height>40</height>
+            <width>250</width>
+            <height>0</height>
            </size>
           </property>
-         </spacer>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Rotate X</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="2">
-         <widget class="QSlider" name="Y_move">
           <property name="minimum">
            <number>-30</number>
           </property>
@@ -210,69 +351,220 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <spacer name="verticalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_ztr">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="sizeHint" stdset="0">
+          <property name="minimumSize">
            <size>
             <width>20</width>
-            <height>40</height>
+            <height>0</height>
            </size>
           </property>
-         </spacer>
-        </item>
-        <item row="4" column="3">
-         <widget class="QLabel" name="label_12">
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+          </property>
           <property name="text">
-           <string>Rotate Z</string>
+           <string>Z</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="12" column="2">
-         <widget class="QLabel" name="label_3">
+        <item row="0" column="0" colspan="2">
+         <widget class="QLabel" name="label_tr">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	font-weight: bold;
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+          </property>
           <property name="text">
-           <string>Move Y</string>
+           <string>Translate</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="12" column="1">
-         <widget class="QLabel" name="label_13">
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_ytr">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>20</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+          </property>
           <property name="text">
-           <string>Move X</string>
+           <string>Y</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item row="12" column="3">
-         <widget class="QLabel" name="label_14">
+        <item row="2" column="1">
+         <widget class="QSlider" name="Y_move">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="minimum">
+           <number>-30</number>
+          </property>
+          <property name="maximum">
+           <number>30</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_xtr">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>20</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	color: rgb(255, 255, 255);
+	font-size: 20px;
+}</string>
+          </property>
           <property name="text">
-           <string>Move Z</string>
+           <string>X</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QSlider" name="Z_move">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="minimum">
+           <number>-30</number>
+          </property>
+          <property name="maximum">
+           <number>30</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="reset">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	font-weight: bold;
+	background-color: rgb(73, 33, 152);
+	color: rgb(255, 255, 255);
+ 	font-size: 18px;
+}
+
+QPushButton:pressed {
+    background-color: rgb(76, 20, 98);
+}</string>
+        </property>
         <property name="text">
-         <string>Quit</string>
+         <string>Reset</string>
         </property>
        </widget>
       </item>
      </layout>
+    </item>
+    <item row="0" column="1">
+     <widget class="GLWidget" name="GL" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -286,22 +578,5 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>858</x>
-     <y>554</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>825</x>
-     <y>389</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
