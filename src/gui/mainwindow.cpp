@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->GL, &GLWidget::mousePress, this, &MainWindow::slotMousePress);
     connect(ui->GL, &GLWidget::mouseMove, this, &MainWindow::slotMouseMove);
     connect(ui->GL, &GLWidget::mouseWheel, this, &MainWindow::slotMouseWheel);
+    ui->info_vert->setText("Verticies: " + QString::number(ui->GL->data.vertex_count));
+    ui->info_facet->setText("Facets: " + QString::number(ui->GL->data.facet_count));
 }
 
 MainWindow::~MainWindow()
@@ -261,6 +263,8 @@ void MainWindow::on_back_color_clicked()
         ui->GL->clr_back = colorDialog.selectedColor();
     }
 
+    ui->back_label->setStyleSheet("background-color:" + ui->GL->clr_back.name() + ";border-radius: 20px;border: 3px solid rgb(255, 255, 255);");
+
     ui->GL->update();
 }
 
@@ -273,6 +277,8 @@ void MainWindow::on_vertex_color_clicked()
     if (colorDialog.exec() == QDialog::Accepted) {
         ui->GL->clr_vert = colorDialog.selectedColor();
     }
+
+    ui->vertex_color->setStyleSheet("background-color:" + ui->GL->clr_vert.name() + ";border-radius: 17px;border: 3px solid rgb(255, 255, 255);");
 
     ui->GL->update();
 }
@@ -288,6 +294,74 @@ void MainWindow::on_lines_color_clicked()
         ui->GL->clr_line = colorDialog.selectedColor();
     }
 
+    ui->lines_color->setStyleSheet("background-color:" + ui->GL->clr_line.name() + ";border-radius: 17px;border: 3px solid rgb(255, 255, 255);");
+
     ui->GL->update();
+}
+
+void MainWindow::on_square_points_toggled(bool checked)
+{
+    if(checked == true) {
+        ui->GL->points = 1;
+    }
+
+    ui->GL->update();
+}
+
+void MainWindow::on_circle_points_toggled(bool checked)
+{
+    if(checked == true) {
+        ui->GL->points = 2;
+    }
+
+    ui->GL->update();
+}
+
+void MainWindow::on_no_points_toggled(bool checked)
+{
+    if(checked == true) {
+        ui->GL->points = 0;
+    }
+
+    ui->GL->update();
+}
+
+
+void MainWindow::on_edit_xtr_2_valueChanged(int arg1)
+{
+    ui->GL->points_size = arg1;
+
+    if(ui->GL->points != 0) {
+        ui->GL->update();
+    }
+}
+
+
+void MainWindow::on_circle_points_3_toggled(bool checked)
+{
+    ui->GL->dotted_line = 2;
+    ui->GL->update();
+}
+
+
+void MainWindow::on_square_points_3_toggled(bool checked)
+{
+    ui->GL->dotted_line = 1;
+    ui->GL->update();
+}
+
+void MainWindow::on_square_points_4_clicked()
+{
+    ui->GL->dotted_line = 0;
+    ui->GL->update();
+}
+
+void MainWindow::on_line_size_edit_valueChanged(int arg1)
+{
+    ui->GL->line_size = arg1;
+
+    if(ui->GL->dotted_line != 0) {
+        ui->GL->update();
+    }
 }
 

@@ -4,5 +4,9 @@
         <file>move.png</file>
         <file>rotate.png</file>
         <file>zoom.png</file>
+        <file>circle.png</file>
+        <file>square.png</file>
+        <file>line.png</file>
+        <file>dotted_line.png</file>
     </qresource>
 </RCC>

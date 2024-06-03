@@ -29,6 +29,10 @@ public:
     QColor clr_back;
     QColor clr_vert;
     QColor clr_line;
+    int points;
+    int points_size;
+    int dotted_line;
+    int line_size;
 
 signals:
     void mousePress(QMouseEvent *event);

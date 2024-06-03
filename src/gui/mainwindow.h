@@ -42,8 +42,16 @@ private slots:
     void on_edit_ztr_valueChanged(int arg1);
     void on_back_color_clicked();
     void on_vertex_color_clicked();
-
     void on_lines_color_clicked();
+    void on_square_points_toggled(bool checked);
+    void on_circle_points_toggled(bool checked);
+    void on_no_points_toggled(bool checked);
+    void on_edit_xtr_2_valueChanged(int arg1);
+    void on_circle_points_3_toggled(bool checked);
+    void on_square_points_3_toggled(bool checked);
+    void on_square_points_4_clicked();
+
+    void on_line_size_edit_valueChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;
@@ -56,4 +64,5 @@ public slots:
     void slotMouseMove(QMouseEvent *event);
     void slotMouseWheel(QWheelEvent *event);
 };
+
 #endif // MAINWINDOW_H

@@ -6,8 +6,12 @@ GLWidget::GLWidget(QWidget *parent)
     , m_program(nullptr)
     , mx(init_afinne())
     , clr_back(0, 0, 0)
-    , clr_vert(0, 255, 0)
-    , clr_line(0, 255, 0)
+    , clr_vert(0, 0, 255)
+    , clr_line(0, 0, 255)
+    , points(0)
+    , points_size(1)
+    , dotted_line(1)
+    , line_size(1)
 {
     setlocale(LC_NUMERIC, "C");
     data = parse(OBJECT);
@@ -94,23 +98,41 @@ void GLWidget::resizeGL(int w, int h) {
 void GLWidget::paintGL() {
     glClearColor(clr_back.redF(), clr_back.greenF(), clr_back.blueF(), 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glPointSize(5);
 
     vbo.bind();
     vbo.write(0, data.vertexes.matrix, data.vertex_count * 3 * sizeof(GLfloat));
     vbo.release();
 
-    m_program->setUniformValue("color", QVector4D(clr_line.redF(), clr_line.greenF(), clr_line.blueF(), 1.0f));
+    if(dotted_line != 0) {
+        m_program->setUniformValue("color", QVector4D(clr_line.redF(), clr_line.greenF(), clr_line.blueF(), 1.0f));
+        glLineWidth(line_size);
 
-    vao.bind();
-    glDrawElements(GL_LINES, data.full_cnt, GL_UNSIGNED_INT, nullptr);
-    vao.release();
+        if(dotted_line == 2) {
+            glEnable(GL_LINE_STIPPLE);
+            glLineStipple(1, 0x0F0F);
+        } else {
+            glDisable(GL_LINE_STIPPLE);
+        }
 
-    m_program->setUniformValue("color", QVector4D(clr_vert.redF(), clr_vert.greenF(), clr_vert.blueF(), 1.0f));
+        vao.bind();
+        glDrawElements(GL_LINES, data.full_cnt, GL_UNSIGNED_INT, nullptr);
+        vao.release();
+    }
 
-    vao.bind();
-    glDrawArrays(GL_POINTS, 0, data.vertex_count);
-    vao.release();
+    if(points != 0) {
+        m_program->setUniformValue("color", QVector4D(clr_vert.redF(), clr_vert.greenF(), clr_vert.blueF(), 1.0f));
+        glPointSize(points_size);
+
+        if(points == 2) {
+            glEnable(GL_POINT_SMOOTH);
+        } else {
+            glDisable(GL_POINT_SMOOTH);
+        }
+
+        vao.bind();
+        glDrawArrays(GL_POINTS, 0, data.vertex_count);
+        vao.release();
+    }
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event) {
