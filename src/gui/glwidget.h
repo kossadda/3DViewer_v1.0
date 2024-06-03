@@ -26,6 +26,9 @@ public:
     data_t object;
     afinne_t mx;
     void initBuffer();
+    QColor clr_back;
+    QColor clr_vert;
+    QColor clr_line;
 
 signals:
     void mousePress(QMouseEvent *event);

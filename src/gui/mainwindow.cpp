@@ -23,7 +23,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_Zoom_valueChanged(int position)
 {
-    ui->edit_scale->setText(QString::number(position));
+    ui->edit_scale->setValue(position);
     ui->GL->mx.scale[0] = ui->GL->mx.scale[5] = ui->GL->mx.scale[10] = (float)(position + 100.0f) / 100.0f;
 
     update_vertex();
@@ -31,7 +31,7 @@ void MainWindow::on_Zoom_valueChanged(int position)
 
 void MainWindow::on_X_rotate_valueChanged(int position)
 {
-    ui->edit_xr->setText(QString::number(position));
+    ui->edit_xr->setValue(position);
     float rt = (float)position * RAD;
     ui->GL->mx.rotate_x[5] = ui->GL->mx.rotate_x[10] = std::cos(rt);
     ui->GL->mx.rotate_x[9] = std::sin(rt);
@@ -42,7 +42,7 @@ void MainWindow::on_X_rotate_valueChanged(int position)
 
 void MainWindow::on_Y_rotate_valueChanged(int position)
 {
-    ui->edit_yr->setText(QString::number(position));
+    ui->edit_yr->setValue(position);
     float rt = (float)position * RAD;
     ui->GL->mx.rotate_y[0] = ui->GL->mx.rotate_y[10] = std::cos(rt);
     ui->GL->mx.rotate_y[2] = std::sin(rt);
@@ -53,7 +53,7 @@ void MainWindow::on_Y_rotate_valueChanged(int position)
 
 void MainWindow::on_Z_rotate_valueChanged(int position)
 {
-    ui->edit_zr->setText(QString::number(position));
+    ui->edit_zr->setValue(position);
     float rt = (float)position * RAD;
     ui->GL->mx.rotate_z[0] = ui->GL->mx.rotate_z[5] = std::cos(rt);
     ui->GL->mx.rotate_z[4] = std::sin(rt);
@@ -64,7 +64,7 @@ void MainWindow::on_Z_rotate_valueChanged(int position)
 
 void MainWindow::on_X_move_valueChanged(int position)
 {
-    ui->edit_xtr->setText(QString::number(position));
+    ui->edit_xtr->setValue(position);
     ui->GL->mx.move[3] = (float)position / 60.0f;
 
     update_vertex();
@@ -72,7 +72,7 @@ void MainWindow::on_X_move_valueChanged(int position)
 
 void MainWindow::on_Y_move_valueChanged(int position)
 {
-    ui->edit_ytr->setText(QString::number(position));
+    ui->edit_ytr->setValue(position);
     ui->GL->mx.move[7] = (float)position / 60.0f;
 
     update_vertex();
@@ -80,7 +80,7 @@ void MainWindow::on_Y_move_valueChanged(int position)
 
 void MainWindow::on_Z_move_valueChanged(int position)
 {
-    ui->edit_ztr->setText(QString::number(position));
+    ui->edit_ztr->setValue(position);
     ui->GL->mx.move[11] = (float)position / 60.0f;
 
     update_vertex();
@@ -122,19 +122,15 @@ void MainWindow::on_reset_clicked()
     ui->Z_rotate->setValue(0);
     ui->Zoom->setValue(0);
     ui->GL->mx.move[3] = ui->GL->mx.move[7] = ui->GL->mx.move[11] = 0.0f;
+    ui->edit_xtr->setValue(0);
+    ui->edit_ytr->setValue(0);
+    ui->edit_ztr->setValue(0);
+    ui->edit_xr->setValue(0);
+    ui->edit_yr->setValue(0);
+    ui->edit_zr->setValue(0);
+    ui->edit_scale->setValue(0);
 
-
-    ui->edit_xtr->setText("");
-    ui->edit_ytr->setText("");
-    ui->edit_ztr->setText("");
-    ui->edit_xr->setText("");
-    ui->edit_yr->setText("");
-    ui->edit_zr->setText("");
-    ui->edit_scale->setText("");
-
-    transform_mx(&ui->GL->mx, check_sliders());
-    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
-    ui->GL->update();
+    update_vertex();
 }
 
 void MainWindow::update_vertex() {
@@ -163,21 +159,21 @@ void MainWindow::slotMouseMove(QMouseEvent *event) {
     if (leftMouse) {
         QPoint offset = event->pos() - startPos;
         if(shiftPressed) {
-            ui->X_move->setValue(ui->X_move->value() - (offset.x() / 2));
-            ui->Y_move->setValue(ui->Y_move->value() + (offset.y() / 2));
+            ui->X_move->setValue(ui->X_move->value() + (offset.x() / 2));
+            ui->Y_move->setValue(ui->Y_move->value() - (offset.y() / 2));
         } else {
-            ui->X_rotate->setValue(ui->X_rotate->value() - (offset.y() / 2));
+            ui->X_rotate->setValue(ui->X_rotate->value() + (offset.y() / 2));
             ui->Y_rotate->setValue(ui->Y_rotate->value() + (offset.x() / 2));
         }
         startPos = event->pos();
     } else if (rightMouse){
         QPoint offset = event->pos() - startPos;
         if(shiftPressed) {
-            ui->X_move->setValue(ui->X_move->value() - (offset.x() / 2));
+            ui->X_move->setValue(ui->X_move->value() + (offset.x() / 2));
             ui->Z_move->setValue(ui->Z_move->value() + (offset.y() / 2));
         } else {
             ui->Y_rotate->setValue(ui->Y_rotate->value() - (offset.x() / 2));
-            ui->Z_rotate->setValue(ui->Z_rotate->value() + (offset.y() / 2));
+            ui->Z_rotate->setValue(ui->Z_rotate->value() - (offset.y() / 2));
         }
         startPos = event->pos();
     }
@@ -186,3 +182,112 @@ void MainWindow::slotMouseMove(QMouseEvent *event) {
 void MainWindow::slotMouseWheel(QWheelEvent *event) {
     ui->Zoom->setValue(ui->Zoom->value() + ((event->angleDelta().y() > 0) ? 5 : -5));
 }
+
+void MainWindow::on_reset_rotate_clicked()
+{
+    ui->X_rotate->setValue(0);
+    ui->Y_rotate->setValue(0);
+    ui->Z_rotate->setValue(0);
+    ui->edit_xr->setValue(0);
+    ui->edit_yr->setValue(0);
+    ui->edit_zr->setValue(0);
+
+    update_vertex();
+}
+
+void MainWindow::on_reset_scale_clicked()
+{
+    ui->Zoom->setValue(0);
+    ui->edit_scale->setValue(0);
+
+    update_vertex();
+}
+
+void MainWindow::on_reset_move_clicked()
+{
+    ui->X_move->setValue(0);
+    ui->Y_move->setValue(0);
+    ui->Z_move->setValue(0);
+    ui->GL->mx.move[3] = ui->GL->mx.move[7] = ui->GL->mx.move[11] = 0.0f;
+    ui->edit_xtr->setValue(0);
+    ui->edit_ytr->setValue(0);
+    ui->edit_ztr->setValue(0);
+
+    update_vertex();
+}
+
+void MainWindow::on_edit_xr_valueChanged(int arg1)
+{
+    ui->X_rotate->setValue(arg1);
+}
+
+void MainWindow::on_edit_yr_valueChanged(int arg1)
+{
+    ui->Y_rotate->setValue(arg1);
+}
+
+void MainWindow::on_edit_zr_valueChanged(int arg1)
+{
+    ui->Z_rotate->setValue(arg1);
+}
+
+void MainWindow::on_edit_scale_valueChanged(int arg1)
+{
+    ui->Zoom->setValue(arg1);
+}
+
+void MainWindow::on_edit_xtr_valueChanged(int arg1)
+{
+    ui->X_move->setValue(arg1);
+}
+
+void MainWindow::on_edit_ytr_valueChanged(int arg1)
+{
+    ui->Y_move->setValue(arg1);
+}
+
+void MainWindow::on_edit_ztr_valueChanged(int arg1)
+{
+    ui->Z_move->setValue(arg1);
+}
+
+void MainWindow::on_back_color_clicked()
+{
+    QColorDialog colorDialog(this);
+
+    colorDialog.setCurrentColor(Qt::red);
+
+    if (colorDialog.exec() == QDialog::Accepted) {
+        ui->GL->clr_back = colorDialog.selectedColor();
+    }
+
+    ui->GL->update();
+}
+
+void MainWindow::on_vertex_color_clicked()
+{
+    QColorDialog colorDialog(this);
+
+    colorDialog.setCurrentColor(Qt::red);
+
+    if (colorDialog.exec() == QDialog::Accepted) {
+        ui->GL->clr_vert = colorDialog.selectedColor();
+    }
+
+    ui->GL->update();
+}
+
+
+void MainWindow::on_lines_color_clicked()
+{
+    QColorDialog colorDialog(this);
+
+    colorDialog.setCurrentColor(Qt::red);
+
+    if (colorDialog.exec() == QDialog::Accepted) {
+        ui->GL->clr_line = colorDialog.selectedColor();
+    }
+
+    ui->GL->update();
+}
+

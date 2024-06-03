@@ -15,7 +15,7 @@
 #include "./objects.h"
 
 #define PATH "/home/kossadda/data-samples/"
-#define NAME "dragon"
+#define NAME "cube"
 
 #define OBJECT (PATH NAME ".obj")
 
