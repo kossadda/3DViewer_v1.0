@@ -33,6 +33,7 @@ public:
     int points_size;
     int dotted_line;
     int line_size;
+    int rotation_mode;
     
 signals:
     void mousePress(QMouseEvent *event);

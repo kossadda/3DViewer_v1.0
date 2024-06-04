@@ -12,6 +12,7 @@ GLWidget::GLWidget(QWidget *parent)
     , points_size(1)
     , dotted_line(1)
     , line_size(1)
+    , rotation_mode(0)
 {
     setlocale(LC_NUMERIC, "C");
     data = parse(OBJECT);
@@ -84,32 +85,7 @@ void GLWidget::initBuffer() {
 }
 
 void GLWidget::resizeGL(int w, int h) {
-  // setupProjection(w, h);
-    if (w < 1 || h < 1) {
-        w = width();
-        h = height();
-    }
-
-    projectionMatrix.setToIdentity();
-    projectionMatrix.perspective(45.0f, GLfloat(w) / h, 0.1f, 100.0f);
-    m_program->bind();
-
-    cameraMatrix.setToIdentity();
-    
-    QVector3D cameraPosition(0.0f, 0.0f, 3.0f); // Позиция камеры
-    QVector3D target(0.0f, 0.0f, 0.0f); // Точка, на которую направлена камера (центр модели)
-    QVector3D upVector(0.0f, 1.0f, 0.0f); // Вектор "вверх"
-
-    cameraMatrix.lookAt(cameraPosition, target, upVector);
-
-    moveMatrix.setToIdentity();
-    rotateMatrix.setToIdentity();
-    scaleMatrix.setToIdentity();
-
-    QMatrix4x4 coeffMatrix = projectionMatrix * cameraMatrix * moveMatrix * rotateMatrix * scaleMatrix;
-
-    m_program->setUniformValue("coeffMatrix", coeffMatrix);
-    m_program->bind();
+  setupProjection(w, h);
 }
 
 void GLWidget::setupProjection(int w, int h) {
@@ -134,7 +110,6 @@ void GLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
 
-    setupProjection();
     m_program->setUniformValue(m_coeffMatrixLoc, projectionMatrix * cameraMatrix * moveMatrix * rotateMatrix * scaleMatrix);
 
     vbo.bind();

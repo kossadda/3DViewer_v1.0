@@ -81,26 +81,20 @@ void normalize_vertex(data_t *data) {
   }
 }
 
-void transform_mx(afinne_t *mx, unsigned int data) {
+void transform_mx(afinne_t *mx, unsigned int data, int mode) {
   mx_copy(mx->current, mx->identity);
 
-  if (data & ROTATE_X) {
-    mx_affine_mult(mx->current, mx->rotate_x);
-  }
-
-  if (data & ROTATE_Y) {
-    mx_affine_mult(mx->current, mx->rotate_y);
-  }
-
-  if (data & ROTATE_Z) {
-    mx_affine_mult(mx->current, mx->rotate_z);
-  }
-
-  if (data & MOVE) {
-    mx_affine_mult(mx->current, mx->move);
-  }
-
-  if (data & SCALE) {
-    mx_affine_mult(mx->current, mx->scale);
+  if(mode == 0) {
+    if (data & SCALE) mx_affine_mult(mx->current, mx->scale);
+    if (data & ROTATE_X) mx_affine_mult(mx->current, mx->rotate_x);
+    if (data & ROTATE_Y) mx_affine_mult(mx->current, mx->rotate_y);
+    if (data & ROTATE_Z) mx_affine_mult(mx->current, mx->rotate_z);
+    if (data & MOVE) mx_affine_mult(mx->current, mx->move);
+  } else {
+    if (data & SCALE) mx_affine_mult(mx->current, mx->scale);
+    if (data & MOVE) mx_affine_mult(mx->current, mx->move);
+    if (data & ROTATE_Z) mx_affine_mult(mx->current, mx->rotate_z);
+    if (data & ROTATE_Y) mx_affine_mult(mx->current, mx->rotate_y);
+    if (data & ROTATE_X) mx_affine_mult(mx->current, mx->rotate_x);
   }
 }

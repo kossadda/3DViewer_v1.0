@@ -15,7 +15,7 @@
 #include "./objects.h"
 
 #define PATH "/home/kossadda/data-samples/"
-#define NAME "glass"
+#define NAME "city"
 
 #define OBJECT (PATH NAME ".obj")
 
@@ -33,6 +33,6 @@ void y_rotate_model(data_t *data, data_t *object, float degree);
 void z_rotate_model(data_t *data, data_t *object, float degree);
 void scale_model(data_t *data, data_t *object, float x, float y, float z);
 void normalize_vertex(data_t *data);
-void transform_mx(afinne_t *mx, unsigned int data);
+void transform_mx(afinne_t *mx, unsigned int data, int mode);
 
 #endif  //_AFINE_H_

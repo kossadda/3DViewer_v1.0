@@ -136,7 +136,7 @@ void MainWindow::on_reset_clicked()
 }
 
 void MainWindow::update_vertex() {
-    transform_mx(&ui->GL->mx, check_sliders());
+    transform_mx(&ui->GL->mx, check_sliders(), ui->GL->rotation_mode);
     mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
     ui->GL->update();
 }
@@ -362,6 +362,22 @@ void MainWindow::on_line_size_edit_valueChanged(int arg1)
 
     if(ui->GL->dotted_line != 0) {
         ui->GL->update();
+    }
+}
+
+
+void MainWindow::on_rotate_model_toggled(bool checked)
+{
+    if(checked) {
+        ui->GL->rotation_mode = 0;
+    }
+}
+
+
+void MainWindow::on_rotate_axes_toggled(bool checked)
+{
+    if(checked) {
+        ui->GL->rotation_mode = 1;
     }
 }
 

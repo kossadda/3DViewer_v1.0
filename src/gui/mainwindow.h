@@ -50,8 +50,9 @@ private slots:
     void on_circle_points_3_toggled(bool checked);
     void on_square_points_3_toggled(bool checked);
     void on_square_points_4_clicked();
-
     void on_line_size_edit_valueChanged(int arg1);
+    void on_rotate_model_toggled(bool checked);
+    void on_rotate_axes_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
