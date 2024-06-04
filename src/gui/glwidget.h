@@ -33,16 +33,17 @@ public:
     int points_size;
     int dotted_line;
     int line_size;
-
+    
 signals:
     void mousePress(QMouseEvent *event);
     void mouseMove(QMouseEvent *event);
     void mouseWheel(QWheelEvent *event);
 
 protected:
-    void initializeGL();
-    void paintGL();
-    void resizeGL(int w, int h);
+    void initializeGL() override;
+    void paintGL() override;
+    void resizeGL(int w, int h) override;
+    void setupProjection(int w = 0, int h = 0);
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;
@@ -57,6 +58,9 @@ private:
     QOpenGLVertexArrayObject vao;
     QMatrix4x4 projectionMatrix;
     QMatrix4x4 cameraMatrix;
+    QMatrix4x4 rotateMatrix;
+    QMatrix4x4 moveMatrix;
+    QMatrix4x4 scaleMatrix;
 };
 
 #endif // GLWIDGET_H

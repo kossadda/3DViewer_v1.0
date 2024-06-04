@@ -6,8 +6,8 @@ GLWidget::GLWidget(QWidget *parent)
     , m_program(nullptr)
     , mx(init_afinne())
     , clr_back(0, 0, 0)
-    , clr_vert(0, 0, 255)
-    , clr_line(0, 0, 255)
+    , clr_vert(255, 0, 0)
+    , clr_line(255, 0, 0)
     , points(0)
     , points_size(1)
     , dotted_line(1)
@@ -55,6 +55,10 @@ void GLWidget::initializeGL() {
     m_coeffMatrixLoc = m_program->uniformLocation("coeffMatrix");
     m_colorLoc = m_program->uniformLocation("color");
 
+    rotateMatrix.setToIdentity();
+    moveMatrix.setToIdentity();
+    scaleMatrix.setToIdentity();
+
     initBuffer();
 }
 
@@ -80,24 +84,58 @@ void GLWidget::initBuffer() {
 }
 
 void GLWidget::resizeGL(int w, int h) {
+  // setupProjection(w, h);
     if (w < 1 || h < 1) {
         w = width();
         h = height();
     }
 
-    cameraMatrix.setToIdentity();
     projectionMatrix.setToIdentity();
-    
     projectionMatrix.perspective(45.0f, GLfloat(w) / h, 0.1f, 100.0f);
-    cameraMatrix.translate(0.0f, 0.0f, -3.0f);
+    m_program->bind();
+
+    cameraMatrix.setToIdentity();
     
-    m_program->setUniformValue("coeffMatrix", projectionMatrix * cameraMatrix);
+    QVector3D cameraPosition(0.0f, 0.0f, 3.0f); // Позиция камеры
+    QVector3D target(0.0f, 0.0f, 0.0f); // Точка, на которую направлена камера (центр модели)
+    QVector3D upVector(0.0f, 1.0f, 0.0f); // Вектор "вверх"
+
+    cameraMatrix.lookAt(cameraPosition, target, upVector);
+
+    moveMatrix.setToIdentity();
+    rotateMatrix.setToIdentity();
+    scaleMatrix.setToIdentity();
+
+    QMatrix4x4 coeffMatrix = projectionMatrix * cameraMatrix * moveMatrix * rotateMatrix * scaleMatrix;
+
+    m_program->setUniformValue("coeffMatrix", coeffMatrix);
     m_program->bind();
 }
+
+void GLWidget::setupProjection(int w, int h) {
+    if (w < 1 || h < 1) {
+      w = width();
+      h = height();
+    }
+
+    cameraMatrix.setToIdentity();
+    projectionMatrix.setToIdentity();
+    rotateMatrix.setToIdentity();
+    moveMatrix.setToIdentity();
+    scaleMatrix.setToIdentity();
+    
+    projectionMatrix.perspective(45.0f, GLfloat(w) / h, 0.01f, 100.0f);
+    cameraMatrix.translate(0, 0, -3);
+}
+
 
 void GLWidget::paintGL() {
     glClearColor(clr_back.redF(), clr_back.greenF(), clr_back.blueF(), 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
+
+    setupProjection();
+    m_program->setUniformValue(m_coeffMatrixLoc, projectionMatrix * cameraMatrix * moveMatrix * rotateMatrix * scaleMatrix);
 
     vbo.bind();
     vbo.write(0, data.vertexes.matrix, data.vertex_count * 3 * sizeof(GLfloat));

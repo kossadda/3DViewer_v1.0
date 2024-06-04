@@ -36,7 +36,8 @@ void init_data(data_t *data, FILE *obj) {
   data->vertex_count = 0;
   data->facet_count = 0;
   data->full_cnt = 0;
-  data->max_position = 0.0;
+  data->max_position = 0.0f;
+
   char *line = NULL;
   size_t n = 0;
   ssize_t len;
@@ -154,6 +155,7 @@ data_t copy_data(data_t *object) {
   data.facet_count = object->facet_count;
   data.full_cnt = object->full_cnt;
   data.max_position = object->max_position;
+
   data.v_in_facet = NULL;
   data.facets = NULL;
 

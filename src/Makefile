@@ -39,7 +39,7 @@ BUILD = ./../bin
 
 #==================================== FLAGS ===================================#
 # MAIN FLAGS FOR COMPILER
-CFLAGS = -Wall -Wextra -pedantic -std=c11 -g
+CFLAGS = -Wall -Wextra -pedantic -std=c11 -O3
 # CFLAGS = -Wall -Werror -Wextra -pedantic -std=c11
 
 # CHECK LIBRARY FOR LINKING
