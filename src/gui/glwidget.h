@@ -5,12 +5,9 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QOpenGLBuffer>
-#include <GL/glu.h>
 #include <QDebug>
-#include <QMatrix4x4>
 #include <QOpenGLVertexArrayObject>
 #include <QMouseEvent>
-#include <QWheelEvent>
 
 extern "C" {
 #include "./../modules/include/common.h"
@@ -22,13 +19,15 @@ class GLWidget : public QOpenGLWidget, public QOpenGLFunctions
 public:
     explicit GLWidget(QWidget *parent = 0);
     ~GLWidget();
+    void initBuffers();
+    void destroyBuffers();
+    void afinneGPU(float *values);
+    void initModel(QString filepath);
+    void updateBuffer(float *update_to);
+    void transformToIdentity();
     data_t data;
     data_t object;
     afinne_t mx;
-    void initBuffers();
-    void destroyBuffers();
-    void setupProjection(int w = 0, int h = 0);
-    void initModel(QString filepath);
     QColor clr_back;
     QColor clr_vert;
     QColor clr_line;
@@ -37,6 +36,8 @@ public:
     int dotted_line;
     int line_size;
     int rotation_mode;
+    int calculation_mode;
+    float sliders[7];
     
 signals:
     void mousePress(QMouseEvent *event);

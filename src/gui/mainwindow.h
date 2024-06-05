@@ -57,6 +57,8 @@ private slots:
     void on_rotate_axes_toggled(bool checked);
     void on_load_file_clicked();
     void on_filename_returnPressed();
+    void on_calc_cpu_toggled(bool checked);
+    void on_calc_gpu_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;

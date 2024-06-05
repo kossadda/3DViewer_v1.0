@@ -25,6 +25,7 @@ void MainWindow::on_Zoom_valueChanged(int position)
 {
     ui->edit_scale->setValue(position);
     ui->GL->mx.scale[0] = ui->GL->mx.scale[5] = ui->GL->mx.scale[10] = (float)(position + 100.0f) / 100.0f;
+    ui->GL->sliders[6] = ui->GL->mx.scale[0];
 
     update_vertex();
 }
@@ -36,6 +37,7 @@ void MainWindow::on_X_rotate_valueChanged(int position)
     ui->GL->mx.rotate_x[5] = ui->GL->mx.rotate_x[10] = std::cos(rt);
     ui->GL->mx.rotate_x[9] = std::sin(rt);
     ui->GL->mx.rotate_x[6] = -ui->GL->mx.rotate_x[9];
+    ui->GL->sliders[0] = position;
 
     update_vertex();
 }
@@ -47,6 +49,7 @@ void MainWindow::on_Y_rotate_valueChanged(int position)
     ui->GL->mx.rotate_y[0] = ui->GL->mx.rotate_y[10] = std::cos(rt);
     ui->GL->mx.rotate_y[2] = std::sin(rt);
     ui->GL->mx.rotate_y[8] = -ui->GL->mx.rotate_y[2];
+    ui->GL->sliders[1] = position;
 
     update_vertex();
 }
@@ -58,6 +61,7 @@ void MainWindow::on_Z_rotate_valueChanged(int position)
     ui->GL->mx.rotate_z[0] = ui->GL->mx.rotate_z[5] = std::cos(rt);
     ui->GL->mx.rotate_z[4] = std::sin(rt);
     ui->GL->mx.rotate_z[1] = -ui->GL->mx.rotate_z[4];
+    ui->GL->sliders[2] = position;
 
     update_vertex();
 }
@@ -66,6 +70,7 @@ void MainWindow::on_X_move_valueChanged(int position)
 {
     ui->edit_xtr->setValue(position);
     ui->GL->mx.move[3] = (float)position / 60.0f;
+    ui->GL->sliders[3] = ui->GL->mx.move[3];
 
     update_vertex();
 }
@@ -74,6 +79,7 @@ void MainWindow::on_Y_move_valueChanged(int position)
 {
     ui->edit_ytr->setValue(position);
     ui->GL->mx.move[7] = (float)position / 60.0f;
+    ui->GL->sliders[4] = ui->GL->mx.move[7];
 
     update_vertex();
 }
@@ -82,6 +88,7 @@ void MainWindow::on_Z_move_valueChanged(int position)
 {
     ui->edit_ztr->setValue(position);
     ui->GL->mx.move[11] = (float)position / 60.0f;
+    ui->GL->sliders[5] = ui->GL->mx.move[11];
 
     update_vertex();
 }
@@ -134,8 +141,11 @@ void MainWindow::on_reset_clicked()
 }
 
 void MainWindow::update_vertex() {
-    transform_mx(&ui->GL->mx, check_sliders(), ui->GL->rotation_mode);
-    mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
+    if(ui->GL->calculation_mode == 0) {
+        transform_mx(&ui->GL->mx, check_sliders(), ui->GL->rotation_mode);
+        mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
+    }
+
     ui->GL->update();
 }
 
@@ -261,7 +271,7 @@ void MainWindow::on_back_color_clicked()
         ui->GL->clr_back = colorDialog.selectedColor();
     }
 
-    ui->back_color->setStyleSheet("background-color:" + ui->GL->clr_back.name() + ";border-radius: 17px;border: 3px solid rgb(255, 255, 255);");
+    ui->back_color->setStyleSheet("background-color:" + ui->GL->clr_back.name() + ";border-radius: 17px;border: 3px solid rgba(189, 0, 195, 0.25);");
 
     ui->GL->update();
 }
@@ -276,7 +286,7 @@ void MainWindow::on_vertex_color_clicked()
         ui->GL->clr_vert = colorDialog.selectedColor();
     }
 
-    ui->vertex_color->setStyleSheet("background-color:" + ui->GL->clr_vert.name() + ";border-radius: 17px;border: 3px solid rgb(255, 255, 255);");
+    ui->vertex_color->setStyleSheet("background-color:" + ui->GL->clr_vert.name() + ";border-radius: 17px;border: 3px solid rgba(189, 0, 195, 0.25);");
 
     ui->GL->update();
 }
@@ -292,7 +302,7 @@ void MainWindow::on_lines_color_clicked()
         ui->GL->clr_line = colorDialog.selectedColor();
     }
 
-    ui->lines_color->setStyleSheet("background-color:" + ui->GL->clr_line.name() + ";border-radius: 17px;border: 3px solid rgb(255, 255, 255);");
+    ui->lines_color->setStyleSheet("background-color:" + ui->GL->clr_line.name() + ";border-radius: 17px;border: 3px solid rgba(189, 0, 195, 0.25);");
 
     ui->GL->update();
 }
@@ -396,6 +406,23 @@ void MainWindow::on_filename_returnPressed()
         ui->GL->initModel(fileInfo.absoluteFilePath());
         ui->info_model->setText("Verticies: " + QString::number(ui->GL->data.vertex_count) + "\nFacets: " + QString::number(ui->GL->data.facet_count));
         on_reset_clicked();
+    }
+}
+
+void MainWindow::on_calc_cpu_toggled(bool checked)
+{
+    if(checked) {
+        ui->GL->transformToIdentity();
+        ui->GL->calculation_mode = 0;
+        update_vertex();
+    }
+}
+
+void MainWindow::on_calc_gpu_toggled(bool checked)
+{
+    if(checked) {
+        ui->GL->calculation_mode = 1;
+        ui->GL->update();
     }
 }
 
