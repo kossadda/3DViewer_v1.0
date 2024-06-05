@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QSlider>
 #include <QColorDialog>
+#include <QFileDialog>
+#include <QMessageBox>
 
 #include "./glwidget.h"
 
@@ -53,6 +55,8 @@ private slots:
     void on_line_size_edit_valueChanged(int arg1);
     void on_rotate_model_toggled(bool checked);
     void on_rotate_axes_toggled(bool checked);
+    void on_load_file_clicked();
+    void on_filename_returnPressed();
 
 private:
     Ui::MainWindow *ui;

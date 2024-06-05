@@ -14,8 +14,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->GL, &GLWidget::mousePress, this, &MainWindow::slotMousePress);
     connect(ui->GL, &GLWidget::mouseMove, this, &MainWindow::slotMouseMove);
     connect(ui->GL, &GLWidget::mouseWheel, this, &MainWindow::slotMouseWheel);
-    ui->info_vert->setText("Verticies: " + QString::number(ui->GL->data.vertex_count));
-    ui->info_facet->setText("Facets: " + QString::number(ui->GL->data.facet_count));
 }
 
 MainWindow::~MainWindow()
@@ -263,7 +261,7 @@ void MainWindow::on_back_color_clicked()
         ui->GL->clr_back = colorDialog.selectedColor();
     }
 
-    ui->back_label->setStyleSheet("background-color:" + ui->GL->clr_back.name() + ";border-radius: 20px;border: 3px solid rgb(255, 255, 255);");
+    ui->back_color->setStyleSheet("background-color:" + ui->GL->clr_back.name() + ";border-radius: 17px;border: 3px solid rgb(255, 255, 255);");
 
     ui->GL->update();
 }
@@ -326,7 +324,6 @@ void MainWindow::on_no_points_toggled(bool checked)
     ui->GL->update();
 }
 
-
 void MainWindow::on_edit_xtr_2_valueChanged(int arg1)
 {
     ui->GL->points_size = arg1;
@@ -336,13 +333,11 @@ void MainWindow::on_edit_xtr_2_valueChanged(int arg1)
     }
 }
 
-
 void MainWindow::on_circle_points_3_toggled(bool checked)
 {
     ui->GL->dotted_line = 2;
     ui->GL->update();
 }
-
 
 void MainWindow::on_square_points_3_toggled(bool checked)
 {
@@ -365,7 +360,6 @@ void MainWindow::on_line_size_edit_valueChanged(int arg1)
     }
 }
 
-
 void MainWindow::on_rotate_model_toggled(bool checked)
 {
     if(checked) {
@@ -373,11 +367,35 @@ void MainWindow::on_rotate_model_toggled(bool checked)
     }
 }
 
-
 void MainWindow::on_rotate_axes_toggled(bool checked)
 {
     if(checked) {
         ui->GL->rotation_mode = 1;
+    }
+}
+
+void MainWindow::on_load_file_clicked()
+{
+    QString openFileName = QFileDialog::getOpenFileName(this, "Choose wavefront obj file", QDir::homePath() + "/data-samples", "Wafefront obj (*.obj)");
+    if(!openFileName.isEmpty()) {
+        ui->filename->setText(openFileName);
+        on_filename_returnPressed();
+    }
+}
+
+void MainWindow::on_filename_returnPressed()
+{
+    QFileInfo fileInfo(ui->filename->text());
+    if (!fileInfo.isAbsolute()) {
+        QMessageBox::warning(this, "Error", "Enter the full path to the file");
+    } else if(!fileInfo.exists()) {
+        QMessageBox::warning(this, "Error", "File " + fileInfo.fileName() + " does not exist");
+    } else if(fileInfo.suffix() != "obj") {
+        QMessageBox::warning(this, "Error", "Enter path to obj file");
+    } else {
+        ui->GL->initModel(fileInfo.absoluteFilePath());
+        ui->info_model->setText("Verticies: " + QString::number(ui->GL->data.vertex_count) + "\nFacets: " + QString::number(ui->GL->data.facet_count));
+        on_reset_clicked();
     }
 }
 

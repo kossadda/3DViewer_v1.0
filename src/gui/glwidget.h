@@ -25,7 +25,10 @@ public:
     data_t data;
     data_t object;
     afinne_t mx;
-    void initBuffer();
+    void initBuffers();
+    void destroyBuffers();
+    void setupProjection(int w = 0, int h = 0);
+    void initModel(QString filepath);
     QColor clr_back;
     QColor clr_vert;
     QColor clr_line;
@@ -44,7 +47,6 @@ protected:
     void initializeGL() override;
     void paintGL() override;
     void resizeGL(int w, int h) override;
-    void setupProjection(int w = 0, int h = 0);
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void wheelEvent(QWheelEvent *event) override;

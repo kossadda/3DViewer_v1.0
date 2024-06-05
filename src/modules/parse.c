@@ -17,16 +17,21 @@
 #include "./include/common.h"
 
 data_t parse(const char *filename) {
-  FILE *obj = fopen(filename, "r");
+  FILE *obj = NULL; 
   data_t data;
 
+  if(filename) {
+    obj = fopen(filename, "r");
+  }
+
+  init_data(&data, obj);
+
   if (obj) {
-    init_data(&data, obj);
-
     get_data(&data, obj);
-
+  }
+  
+  if(filename) {
     fclose(obj);
-  } else {
   }
 
   return data;
@@ -38,38 +43,46 @@ void init_data(data_t *data, FILE *obj) {
   data->full_cnt = 0;
   data->max_position = 0.0f;
 
-  char *line = NULL;
-  size_t n = 0;
-  ssize_t len;
+  if(obj != NULL) {
+    char *line = NULL;
+    size_t n = 0;
+    ssize_t len;
 
-  while ((len = getline(&line, &n, obj)) != -1) {
-    if (*line == 'v' && *(line + 1) == ' ') {
-      data->vertex_count++;
-    } else if (*line == 'f' && *(line + 1) == ' ') {
-      data->facet_count++;
+    while ((len = getline(&line, &n, obj)) != -1) {
+      if (*line == 'v' && *(line + 1) == ' ') {
+        data->vertex_count++;
+      } else if (*line == 'f' && *(line + 1) == ' ') {
+        data->facet_count++;
+      }
     }
-  }
 
-  data->vertexes = mx_create(data->vertex_count, V_DOTS_CNT);
-  data->v_in_facet = (int *)calloc(data->facet_count, sizeof(int));
+    data->vertexes = mx_create(data->vertex_count, V_DOTS_CNT);
+    data->v_in_facet = (int *)calloc(data->facet_count, sizeof(int));
 
-  rewind(obj);
+    rewind(obj);
 
-  int *ptr = data->v_in_facet;
+    int *ptr = data->v_in_facet;
 
-  while ((len = getline(&line, &n, obj)) != -1) {
-    if (*line == 'f' && *(line + 1) == ' ') {
-      *ptr++ = vert_count_in_facet(line + 1);
-      data->full_cnt += *(ptr - 1) * 2;
+    while ((len = getline(&line, &n, obj)) != -1) {
+      if (*line == 'f' && *(line + 1) == ' ') {
+        *ptr++ = vert_count_in_facet(line + 1);
+        data->full_cnt += *(ptr - 1) * 2;
+      }
     }
+
+    data->facets = (int *)calloc(data->full_cnt, sizeof(int));
+
+    free(line);
+    line = NULL;
+
+    rewind(obj);
+  } else {
+    data->v_in_facet = NULL;
+    data->facets = NULL;
+    data->vertexes.matrix = NULL;
+    data->vertexes.rows = 0;
+    data->vertexes.cols = 0;
   }
-
-  data->facets = (int *)calloc(data->full_cnt, sizeof(int));
-
-  free(line);
-  line = NULL;
-
-  rewind(obj);
 }
 
 void remove_data(data_t *data) {
@@ -84,6 +97,11 @@ void remove_data(data_t *data) {
     free(data->facets);
     data->facets = NULL;
   }
+
+  data->vertex_count = 0;
+  data->facet_count = 0;
+  data->full_cnt = 0;
+  data->max_position = 0.0f;
 }
 
 void get_data(data_t *data, FILE *obj) {

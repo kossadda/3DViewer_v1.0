@@ -92,9 +92,9 @@ void transform_mx(afinne_t *mx, unsigned int data, int mode) {
     if (data & MOVE) mx_affine_mult(mx->current, mx->move);
   } else {
     if (data & SCALE) mx_affine_mult(mx->current, mx->scale);
-    if (data & MOVE) mx_affine_mult(mx->current, mx->move);
-    if (data & ROTATE_Z) mx_affine_mult(mx->current, mx->rotate_z);
-    if (data & ROTATE_Y) mx_affine_mult(mx->current, mx->rotate_y);
     if (data & ROTATE_X) mx_affine_mult(mx->current, mx->rotate_x);
+    if (data & ROTATE_Y) mx_affine_mult(mx->current, mx->rotate_y);
+    if (data & ROTATE_Z) mx_affine_mult(mx->current, mx->rotate_z);
+    if (data & MOVE) mx_affine_mult(mx->current, mx->move);
   }
 }

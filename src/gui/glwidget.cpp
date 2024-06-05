@@ -12,11 +12,10 @@ GLWidget::GLWidget(QWidget *parent)
     , points_size(1)
     , dotted_line(1)
     , line_size(1)
-    , rotation_mode(0)
+    , rotation_mode(1)
 {
     setlocale(LC_NUMERIC, "C");
-    data = parse(OBJECT);
-    normalize_vertex(&data);
+    data = parse(NULL);
     object = copy_data(&data);
 }
 
@@ -25,11 +24,20 @@ GLWidget::~GLWidget()
     remove_data(&data);
     remove_data(&object);
     destroy_affine(&mx);
+    destroyBuffers();
+}
 
+void GLWidget::destroyBuffers() {
     makeCurrent();
-    vao.destroy();
-    vbo.destroy();
-    ebo.destroy();
+    if(vao.isCreated()) {
+      vao.destroy();
+    }
+    if(vbo.isCreated()) {
+      vbo.destroy();
+    }
+    if(ebo.isCreated()) {
+      ebo.destroy();
+    }
 }
 
 void GLWidget::initializeGL() {
@@ -59,29 +67,39 @@ void GLWidget::initializeGL() {
     rotateMatrix.setToIdentity();
     moveMatrix.setToIdentity();
     scaleMatrix.setToIdentity();
-
-    initBuffer();
 }
 
-void GLWidget::initBuffer() {
+void GLWidget::initBuffers() {
     makeCurrent();
-    vao.create();
-    vao.bind();
-    vbo = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
-    vbo.create();
-    vbo.bind();
-    vbo.setUsagePattern(QOpenGLBuffer::DynamicDraw);
-    vbo.allocate(data.vertexes.matrix, data.vertex_count * 3 * sizeof(GLfloat));
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-    glEnableVertexAttribArray(0);
 
-    ebo = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
-    ebo.create();
-    ebo.bind();
-    ebo.setUsagePattern(QOpenGLBuffer::StaticDraw);
-    ebo.allocate(data.facets, data.full_cnt * sizeof(GLuint));
+    if(vao.isCreated() == false) {
+      vao.create();
+      vao.bind();
 
-    vao.release();
+      if(vbo.isCreated() == false) {
+        vbo = QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+        vbo.create();
+        vbo.bind();
+        vbo.setUsagePattern(QOpenGLBuffer::DynamicDraw);
+        if(data.vertex_count != 0) {
+            vbo.allocate(data.vertexes.matrix, data.vertex_count * 3 * sizeof(GLfloat));
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+            glEnableVertexAttribArray(0);
+        }
+      }
+
+      if(ebo.isCreated() == false) {
+        ebo = QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+        ebo.create();
+        ebo.bind();
+        ebo.setUsagePattern(QOpenGLBuffer::StaticDraw);
+        if(data.facet_count != 0) {
+            ebo.allocate(data.facets, data.full_cnt * sizeof(GLuint));
+        }
+      }
+
+      vao.release();
+    }
 }
 
 void GLWidget::resizeGL(int w, int h) {
@@ -112,28 +130,28 @@ void GLWidget::paintGL() {
 
     m_program->setUniformValue(m_coeffMatrixLoc, projectionMatrix * cameraMatrix * moveMatrix * rotateMatrix * scaleMatrix);
 
+  if(vao.isCreated() && vbo.isCreated() && ebo.isCreated()) {
     vbo.bind();
     vbo.write(0, data.vertexes.matrix, data.vertex_count * 3 * sizeof(GLfloat));
     vbo.release();
 
+    vao.bind();
     if(dotted_line != 0) {
-        m_program->setUniformValue("color", QVector4D(clr_line.redF(), clr_line.greenF(), clr_line.blueF(), 1.0f));
+        m_program->setUniformValue("color", QVector4D(clr_line.redF(), clr_line.greenF(), clr_line.blueF(), clr_line.alphaF()));
         glLineWidth(line_size);
 
         if(dotted_line == 2) {
             glEnable(GL_LINE_STIPPLE);
-            glLineStipple(1, 0x0F0F);
+            glLineStipple(1, 0x00FF);
         } else {
             glDisable(GL_LINE_STIPPLE);
         }
 
-        vao.bind();
         glDrawElements(GL_LINES, data.full_cnt, GL_UNSIGNED_INT, nullptr);
-        vao.release();
     }
 
     if(points != 0) {
-        m_program->setUniformValue("color", QVector4D(clr_vert.redF(), clr_vert.greenF(), clr_vert.blueF(), 1.0f));
+        m_program->setUniformValue("color", QVector4D(clr_vert.redF(), clr_vert.greenF(), clr_vert.blueF(), clr_vert.alphaF()));
         glPointSize(points_size);
 
         if(points == 2) {
@@ -142,10 +160,10 @@ void GLWidget::paintGL() {
             glDisable(GL_POINT_SMOOTH);
         }
 
-        vao.bind();
         glDrawArrays(GL_POINTS, 0, data.vertex_count);
-        vao.release();
     }
+    vao.release();
+  }
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event) {
@@ -158,4 +176,16 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
 
 void GLWidget::wheelEvent(QWheelEvent *event) {
     emit mouseWheel(event);
+}
+
+void GLWidget::initModel(QString filepath) {
+    std::string str = filepath.toStdString();
+    remove_data(&data);
+    remove_data(&object);
+    data = parse((char *)str.c_str());
+    normalize_vertex(&data);
+    object = copy_data(&data);
+    destroyBuffers();
+    initBuffers();
+    update();
 }
