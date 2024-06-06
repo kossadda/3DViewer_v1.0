@@ -65,15 +65,3 @@ void mx_copy(float *copy, float *data) {
     copy[i] = data[i];
   }
 }
-
-void mx_print(float *mx) {
-  for (int i = 0; i < 16; i++) {
-    if (i && i % 4 == 0) {
-      printf("\n");
-    }
-
-    printf("%f ", mx[i]);
-  }
-
-  printf("\n\n");
-}

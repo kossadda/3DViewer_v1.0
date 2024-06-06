@@ -24,7 +24,6 @@ typedef struct {
   int vertex_count;
   matrix_t vertexes;
   int facet_count;
-  int *v_in_facet;
   int *facets;
   int full_cnt;
   float max_position;

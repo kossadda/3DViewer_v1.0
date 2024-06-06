@@ -12,8 +12,6 @@
 #define _GNU_SOURCE
 
 #include <ctype.h>
-#include <stdbool.h>
-
 #include "./include/common.h"
 
 data_t parse(const char *filename) {
@@ -57,16 +55,12 @@ void init_data(data_t *data, FILE *obj) {
     }
 
     data->vertexes = mx_create(data->vertex_count, V_DOTS_CNT);
-    data->v_in_facet = (int *)calloc(data->facet_count, sizeof(int));
 
     rewind(obj);
 
-    int *ptr = data->v_in_facet;
-
     while ((len = getline(&line, &n, obj)) != -1) {
       if (*line == 'f' && *(line + 1) == ' ') {
-        *ptr++ = vert_count_in_facet(line + 1);
-        data->full_cnt += *(ptr - 1) * 2;
+        data->full_cnt += vert_count_in_facet(line + 1) * 2;
       }
     }
 
@@ -77,7 +71,6 @@ void init_data(data_t *data, FILE *obj) {
 
     rewind(obj);
   } else {
-    data->v_in_facet = NULL;
     data->facets = NULL;
     data->vertexes.matrix = NULL;
     data->vertexes.rows = 0;
@@ -87,11 +80,6 @@ void init_data(data_t *data, FILE *obj) {
 
 void remove_data(data_t *data) {
   mx_remove(&data->vertexes);
-
-  if (data->v_in_facet) {
-    free(data->v_in_facet);
-    data->v_in_facet = NULL;
-  }
 
   if (data->facets) {
     free(data->facets);
@@ -111,7 +99,6 @@ void get_data(data_t *data, FILE *obj) {
   ssize_t len;
   float *v_ptr = data->vertexes.matrix;
   int *f_ptr = data->facets;
-  int *f_cnt = data->v_in_facet;
 
   while ((len = getline(&line, &n, obj)) != -1) {
     if (*line == 'v' && *(line + 1) == ' ') {
@@ -127,21 +114,20 @@ void get_data(data_t *data, FILE *obj) {
     } else if (*line == 'f' && *(line + 1) == ' ') {
       int *begin = f_ptr;
 
-      for (int j = 0; j < *f_cnt; j++) {
-        token = strtok((token) ? NULL : (line + 1), " ");
+      token = strtok(line + 1, " ");
+      
+      while (token != NULL) {
         if (f_ptr == begin) {
           *f_ptr++ = atoi(token) - 1;
         } else {
           *f_ptr++ = atoi(token) - 1;
           *f_ptr = *(f_ptr - 1);
           f_ptr++;
-          if (j == *f_cnt - 1) {
-            *f_ptr++ = *begin;
-          }
         }
+        token = strtok(NULL, " ");
       }
 
-      f_cnt++;
+      *f_ptr++ = *begin;
       token = NULL;
     }
   }
@@ -173,10 +159,7 @@ data_t copy_data(data_t *object) {
   data.facet_count = object->facet_count;
   data.full_cnt = object->full_cnt;
   data.max_position = object->max_position;
-
-  data.v_in_facet = NULL;
   data.facets = NULL;
-
   data.vertexes = mx_create(data.vertex_count, V_DOTS_CNT);
 
   for (int i = 0; i < data.vertex_count * V_DOTS_CNT; i++) {

@@ -16,11 +16,7 @@ void vf_print(data_t data);
 int main() {
   data_t data = parse(OBJECT);
   
-  // vf_print(data);
-
-  normalize_vertex(&data);
-
-  // vf_print(data);
+  vf_print(data);
 
   remove_data(&data);
 }
@@ -34,16 +30,18 @@ void vf_print(data_t data) {
     printf("\n");
   }  
 
-  // printf("\n\nFacets:\n\n");
+  printf("\n\nFacets:\n\n");
 
-  // for(int i = 0, j = 0, *ptr = data.v_in_facet; i < data.full_cnt; i++, j++) {
-  //   if(j >= *ptr * 2) {
-  //     printf("\n");
-  //     j = 0;
-  //     ptr++;
-  //   }
-  //   printf("%d ", data.facets[i]);
-  // }
+  int *ptr = data.facets;
+
+  for(int i = 0; i < data.full_cnt; i++) {
+    printf("%d ", data.facets[i]);
+    if(i && data.facets[i - 1] != data.facets[i] && *ptr == data.facets[i] && ptr != data.facets + i) {
+      ptr = data.facets + i + 1;
+      printf("\n");
+    }
+
+  }
 
   printf("\n\n");
 }
