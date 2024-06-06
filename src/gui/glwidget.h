@@ -25,6 +25,7 @@ public:
     void initModel(QString filepath);
     void updateBuffer(float *update_to);
     void transformToIdentity();
+    void setupProjection(int w, int h);
     data_t data;
     data_t object;
     afinne_t mx;
@@ -38,6 +39,7 @@ public:
     int rotation_mode;
     int calculation_mode;
     float sliders[7];
+    int projection;
     
 signals:
     void mousePress(QMouseEvent *event);

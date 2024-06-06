@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include <QButtonGroup>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -14,6 +16,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->GL, &GLWidget::mousePress, this, &MainWindow::slotMousePress);
     connect(ui->GL, &GLWidget::mouseMove, this, &MainWindow::slotMouseMove);
     connect(ui->GL, &GLWidget::mouseWheel, this, &MainWindow::slotMouseWheel);
+
+    QButtonGroup *group1 = new QButtonGroup(ui->other_frame);
+    QButtonGroup *group2 = new QButtonGroup(ui->other_frame);
+    group1->addButton(ui->calc_cpu);
+    group1->addButton(ui->calc_gpu);
+    ui->calc_cpu->setChecked(1);
+    group2->addButton(ui->central);
+    group2->addButton(ui->parallel);
+    ui->central->setChecked(1);
 }
 
 MainWindow::~MainWindow()
@@ -422,6 +433,24 @@ void MainWindow::on_calc_gpu_toggled(bool checked)
 {
     if(checked) {
         ui->GL->calculation_mode = 1;
+        ui->GL->update();
+    }
+}
+
+void MainWindow::on_central_toggled(bool checked)
+{
+    if(checked) {
+        ui->GL->projection = 0;
+        ui->GL->setupProjection(0, 0);
+        ui->GL->update();
+    }
+}
+
+void MainWindow::on_parallel_toggled(bool checked)
+{
+    if(checked) {
+        ui->GL->projection = 1;
+        ui->GL->setupProjection(0, 0);
         ui->GL->update();
     }
 }

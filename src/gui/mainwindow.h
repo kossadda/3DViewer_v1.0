@@ -59,6 +59,8 @@ private slots:
     void on_filename_returnPressed();
     void on_calc_cpu_toggled(bool checked);
     void on_calc_gpu_toggled(bool checked);
+    void on_central_toggled(bool checked);
+    void on_parallel_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;

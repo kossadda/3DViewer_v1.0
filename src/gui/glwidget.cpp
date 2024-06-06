@@ -14,6 +14,7 @@ GLWidget::GLWidget(QWidget *parent)
     , line_size(1)
     , rotation_mode(0)
     , calculation_mode(0)
+    , projection(0)
 {
     setlocale(LC_NUMERIC, "C");
     data = parse(NULL);
@@ -108,17 +109,41 @@ void GLWidget::initBuffers() {
 }
 
 void GLWidget::resizeGL(int w, int h) {
+    setupProjection(w, h);
+}
+
+void GLWidget::setupProjection(int w, int h) {
     if (w < 1 || h < 1) {
-      w = width();
-      h = height();
+        w = width();
+        h = height();
     }
 
     transformToIdentity();
     cameraMatrix.setToIdentity();
     projectionMatrix.setToIdentity();
 
-    cameraMatrix.translate(0.0f, 0.0f, -3.0f);
-    projectionMatrix.perspective(45.0f, GLfloat(w) / h, 0.01f, 100.0f);
+    if(projection == 0) {
+        cameraMatrix.translate(0.0f, 0.0f, -3.0f);
+        projectionMatrix.perspective(45.0f, GLfloat(w) / h, 0.01f, 100.0f);
+    } else {
+        float top, bottom, right, left;
+        float aspect = (GLfloat)w / h;
+        float coeff = 1.3f;
+
+        if (w > h) {
+            top = coeff;
+            bottom = -coeff;
+            right = coeff * aspect;
+            left = -right;
+        } else {
+            right = coeff;
+            left = -coeff;
+            top = coeff / aspect;
+            bottom = -top;
+        }
+
+        cameraMatrix.ortho(left, right, bottom, top, -100.0f, 100.0f);
+    }
 }
 
 void GLWidget::afinneGPU(float *values) {
