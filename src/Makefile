@@ -39,7 +39,7 @@ BUILD = ./../bin
 
 #==================================== FLAGS ===================================#
 # MAIN FLAGS FOR COMPILER
-CFLAGS = -Wall -Wextra -pedantic -std=c11 -O3
+CFLAGS = -Wall -Wextra -pedantic -std=c11
 # CFLAGS = -Wall -Werror -Wextra -pedantic -std=c11
 
 # CHECK LIBRARY FOR LINKING
@@ -117,7 +117,7 @@ vpath %.o $(OBJ_DIR)
 
 temp: $(LIBRARY)
 	@mkdir -p $(BUILD)
-	@cd $(BUILD) && cmake ./../src/gui && make	
+	@cd $(BUILD) && cmake ./../src && make	
 	@./$(BUILD)/3DViewer
 
 #================================= MAIN TARGETS ===============================#
@@ -127,7 +127,7 @@ all: install run
 
 install: uninstall $(LIBRARY)
 	@mkdir -p $(BUILD)
-	cd $(BUILD) && cmake ./../src/gui && make	
+	cd $(BUILD) && cmake ./../src && make	
 
 uninstall: clean
 	@rm -f ./brick_game/tetris/modules/score.txt
@@ -168,7 +168,7 @@ clean:
 	@rm -rf $(DVI_DIR)
 	@rm -rf $(DIST_DIR)
 	@rm -rf $(GCOV)
-	@rm -rf $(GUI_DIR)/build*
+	@rm -rf ../build*
 	@rm -rf build*
 	@rm -f $(TARGET)
 	@rm -f $(GUI_DIR)/CMake*.user

@@ -15,24 +15,24 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGL)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGLWidgets)
 
-set(VIEWER_LIB ${CMAKE_CURRENT_SOURCE_DIR}/../viewer.a)
+set(VIEWER_LIB ${CMAKE_CURRENT_SOURCE_DIR}/viewer.a)
 
 set(PROJECT_SOURCES
-  ./main.cpp
-  ./mainwindow.cpp
-  ./mainwindow.ui
-  ./mainwindow.h
-  ./glwidget.cpp
-  ./glwidget.h
-  ./../modules/parse.c
-  ./../modules/matrix.c
-  ./../modules/afine.c
-  ./../modules/include/parse.h
-  ./../modules/include/matrix.h
-  ./../modules/include/afine.h
-  ./../modules/include/common.h
-  ./../modules/include/objects.h
-  ./../resources/resource.qrc
+  ./gui/main.cpp
+  ./gui/mainwindow.cpp
+  ./gui/mainwindow.ui
+  ./gui/mainwindow.h
+  ./gui/glwidget.cpp
+  ./gui/glwidget.h
+  ./modules/parse.c
+  ./modules/matrix.c
+  ./modules/afine.c
+  ./modules/include/parse.h
+  ./modules/include/matrix.h
+  ./modules/include/afine.h
+  ./modules/include/common.h
+  ./modules/include/objects.h
+  ./resources/resource.qrc
 )
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS

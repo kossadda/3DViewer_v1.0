@@ -301,11 +301,11 @@ QSlider::sub-page:horizontal {
 	font-weight: bold;
 	background-color: rgb(50, 50, 50);
 	color: rgb(255, 255, 255);
-	font-size: 20px;
+	font-size: 17px;
 }</string>
              </property>
              <property name="text">
-              <string>       Rotate</string>
+              <string>      Rotate</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -588,21 +588,21 @@ QRadioButton {
              <item row="1" column="2">
               <widget class="QLabel" name="info_2">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>60</width>
-                 <height>30</height>
+                 <width>50</width>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>60</width>
-                 <height>30</height>
+                 <width>50</width>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -649,7 +649,7 @@ QRadioButton {
 
 QRadioButton::indicator:checked {
     background-color: rgb(76, 0, 143);
-    border: 2px solid #ffffff;
+    border: 2px solid rgba(189, 0, 195, 0.25);
 }
 
 QRadioButton {
@@ -666,7 +666,7 @@ QRadioButton {
              <item row="1" column="4">
               <widget class="QLabel" name="info_3">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -674,13 +674,13 @@ QRadioButton {
                <property name="minimumSize">
                 <size>
                  <width>50</width>
-                 <height>30</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>50</width>
-                 <height>30</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -888,7 +888,7 @@ QSlider::sub-page:horizontal {
               <number>-99</number>
              </property>
              <property name="maximum">
-              <number>300</number>
+              <number>500</number>
              </property>
              <property name="singleStep">
               <number>1</number>
@@ -962,11 +962,11 @@ QPushButton:pressed {
 	font-weight: bold;
 	color: rgb(255, 255, 255);
 	background-color: rgb(50, 50, 50);
-	font-size: 20px;
+	font-size: 17px;
 }</string>
              </property>
              <property name="text">
-              <string>   Scale</string>
+              <string>       Scale</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -999,7 +999,7 @@ color: #000000;</string>
               <number>-99</number>
              </property>
              <property name="maximum">
-              <number>300</number>
+              <number>500</number>
              </property>
             </widget>
            </item>
@@ -1516,11 +1516,11 @@ QSlider::sub-page:horizontal {
 	font-weight: bold;
 	background-color: rgb(50, 50, 50);
 	color: rgb(255, 255, 255);
-	font-size: 20px;
+	font-size: 17px;
 }</string>
              </property>
              <property name="text">
-              <string>   Translate</string>
+              <string>       Translate</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -1655,7 +1655,7 @@ QPushButton:pressed {
               <string notr="true">QLabel {
 	font-weight: bold;
 	background-color: rgba(189, 0, 195, 0.0);
-	color: #000000;
+	color: #ffffff;
 	font-size: 13px;
 }</string>
              </property>
@@ -1842,163 +1842,7 @@ QPushButton:pressed {
            <enum>QFrame::Raised</enum>
           </property>
           <layout class="QGridLayout" name="gridLayout_13">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_14">
-             <property name="styleSheet">
-              <string notr="true">QLabel {
-	font-weight: bold;
-	background-color: rgb(50, 50, 50);
-	color: rgb(255, 255, 255);
-	font-size: 20px;
-}</string>
-             </property>
-             <property name="text">
-              <string>Other settings</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_11">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>5</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>5</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QLabel {
-	font-weight: bold;
-	color: rgb(255, 255, 255);
-	background-color: rgb(50, 50, 50);
-}</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <layout class="QGridLayout" name="gridLayout_14">
-             <item row="0" column="1">
-              <spacer name="horizontalSpacer_14">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="0" column="2">
-              <widget class="QPushButton" name="back_color">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>35</width>
-                 <height>35</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>35</width>
-                 <height>35</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 0, 0);
-border-radius: 17px;
-border: 3px solid rgba(189, 0, 195, 0.25);</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="back_label">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>115</width>
-                 <height>49</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>49</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QLabel {
-	font-weight: bold;
-	background-color: rgb(50, 50, 50);
-	color: rgb(255, 255, 255);
- 	font-size: 13px;
-	border-radius: 20px;
-	padding: 6px 12px;
-	border: 3px solid rgba(189, 0, 195, 0.25);
-}</string>
-               </property>
-               <property name="text">
-                <string>Background
-color</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="3">
-              <spacer name="horizontalSpacer_15">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>31</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </item>
-           <item row="3" column="0">
+           <item row="4" column="0">
             <layout class="QGridLayout" name="gridLayout_17">
              <item row="1" column="3">
               <widget class="QLabel" name="info_5">
@@ -2235,6 +2079,194 @@ QRadioButton {
               </spacer>
              </item>
             </layout>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_11">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>5</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>5</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	font-weight: bold;
+	color: rgb(255, 255, 255);
+	background-color: rgb(50, 50, 50);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <layout class="QGridLayout" name="gridLayout_14">
+             <item row="0" column="1">
+              <spacer name="horizontalSpacer_14">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="2">
+              <widget class="QPushButton" name="back_color">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>35</width>
+                 <height>35</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(0, 0, 0);
+border-radius: 17px;
+border: 3px solid rgba(189, 0, 195, 0.25);</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="back_label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>115</width>
+                 <height>49</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>49</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+	font-weight: bold;
+	background-color: rgb(50, 50, 50);
+	color: rgb(255, 255, 255);
+ 	font-size: 13px;
+	border-radius: 20px;
+	padding: 6px 12px;
+	border: 3px solid rgba(189, 0, 195, 0.25);
+}</string>
+               </property>
+               <property name="text">
+                <string>Background
+color</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <spacer name="horizontalSpacer_15">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>31</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_14">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	font-weight: bold;
+	background-color: rgb(50, 50, 50);
+	color: rgb(255, 255, 255);
+	font-size: 17px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Other settings</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_13">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>6</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	font-weight: bold;
+	color: rgb(255, 255, 255);
+	background-color: rgb(50, 50, 50);
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -2561,7 +2593,7 @@ QRadioButton {
 	font-weight: bold;
 	background-color: rgb(50, 50, 50);
 	color: rgb(255, 255, 255);
-	font-size: 20px;
+	font-size: 17px;
 }</string>
              </property>
              <property name="text">
@@ -2879,7 +2911,7 @@ border: 3px solid rgba(189, 0, 195, 0.25);</string>
 	font-weight: bold;
 	background-color: rgb(50, 50, 50);
 	color: rgb(255, 255, 255);
-	font-size: 20px;
+	font-size: 17px;
 }</string>
              </property>
              <property name="text">
