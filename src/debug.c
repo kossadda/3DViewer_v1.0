@@ -14,7 +14,7 @@
 void vf_print(data_t data);
 
 int main() {
-  data_t data = parse(OBJECT);
+  data_t data = parse("/home/kossadda/data-samples/new/City.obj");
   
   vf_print(data);
 

@@ -125,6 +125,7 @@ void get_data(data_t *data, FILE *obj) {
           f_ptr++;
         }
         token = strtok(NULL, " ");
+        if(token && !strpbrk(token, "0123456789")) token = NULL;
       }
 
       *f_ptr++ = *begin;
