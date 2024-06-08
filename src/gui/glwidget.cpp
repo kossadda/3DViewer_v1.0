@@ -5,9 +5,9 @@ GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
     , m_program(nullptr)
     , mx(init_afinne())
-    , clr_back(0, 0, 0)
-    , clr_vert(255, 0, 255)
-    , clr_line(255, 0, 255)
+    , clr_back(25, 20, 40)
+    , clr_vert(0, 255, 255)
+    , clr_line(255, 0, 100)
     , points(0)
     , points_size(1)
     , dotted_line(1)
@@ -242,3 +242,7 @@ void GLWidget::initModel(QString filepath) {
     initBuffers();
     update();
 }
+
+//void GLWidget::loadModel(QString filepath) {
+//    ui
+//}

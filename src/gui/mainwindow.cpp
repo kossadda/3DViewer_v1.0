@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include <QButtonGroup>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -25,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     group2->addButton(ui->central);
     group2->addButton(ui->parallel);
     ui->central->setChecked(1);
+
+    loadSettings();
 }
 
 MainWindow::~MainWindow()
@@ -148,6 +148,17 @@ void MainWindow::on_reset_clicked()
     ui->edit_zr->setValue(0);
     ui->edit_scale->setValue(0);
 
+    ui->GL->clr_back = QColor(25, 20, 40);
+    ui->GL->clr_vert = QColor(0, 255, 255);
+    ui->GL->clr_line = QColor(255, 0, 100);
+    ui->GL->points = 0;
+    ui->GL->points_size = 1;
+    ui->GL->dotted_line = 1;
+    ui->GL->line_size = 1;
+    ui->GL->calculation_mode = 0;
+    ui->GL->projection = 0;
+
+    setFrontSettings();
     update_vertex();
 }
 
@@ -180,9 +191,11 @@ void MainWindow::slotMouseMove(QMouseEvent *event) {
     if (leftMouse) {
         QPoint offset = event->pos() - startPos;
         if(shiftPressed) {
-            ui->X_move->setValue(ui->X_move->value() + (offset.x() / 2));
+               ui->X_move->setValue(ui->X_move->value() + (offset.x() / 2));
             ui->Y_move->setValue(ui->Y_move->value() - (offset.y() / 2));
-        } else {
+        } else {  
+            if(std::abs(ui->X_rotate->value()) == 360) ui->X_rotate->setValue(0);
+            if(std::abs(ui->Y_rotate->value()) == 360) ui->Y_rotate->setValue(0);
             ui->X_rotate->setValue(ui->X_rotate->value() + (offset.y() / 2));
             ui->Y_rotate->setValue(ui->Y_rotate->value() + (offset.x() / 2));
         }
@@ -193,6 +206,8 @@ void MainWindow::slotMouseMove(QMouseEvent *event) {
             ui->X_move->setValue(ui->X_move->value() + (offset.x() / 2));
             ui->Z_move->setValue(ui->Z_move->value() + (offset.y() / 2));
         } else {
+            if(std::abs(ui->Y_rotate->value()) == 360) ui->Y_rotate->setValue(0);
+            if(std::abs(ui->Z_rotate->value()) == 360) ui->Z_rotate->setValue(0);
             ui->Y_rotate->setValue(ui->Y_rotate->value() - (offset.x() / 2));
             ui->Z_rotate->setValue(ui->Z_rotate->value() - (offset.y() / 2));
         }
@@ -201,7 +216,7 @@ void MainWindow::slotMouseMove(QMouseEvent *event) {
 }
 
 void MainWindow::slotMouseWheel(QWheelEvent *event) {
-    ui->Zoom->setValue(ui->Zoom->value() + ((event->angleDelta().y() > 0) ? 5 : -5));
+    ui->Zoom->setValue(ui->Zoom->value() + ((event->angleDelta().y() > 0) ? 10 : -10));
 }
 
 void MainWindow::on_reset_rotate_clicked()
@@ -345,7 +360,7 @@ void MainWindow::on_no_points_toggled(bool checked)
     ui->GL->update();
 }
 
-void MainWindow::on_edit_xtr_2_valueChanged(int arg1)
+void MainWindow::on_point_size_valueChanged(int arg1)
 {
     ui->GL->points_size = arg1;
 
@@ -354,19 +369,19 @@ void MainWindow::on_edit_xtr_2_valueChanged(int arg1)
     }
 }
 
-void MainWindow::on_circle_points_3_toggled(bool checked)
+void MainWindow::on_dotted_line_toggled(bool checked)
 {
     ui->GL->dotted_line = 2;
     ui->GL->update();
 }
 
-void MainWindow::on_square_points_3_toggled(bool checked)
+void MainWindow::on_default_line_toggled(bool checked)
 {
     ui->GL->dotted_line = 1;
     ui->GL->update();
 }
 
-void MainWindow::on_square_points_4_clicked()
+void MainWindow::on_no_lines_clicked()
 {
     ui->GL->dotted_line = 0;
     ui->GL->update();
@@ -455,3 +470,81 @@ void MainWindow::on_parallel_toggled(bool checked)
     }
 }
 
+void MainWindow::closeEvent(QCloseEvent *event) {
+    saveSettings();
+    QMainWindow::closeEvent(event);
+}
+
+void MainWindow::saveSettings() {
+    QSettings settings("3DViewer", "3DViewerApp");
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("back_color", ui->GL->clr_back);
+    settings.setValue("vertex_color", ui->GL->clr_vert);
+    settings.setValue("line_color", ui->GL->clr_line);
+    settings.setValue("points", ui->GL->points);
+    settings.setValue("point_size", ui->GL->points_size);
+    settings.setValue("lines", ui->GL->dotted_line);
+    settings.setValue("line_size", ui->GL->line_size);
+    settings.setValue("calc_mode", ui->GL->calculation_mode);
+    settings.setValue("projection", ui->GL->projection);
+    settings.setValue("filename", ui->filename->text());
+}
+
+void MainWindow::setFrontSettings() {
+    ui->back_color->setStyleSheet("border-radius: 17px;border: 3px solid rgba(189, 0, 195, 0.25);background-color: " + ui->GL->clr_back.name() +  ";");
+    ui->vertex_color->setStyleSheet("border-radius: 17px;border: 3px solid rgba(189, 0, 195, 0.25);background-color: " + ui->GL->clr_vert.name() +  ";");
+    ui->lines_color->setStyleSheet("border-radius: 17px;border: 3px solid rgba(189, 0, 195, 0.25);background-color: " + ui->GL->clr_line.name() +  ";");
+
+    if(ui->GL->points == 0) {
+        ui->no_points->setChecked(1);
+    } else if(ui->GL->points == 1) {
+        ui->square_points->setChecked(1);
+    } else {
+        ui->circle_points->setChecked(1);
+    }
+
+    if(ui->GL->dotted_line == 0) {
+        ui->no_lines->setChecked(1);
+    } else if(ui->GL->dotted_line == 1) {
+        ui->default_line->setChecked(1);
+    } else {
+        ui->dotted_line->setChecked(1);
+    }
+
+    if(ui->GL->calculation_mode == 0) {
+        ui->calc_cpu->setChecked(1);
+    } else {
+        ui->calc_gpu->setChecked(1);
+    }
+
+    if(ui->GL->projection == 0) {
+        ui->central->setChecked(1);
+    } else {
+        ui->parallel->setChecked(1);
+    }
+
+    ui->point_size->setValue(ui->GL->points_size);
+    ui->line_size_edit->setValue(ui->GL->line_size);
+
+}
+
+void MainWindow::loadSettings() {
+    QSettings settings("3DViewer", "3DViewerApp");
+
+    if (settings.contains("geometry")) {
+        restoreGeometry(settings.value("geometry").toByteArray());
+        ui->GL->clr_back = settings.value("back_color").value<QColor>();
+        ui->GL->clr_vert = settings.value("vertex_color").value<QColor>();
+        ui->GL->clr_line = settings.value("line_color").value<QColor>();
+        ui->GL->points = settings.value("points").value<int>();
+        ui->GL->points_size = settings.value("point_size").value<int>();
+        ui->GL->dotted_line = settings.value("lines").value<int>();
+        ui->GL->line_size = settings.value("line_size").value<int>();
+        ui->GL->calculation_mode = settings.value("calc_mode").value<int>();
+        ui->GL->projection = settings.value("projection").value<int>();
+        ui->filename->setText(settings.value("filename").value<QString>());
+    }
+
+    setFrontSettings();
+    ui->GL->update();
+}

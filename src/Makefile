@@ -170,6 +170,7 @@ clean:
 	@rm -rf $(GCOV)
 	@rm -rf ../build*
 	@rm -rf build*
+	@rm -rf ~/.config/3DViewer
 	@rm -f $(TARGET)
 	@rm -f ./CMake*.user
 	@rm -f *.a *.o

@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QOpenGLVertexArrayObject>
 #include <QMouseEvent>
+#include <QButtonGroup>
 
 extern "C" {
 #include "./../modules/include/common.h"
@@ -23,6 +24,7 @@ public:
     void destroyBuffers();
     void afinneGPU(float *values);
     void initModel(QString filepath);
+//    void loadModel(QString filepath);
     void updateBuffer(float *update_to);
     void transformToIdentity();
     void setupProjection(int w, int h);
@@ -57,7 +59,6 @@ protected:
 private:
     int m_coeffMatrixLoc = 0;
     int m_colorLoc = 0;
-    int m_rotation;
     QOpenGLShaderProgram *m_program;
     QOpenGLBuffer vbo;
     QOpenGLBuffer ebo;

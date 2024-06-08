@@ -6,6 +6,7 @@
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSettings>
 
 #include "./glwidget.h"
 
@@ -48,10 +49,10 @@ private slots:
     void on_square_points_toggled(bool checked);
     void on_circle_points_toggled(bool checked);
     void on_no_points_toggled(bool checked);
-    void on_edit_xtr_2_valueChanged(int arg1);
-    void on_circle_points_3_toggled(bool checked);
-    void on_square_points_3_toggled(bool checked);
-    void on_square_points_4_clicked();
+    void on_point_size_valueChanged(int arg1);
+    void on_dotted_line_toggled(bool checked);
+    void on_default_line_toggled(bool checked);
+    void on_no_lines_clicked();
     void on_line_size_edit_valueChanged(int arg1);
     void on_rotate_model_toggled(bool checked);
     void on_rotate_axes_toggled(bool checked);
@@ -61,6 +62,12 @@ private slots:
     void on_calc_gpu_toggled(bool checked);
     void on_central_toggled(bool checked);
     void on_parallel_toggled(bool checked);
+    void saveSettings();
+    void loadSettings();
+    void setFrontSettings();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     Ui::MainWindow *ui;
