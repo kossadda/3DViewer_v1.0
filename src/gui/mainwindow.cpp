@@ -291,7 +291,7 @@ void MainWindow::on_back_color_clicked()
 {
     QColorDialog colorDialog(this);
 
-    colorDialog.setCurrentColor(Qt::red);
+    colorDialog.setCurrentColor(ui->GL->clr_back);
 
     if (colorDialog.exec() == QDialog::Accepted) {
         ui->GL->clr_back = colorDialog.selectedColor();
@@ -306,7 +306,7 @@ void MainWindow::on_vertex_color_clicked()
 {
     QColorDialog colorDialog(this);
 
-    colorDialog.setCurrentColor(Qt::red);
+    colorDialog.setCurrentColor(ui->GL->clr_vert);
 
     if (colorDialog.exec() == QDialog::Accepted) {
         ui->GL->clr_vert = colorDialog.selectedColor();
@@ -322,7 +322,7 @@ void MainWindow::on_lines_color_clicked()
 {
     QColorDialog colorDialog(this);
 
-    colorDialog.setCurrentColor(Qt::red);
+    colorDialog.setCurrentColor(ui->GL->clr_line);
 
     if (colorDialog.exec() == QDialog::Accepted) {
         ui->GL->clr_line = colorDialog.selectedColor();
@@ -431,7 +431,9 @@ void MainWindow::on_filename_returnPressed()
     } else {
         ui->GL->initModel(fileInfo.absoluteFilePath());
         ui->info_model->setText("Verticies: " + QString::number(ui->GL->data.vertex_count) + "\nFacets: " + QString::number(ui->GL->data.facet_count));
-        on_reset_clicked();
+        on_reset_rotate_clicked();
+        on_reset_move_clicked();
+        on_reset_scale_clicked();
     }
 }
 
@@ -547,4 +549,45 @@ void MainWindow::loadSettings() {
 
     setFrontSettings();
     ui->GL->update();
+}
+
+void MainWindow::on_save_image_clicked()
+{
+    QStringList filters("BMP Files (*.bmp)");
+    filters << "JPEG Files (*.jpeg)";
+
+    QFileDialog dialog(this, "Save image as");
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.setNameFilters(filters);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        QString filePath = dialog.selectedFiles().first();
+        QString selectedFilter = dialog.selectedNameFilter();
+
+        QString format;
+        if (selectedFilter == "BMP Files (*.bmp)") {
+            format = "BMP";
+            if (!filePath.endsWith(".bmp", Qt::CaseInsensitive)) {
+                filePath += ".bmp";
+            }
+        } else {
+            format = "JPEG";
+            if (!filePath.endsWith(".jpeg", Qt::CaseInsensitive)) {
+                filePath += ".jpeg";
+            }
+        }
+
+        if (!filePath.isEmpty()) {
+            ui->GL->makeCurrent();
+
+            QImage image = ui->GL->grabFramebuffer();
+            if (!image.save(filePath, format.toStdString().c_str())) {
+                qWarning() << "Failed to save image";
+            } else {
+                qDebug() << "Image saved successfully";
+            }
+
+            ui->GL->doneCurrent();
+        }
+    }
 }

@@ -24,7 +24,6 @@ public:
     void destroyBuffers();
     void afinneGPU(float *values);
     void initModel(QString filepath);
-//    void loadModel(QString filepath);
     void updateBuffer(float *update_to);
     void transformToIdentity();
     void setupProjection(int w, int h);

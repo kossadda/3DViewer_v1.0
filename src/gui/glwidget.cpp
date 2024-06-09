@@ -242,7 +242,3 @@ void GLWidget::initModel(QString filepath) {
     initBuffers();
     update();
 }
-
-//void GLWidget::loadModel(QString filepath) {
-//    ui
-//}

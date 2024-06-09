@@ -1578,6 +1578,96 @@ QSlider::sub-page:horizontal {
             </spacer>
            </item>
            <item>
+            <layout class="QGridLayout" name="reset_grid_2">
+             <property name="bottomMargin">
+              <number>9</number>
+             </property>
+             <property name="horizontalSpacing">
+              <number>12</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="save_image">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>125</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>125</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+	font-weight: bold;
+	background-color: rgba(101, 0, 189, 0.15);
+	color: rgb(255, 255, 255);
+ 	font-size: 14px;
+	border-radius: 20px;
+	padding: 6px 12px;
+	border: 3px solid rgba(189, 0, 195, 0.25);
+}
+
+QPushButton:pressed {
+    background-color: rgb(76, 20, 98);
+}</string>
+               </property>
+               <property name="text">
+                <string>Save image</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="save_gif">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>125</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>125</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton {
+	font-weight: bold;
+	background-color: rgba(101, 0, 189, 0.15);
+	color: rgb(255, 255, 255);
+ 	font-size: 14px;
+	border-radius: 20px;
+	padding: 6px 12px;
+	border: 3px solid rgba(189, 0, 195, 0.25);
+}
+
+QPushButton:pressed {
+    background-color: rgb(76, 20, 98);
+}</string>
+               </property>
+               <property name="text">
+                <string>Save gif</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
             <layout class="QGridLayout" name="reset_grid">
              <item row="0" column="0">
               <widget class="QPushButton" name="reset">
@@ -3006,247 +3096,6 @@ QRadioButton {
             <enum>QFrame::Raised</enum>
            </property>
            <layout class="QGridLayout" name="gridLayout_13">
-            <item row="4" column="0">
-             <layout class="QGridLayout" name="other_grid_2">
-              <property name="verticalSpacing">
-               <number>0</number>
-              </property>
-              <item row="0" column="0" rowspan="2">
-               <widget class="QLabel" name="calculate_label">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>115</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QLabel {
-	font-weight: bold;
-	background-color: rgb(50, 50, 50);
-	color: rgb(255, 255, 255);
- 	font-size: 14px;
-	border-radius: 20px;
-	padding: 6px 12px;
-	border: 3px solid rgba(189, 0, 195, 0.25);
-}</string>
-                </property>
-                <property name="text">
-                 <string>Calculate
-by</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="3">
-               <widget class="QLabel" name="info_gpu">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>35</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QLabel {
-	font-weight: bold;
-	background-color: rgb(50, 50, 50);
-	color: rgb(255, 255, 255);
-	font-size: 12px;
-}</string>
-                </property>
-                <property name="text">
-                 <string>GPU</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="QLabel" name="info_cpu">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>32</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>32</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QLabel {
-	font-weight: bold;
-	background-color: rgb(50, 50, 50);
-	color: rgb(255, 255, 255);
-	font-size: 12px;
-}</string>
-                </property>
-                <property name="text">
-                 <string>CPU</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QRadioButton" name="calc_cpu">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>25</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QRadioButton::indicator {
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-	background-color: rgb(50, 50, 50);
-    border: 2px solid rgba(189, 0, 195, 0.25);
-}
-
-QRadioButton::indicator:checked {
-    background-color: rgb(76, 0, 143);
-    border: 2px solid rgba(189, 0, 195, 0.25);
-}
-
-QRadioButton {
-	background-color: rgb(50, 50, 50);
-}
-
-</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QRadioButton" name="calc_gpu">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>25</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">QRadioButton::indicator {
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-	background-color: rgb(50, 50, 50);
-    border: 2px solid rgba(189, 0, 195, 0.25);
-}
-
-QRadioButton::indicator:checked {
-    background-color: rgb(76, 0, 143);
-    border: 2px solid rgba(189, 0, 195, 0.25);
-}
-
-QRadioButton {
-	background-color: rgb(50, 50, 50);
-}
-
-</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1" rowspan="2">
-               <spacer name="other_space_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>12</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="0" column="4">
-               <spacer name="other_space_4">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>21</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </item>
             <item row="1" column="0">
              <widget class="QLabel" name="other_space_label_1">
               <property name="sizePolicy">
@@ -3688,6 +3537,246 @@ QRadioButton {
                  <string>Central</string>
                 </property>
                </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="4" column="0">
+             <layout class="QGridLayout" name="other_grid_2">
+              <property name="verticalSpacing">
+               <number>0</number>
+              </property>
+              <item row="0" column="0" rowspan="2">
+               <widget class="QLabel" name="calculate_label">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>115</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel {
+	font-weight: bold;
+	background-color: rgb(50, 50, 50);
+	color: rgb(255, 255, 255);
+ 	font-size: 14px;
+	border-radius: 20px;
+	padding: 6px 12px;
+	border: 3px solid rgba(189, 0, 195, 0.25);
+}</string>
+                </property>
+                <property name="text">
+                 <string>Calculate</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QLabel" name="info_gpu">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>35</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel {
+	font-weight: bold;
+	background-color: rgb(50, 50, 50);
+	color: rgb(255, 255, 255);
+	font-size: 12px;
+}</string>
+                </property>
+                <property name="text">
+                 <string>GPU</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLabel" name="info_cpu">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>32</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>32</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QLabel {
+	font-weight: bold;
+	background-color: rgb(50, 50, 50);
+	color: rgb(255, 255, 255);
+	font-size: 12px;
+}</string>
+                </property>
+                <property name="text">
+                 <string>CPU</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QRadioButton" name="calc_cpu">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>25</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+	background-color: rgb(50, 50, 50);
+    border: 2px solid rgba(189, 0, 195, 0.25);
+}
+
+QRadioButton::indicator:checked {
+    background-color: rgb(76, 0, 143);
+    border: 2px solid rgba(189, 0, 195, 0.25);
+}
+
+QRadioButton {
+	background-color: rgb(50, 50, 50);
+}
+
+</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QRadioButton" name="calc_gpu">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>25</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QRadioButton::indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+	background-color: rgb(50, 50, 50);
+    border: 2px solid rgba(189, 0, 195, 0.25);
+}
+
+QRadioButton::indicator:checked {
+    background-color: rgb(76, 0, 143);
+    border: 2px solid rgba(189, 0, 195, 0.25);
+}
+
+QRadioButton {
+	background-color: rgb(50, 50, 50);
+}
+
+</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1" rowspan="2">
+               <spacer name="other_space_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>12</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="0" column="4">
+               <spacer name="other_space_4">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>21</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
               </item>
              </layout>
             </item>

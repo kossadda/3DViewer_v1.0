@@ -66,6 +66,8 @@ private slots:
     void loadSettings();
     void setFrontSettings();
 
+    void on_save_image_clicked();
+
 protected:
     void closeEvent(QCloseEvent *event) override;
 
