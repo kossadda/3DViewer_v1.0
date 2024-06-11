@@ -1,11 +1,23 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include "./gif.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , leftMouse(false)
     , rightMouse(false)
+    , periodicTimer(new QTimer(this))
+    , countdownTimer(new QTimer(this))
+    , gif_count(0)
+    , gif_fps(10)
+    , gif_length(5)
+    , dir(QFileInfo(QString(__FILE__)).absoluteDir())
+    , screen_dir("images")
+    , abs_screen_dir(dir.absolutePath() + QString("/") + screen_dir + QString("/"))
+    , timer(3)
+    , recording(false)
 {
     QIcon icon(":icon.png");
     this->setWindowIcon(icon);
@@ -14,6 +26,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->GL, &GLWidget::mousePress, this, &MainWindow::slotMousePress);
     connect(ui->GL, &GLWidget::mouseMove, this, &MainWindow::slotMouseMove);
     connect(ui->GL, &GLWidget::mouseWheel, this, &MainWindow::slotMouseWheel);
+
+    connect(periodicTimer, &QTimer::timeout, this, &MainWindow::createSnapshot);
+    connect(countdownTimer, &QTimer::timeout, this, &MainWindow::countDown);
 
     QButtonGroup *group1 = new QButtonGroup(ui->other_frame);
     QButtonGroup *group2 = new QButtonGroup(ui->other_frame);
@@ -553,12 +568,9 @@ void MainWindow::loadSettings() {
 
 void MainWindow::on_save_image_clicked()
 {
-    QStringList filters("BMP Files (*.bmp)");
-    filters << "JPEG Files (*.jpeg)";
-
     QFileDialog dialog(this, "Save image as");
     dialog.setAcceptMode(QFileDialog::AcceptSave);
-    dialog.setNameFilters(filters);
+    dialog.setNameFilters(QStringList("BMP Files (*.bmp)") << "JPEG Files (*.jpeg)");
 
     if (dialog.exec() == QDialog::Accepted) {
         QString filePath = dialog.selectedFiles().first();
@@ -578,16 +590,107 @@ void MainWindow::on_save_image_clicked()
         }
 
         if (!filePath.isEmpty()) {
-            ui->GL->makeCurrent();
+            ui->GL->createImage(filePath, format);
+        }
+    }
+}
 
-            QImage image = ui->GL->grabFramebuffer();
-            if (!image.save(filePath, format.toStdString().c_str())) {
-                qWarning() << "Failed to save image";
-            } else {
-                qDebug() << "Image saved successfully";
+void MainWindow::on_save_gif_clicked()
+{
+    if(recording == false) {
+        recording = true;
+        gif_count = 0;
+        dir.mkdir(screen_dir);
+        timer = 3;
+        countdownTimer->start(1000);
+        ui->save_gif->setStyleSheet(QString("QPushButton {font-weight: bold;background-color: rgba(101, 0, 189, 1);color: rgb(255, 255, 255);font-size: 14px;border-radius: 20px;padding: 6px 12px;border: 3px solid rgba(189, 0, 195, 0.25);} QPushButton:pressed {background-color: rgb(76, 20, 98);}"));
+        ui->save_gif->setText(QString::number(timer));
+    }
+}
+
+void MainWindow::countDown() {
+    timer--;
+    ui->save_gif->setText(QString::number(timer));
+
+    if(timer == 0) {
+        countdownTimer->stop();
+        ui->save_gif->setText("Recording");
+        periodicTimer->start(1000 / gif_fps);
+    }
+}
+
+void MainWindow::createSnapshot() {
+    gif_count++;
+
+    QString format = QString(".bmp");
+
+    ui->GL->createImage(abs_screen_dir + QString::number(gif_count) + format, "BMP");
+
+    if(gif_count == gif_fps * gif_length) {
+        periodicTimer->stop();
+
+        QFileDialog dialog(this, "Save gif as");
+        dialog.setAcceptMode(QFileDialog::AcceptSave);
+        dialog.setNameFilters(QStringList("GIF Files (*.gif)"));
+
+        if (dialog.exec() == QDialog::Accepted) {
+            QString filePath = dialog.selectedFiles().first();
+
+            if (dialog.selectedNameFilter() == "GIF Files (*.gif)") {
+                if (!filePath.endsWith(".gif", Qt::CaseInsensitive)) {
+                    filePath += ".gif";
+                }
             }
 
-            ui->GL->doneCurrent();
+            if (!filePath.isEmpty()) {
+                create_gif(filePath);
+            }
         }
+
+        QDir imagesDir(dir.absoluteFilePath(screen_dir));
+        if (imagesDir.exists()) {
+            imagesDir.removeRecursively();
+        }
+
+        recording = false;
+        ui->save_gif->setText("Save gif");
+        ui->save_gif->setStyleSheet(QString("QPushButton {font-weight: bold;background-color: rgba(101, 0, 189, 0.15);color: rgb(255, 255, 255);font-size: 14px;border-radius: 20px;padding: 6px 12px;border: 3px solid rgba(189, 0, 195, 0.25);} QPushButton:pressed {background-color: rgb(76, 20, 98);}"));
+    }
+}
+
+void MainWindow::create_gif(QString path_to_gif) {
+    bool correct = true;
+
+    QString format = QString(".bmp");
+
+    GifWriter writer = {};
+    if (!GifBegin(&writer, path_to_gif.toStdString().c_str(), 640, 480, gif_fps)) {
+        correct = false;
+    }
+
+    for (int count = 1; count <= gif_fps * gif_length && correct; count++) {
+        QString framePath = abs_screen_dir + QString::number(count) + format;
+        QImage frame(framePath);
+
+        if (frame.isNull()) {
+            correct = false;
+            break;
+        }
+
+        QImage convertedFrame = frame.convertToFormat(QImage::Format_RGBA8888);
+        if (convertedFrame.width() != 640 || convertedFrame.height() != 480) {
+            convertedFrame = convertedFrame.scaled(640, 480);
+        }
+
+        if (!GifWriteFrame(&writer, convertedFrame.bits(), 640, 480, gif_fps)) {
+            correct = false;
+            break;
+        }
+    }
+
+    GifEnd(&writer);
+
+    if(correct == false) {
+        QMessageBox::warning(this, "Error", "An error occurred while recording a GIF image");
     }
 }

@@ -7,8 +7,10 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
-
+#include <QTimer>
 #include "./glwidget.h"
+#include <QThread>
+#include <QDir>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -65,9 +67,12 @@ private slots:
     void saveSettings();
     void loadSettings();
     void setFrontSettings();
-
     void on_save_image_clicked();
-
+    void on_save_gif_clicked();
+    void createSnapshot();
+    void create_gif(QString path_to_gif);
+    void countDown();
+    
 protected:
     void closeEvent(QCloseEvent *event) override;
 
@@ -76,6 +81,16 @@ private:
     QPoint startPos;
     bool leftMouse;
     bool rightMouse;
+    int gif_count;
+    int gif_fps;
+    int gif_length;
+    int timer;
+    bool recording;
+    QTimer *periodicTimer;
+    QTimer *countdownTimer;
+    QDir dir;
+    QString screen_dir;
+    QString abs_screen_dir;
 
 public slots:
     void slotMousePress(QMouseEvent *event);

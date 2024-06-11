@@ -27,6 +27,7 @@ public:
     void updateBuffer(float *update_to);
     void transformToIdentity();
     void setupProjection(int w, int h);
+    void createImage(QString filePath, QString format);
     data_t data;
     data_t object;
     afinne_t mx;

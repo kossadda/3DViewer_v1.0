@@ -242,3 +242,16 @@ void GLWidget::initModel(QString filepath) {
     initBuffers();
     update();
 }
+
+void GLWidget::createImage(QString filePath, QString format) {
+    makeCurrent();
+
+    QImage image = grabFramebuffer();
+    if (!image.save(filePath, format.toStdString().c_str())) {
+
+    } else {
+
+    }
+
+    doneCurrent();
+}
