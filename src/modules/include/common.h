@@ -1,7 +1,7 @@
 /**
  * @file common.h
  * @author kossadda (https://github.com/kossadda)
- * @brief
+ * @brief General header for connection
  * @version 1.0
  * @date 2024-05-11
  *

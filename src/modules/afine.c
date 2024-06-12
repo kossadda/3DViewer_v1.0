@@ -1,7 +1,7 @@
 /**
  * @file afine.c
  * @author kossadda (https://github.com/kossadda)
- * @brief
+ * @brief Module for working with transformation matrix
  * @version 1.0
  * @date 2024-06-01
  *
@@ -9,9 +9,7 @@
  *
  */
 
-#include <math.h>
-
-#include "./include/common.h"
+#include "./include/afine.h"
 
 afinne_t init_afinne() {
   afinne_t mx;
@@ -85,16 +83,16 @@ void transform_mx(afinne_t *mx, unsigned int data, int mode) {
   mx_copy(mx->current, mx->identity);
 
   if(mode == 0) {
-    if (data & SCALE) mx_affine_mult(mx->current, mx->scale);
-    if (data & ROTATE_X) mx_affine_mult(mx->current, mx->rotate_x);
-    if (data & ROTATE_Y) mx_affine_mult(mx->current, mx->rotate_y);
-    if (data & ROTATE_Z) mx_affine_mult(mx->current, mx->rotate_z);
-    if (data & MOVE) mx_affine_mult(mx->current, mx->move);
+    if (data & SCALE) mx_mult_4x4(mx->current, mx->scale);
+    if (data & ROTATE_X) mx_mult_4x4(mx->current, mx->rotate_x);
+    if (data & ROTATE_Y) mx_mult_4x4(mx->current, mx->rotate_y);
+    if (data & ROTATE_Z) mx_mult_4x4(mx->current, mx->rotate_z);
+    if (data & MOVE) mx_mult_4x4(mx->current, mx->move);
   } else {
-    if (data & SCALE) mx_affine_mult(mx->current, mx->scale);
-    if (data & ROTATE_X) mx_affine_mult(mx->current, mx->rotate_x);
-    if (data & ROTATE_Y) mx_affine_mult(mx->current, mx->rotate_y);
-    if (data & ROTATE_Z) mx_affine_mult(mx->current, mx->rotate_z);
-    if (data & MOVE) mx_affine_mult(mx->current, mx->move);
+    if (data & SCALE) mx_mult_4x4(mx->current, mx->scale);
+    if (data & ROTATE_X) mx_mult_4x4(mx->current, mx->rotate_x);
+    if (data & ROTATE_Y) mx_mult_4x4(mx->current, mx->rotate_y);
+    if (data & ROTATE_Z) mx_mult_4x4(mx->current, mx->rotate_z);
+    if (data & MOVE) mx_mult_4x4(mx->current, mx->move);
   }
 }

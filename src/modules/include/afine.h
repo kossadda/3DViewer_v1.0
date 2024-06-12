@@ -1,7 +1,7 @@
 /**
  * @file afine.h
  * @author kossadda (https://github.com/kossadda)
- * @brief
+ * @brief Module header for working with transformation matrix
  * @version 1.0
  * @date 2024-06-01
  *
@@ -14,10 +14,19 @@
 
 #include "./objects.h"
 
+/// @brief Bit multiplying the result matrix by the scale matrix
 #define SCALE 1u
+
+/// @brief Bit multiplying the result matrix by the translate matrix
 #define MOVE 1u << 1
+
+/// @brief Bit multiplying the result matrix by the X-axis rotate matrix
 #define ROTATE_X 1u << 2
+
+/// @brief Bit multiplying the result matrix by the Y-axis rotate matrix
 #define ROTATE_Y 1u << 3
+
+/// @brief Bit multiplying the result matrix by the Z-axis rotate matrix
 #define ROTATE_Z 1u << 4
 
 afinne_t init_afinne();

@@ -1,7 +1,7 @@
 /**
  * @file matrix.h
  * @author kossadda (https://github.com/kossadda)
- * @brief
+ * @brief Header of the module for working with matrices
  * @version 1.0
  * @date 2024-05-11
  *
@@ -16,20 +16,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SUCCESS 1
-#define FAILURE 0
-
+/// @brief Matrix struct
 typedef struct {
-  float *matrix;
-  int rows;
-  int cols;
+  float *matrix; ///< Matrix array
+  int rows; ///< Number of rows
+  int cols; ///< Number of columns
 } matrix_t;
 
 matrix_t mx_create(int rows, int cols);
 void mx_remove(matrix_t *mx);
-void mx_mult(float *data, float *vertexes, float *vector, int rows);
 void mx_copy(float *copy, float *data);
-void mx_print(float *mx);
-void mx_affine_mult(float *current, float *mul);
+void mx_mult_vector(float *data, float *vertexes, float *vector, int rows);
+void mx_mult_4x4(float *current, float *mul);
 
 #endif  //_MATRIX_H_

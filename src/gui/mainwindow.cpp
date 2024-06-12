@@ -180,7 +180,7 @@ void MainWindow::on_reset_clicked()
 void MainWindow::updateVertex() {
     if(ui->GL->calculationMode == 0) {
         transform_mx(&ui->GL->mx, check_sliders(), ui->GL->rotationMode);
-        mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
+        mx_mult_vector(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
     }
 
     ui->GL->update();

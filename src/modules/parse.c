@@ -1,7 +1,7 @@
 /**
  * @file parse.c
  * @author kossadda (https://github.com/kossadda)
- * @brief 
+ * @brief Module by model parsing
  * @version 1.0
  * @date 2024-05-11
  *
@@ -11,9 +11,14 @@
 
 #define _GNU_SOURCE
 
-#include <ctype.h>
-#include "./include/common.h"
+#include "./include/parse.h"
 
+/**
+ * @brief Parses the model. If the filename is NULL, the structure is simply initialized. If the filename is valid - model parsing
+ * 
+ * @param[out] filename path to obj file
+ * @return data_t - structure filled with data about the model
+ */
 data_t parse(const char *filename) {
   FILE *obj = NULL;
   data_t data;
@@ -35,6 +40,12 @@ data_t parse(const char *filename) {
   return data;
 }
 
+/**
+ * @brief Initialize the model. If the obj is NULL, the structure is simply initialized. If the obj is valid - memory allocated
+ * 
+ * @param[out] data models data
+ * @param[out] obj obj model file
+ */
 void init_data(data_t *data, FILE *obj) {
   data->vertex_count = 0;
   data->facet_count = 0;
@@ -83,6 +94,11 @@ void init_data(data_t *data, FILE *obj) {
   }
 }
 
+/**
+ * @brief Clear model of data
+ * 
+ * @param[out] data models data
+ */
 void remove_data(data_t *data) {
   mx_remove(&data->vertexes);
 

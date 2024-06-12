@@ -1,7 +1,7 @@
 /**
  * @file matrix.c
  * @author kossadda (https://github.com/kossadda)
- * @brief
+ * @brief Module for working with matrices
  * @version 1.0
  * @date 2024-05-11
  *
@@ -31,7 +31,7 @@ void mx_remove(matrix_t *mx) {
   mx->cols = 0;
 }
 
-void mx_mult(float *data, float *vertexes, float *vector, int rows) {
+void mx_mult_vector(float *data, float *vertexes, float *vector, int rows) {
   for (int k = 0; k < rows; k++, vertexes += 3, data += 3) {
     float *vr = vector;
 
@@ -41,7 +41,7 @@ void mx_mult(float *data, float *vertexes, float *vector, int rows) {
   }
 }
 
-void mx_affine_mult(float *current, float *mul) {
+void mx_mult_4x4(float *current, float *mul) {
   float tmp[4 * 4];
   float sum;
 
