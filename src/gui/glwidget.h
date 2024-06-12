@@ -27,7 +27,7 @@ public:
     void updateBuffer(float *update_to);
     void transformToIdentity();
     void setupProjection(int w, int h);
-    void createImage(QString filePath, QString format);
+    int createImage(QString filePath, QString format);
     data_t data;
     data_t object;
     afinne_t mx;
@@ -35,11 +35,11 @@ public:
     QColor clr_vert;
     QColor clr_line;
     int points;
-    int points_size;
-    int dotted_line;
-    int line_size;
-    int rotation_mode;
-    int calculation_mode;
+    int pointsSize;
+    int dottedLine;
+    int lineSize;
+    int rotationMode;
+    int calculationMode;
     float sliders[7];
     int projection;
     
@@ -57,8 +57,8 @@ protected:
     void wheelEvent(QWheelEvent *event) override;
 
 private:
-    int m_coeffMatrixLoc = 0;
-    int m_colorLoc = 0;
+    int coeffMatrixLoc = 0;
+    int colorLoc = 0;
     QOpenGLShaderProgram *m_program;
     QOpenGLBuffer vbo;
     QOpenGLBuffer ebo;

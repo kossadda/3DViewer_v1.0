@@ -24,6 +24,7 @@ set(PROJECT_SOURCES
   ./gui/mainwindow.h
   ./gui/glwidget.cpp
   ./gui/glwidget.h
+  ./gui/gif.h
   ./modules/parse.c
   ./modules/matrix.c
   ./modules/afine.c

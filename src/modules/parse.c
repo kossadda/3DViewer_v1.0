@@ -1,7 +1,7 @@
 /**
  * @file parse.c
  * @author kossadda (https://github.com/kossadda)
- * @brief
+ * @brief 
  * @version 1.0
  * @date 2024-05-11
  *
@@ -15,7 +15,7 @@
 #include "./include/common.h"
 
 data_t parse(const char *filename) {
-  FILE *obj = NULL; 
+  FILE *obj = NULL;
   data_t data;
 
   if(filename) {
@@ -50,6 +50,7 @@ void init_data(data_t *data, FILE *obj) {
       if (*line == 'v' && *(line + 1) == ' ') {
         data->vertex_count++;
       } else if (*line == 'f' && *(line + 1) == ' ') {
+        ///@todo move full_cnt here
         data->facet_count++;
       }
     }
@@ -60,14 +61,18 @@ void init_data(data_t *data, FILE *obj) {
 
     while ((len = getline(&line, &n, obj)) != -1) {
       if (*line == 'f' && *(line + 1) == ' ') {
-        data->full_cnt += vert_count_in_facet(line + 1) * 2;
+        data->full_cnt += vert_count_in_facet(line + 1);
       }
     }
 
+    data->full_cnt *= 2;
+
     data->facets = (int *)calloc(data->full_cnt, sizeof(int));
 
-    free(line);
-    line = NULL;
+    if(line) {
+        free(line);
+        line = NULL;
+    }
 
     rewind(obj);
   } else {
@@ -122,6 +127,7 @@ void get_data(data_t *data, FILE *obj) {
         } else {
           *f_ptr++ = atoi(token) - 1;
           *f_ptr = *(f_ptr - 1);
+          ///@todo prefix/postfix
           f_ptr++;
         }
         token = strtok(NULL, " ");
@@ -164,6 +170,7 @@ data_t copy_data(data_t *object) {
   data.vertexes = mx_create(data.vertex_count, V_DOTS_CNT);
 
   for (int i = 0; i < data.vertex_count * V_DOTS_CNT; i++) {
+    ///@todo memcpy
     data.vertexes.matrix[i] = object->vertexes.matrix[i];
   }
 

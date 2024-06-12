@@ -10,12 +10,12 @@ MainWindow::MainWindow(QWidget *parent)
     , rightMouse(false)
     , periodicTimer(new QTimer(this))
     , countdownTimer(new QTimer(this))
-    , gif_count(0)
-    , gif_fps(10)
-    , gif_length(5)
+    , gifCount(0)
+    , gifFps(10)
+    , gifLength(5)
     , dir(QFileInfo(QString(__FILE__)).absoluteDir())
-    , screen_dir("images")
-    , abs_screen_dir(dir.absolutePath() + QString("/") + screen_dir + QString("/"))
+    , screenDir(".images")
+    , absScreenDir(dir.absolutePath() + QString("/") + screenDir + QString("/"))
     , timer(3)
     , recording(false)
 {
@@ -53,7 +53,7 @@ void MainWindow::on_Zoom_valueChanged(int position)
     ui->GL->mx.scale[0] = ui->GL->mx.scale[5] = ui->GL->mx.scale[10] = (float)(position + 100.0f) / 100.0f;
     ui->GL->sliders[6] = ui->GL->mx.scale[0];
 
-    update_vertex();
+    updateVertex();
 }
 
 void MainWindow::on_X_rotate_valueChanged(int position)
@@ -65,7 +65,7 @@ void MainWindow::on_X_rotate_valueChanged(int position)
     ui->GL->mx.rotate_x[6] = -ui->GL->mx.rotate_x[9];
     ui->GL->sliders[0] = position;
 
-    update_vertex();
+    updateVertex();
 }
 
 void MainWindow::on_Y_rotate_valueChanged(int position)
@@ -77,7 +77,7 @@ void MainWindow::on_Y_rotate_valueChanged(int position)
     ui->GL->mx.rotate_y[8] = -ui->GL->mx.rotate_y[2];
     ui->GL->sliders[1] = position;
 
-    update_vertex();
+    updateVertex();
 }
 
 void MainWindow::on_Z_rotate_valueChanged(int position)
@@ -89,7 +89,7 @@ void MainWindow::on_Z_rotate_valueChanged(int position)
     ui->GL->mx.rotate_z[1] = -ui->GL->mx.rotate_z[4];
     ui->GL->sliders[2] = position;
 
-    update_vertex();
+    updateVertex();
 }
 
 void MainWindow::on_X_move_valueChanged(int position)
@@ -98,7 +98,7 @@ void MainWindow::on_X_move_valueChanged(int position)
     ui->GL->mx.move[3] = (float)position / 60.0f;
     ui->GL->sliders[3] = ui->GL->mx.move[3];
 
-    update_vertex();
+    updateVertex();
 }
 
 void MainWindow::on_Y_move_valueChanged(int position)
@@ -107,7 +107,7 @@ void MainWindow::on_Y_move_valueChanged(int position)
     ui->GL->mx.move[7] = (float)position / 60.0f;
     ui->GL->sliders[4] = ui->GL->mx.move[7];
 
-    update_vertex();
+    updateVertex();
 }
 
 void MainWindow::on_Z_move_valueChanged(int position)
@@ -116,7 +116,7 @@ void MainWindow::on_Z_move_valueChanged(int position)
     ui->GL->mx.move[11] = (float)position / 60.0f;
     ui->GL->sliders[5] = ui->GL->mx.move[11];
 
-    update_vertex();
+    updateVertex();
 }
 
 unsigned int MainWindow::check_sliders() {
@@ -167,19 +167,19 @@ void MainWindow::on_reset_clicked()
     ui->GL->clr_vert = QColor(0, 255, 255);
     ui->GL->clr_line = QColor(255, 0, 100);
     ui->GL->points = 0;
-    ui->GL->points_size = 1;
-    ui->GL->dotted_line = 1;
-    ui->GL->line_size = 1;
-    ui->GL->calculation_mode = 0;
+    ui->GL->pointsSize = 1;
+    ui->GL->dottedLine = 1;
+    ui->GL->lineSize = 1;
+    ui->GL->calculationMode = 0;
     ui->GL->projection = 0;
 
     setFrontSettings();
-    update_vertex();
+    updateVertex();
 }
 
-void MainWindow::update_vertex() {
-    if(ui->GL->calculation_mode == 0) {
-        transform_mx(&ui->GL->mx, check_sliders(), ui->GL->rotation_mode);
+void MainWindow::updateVertex() {
+    if(ui->GL->calculationMode == 0) {
+        transform_mx(&ui->GL->mx, check_sliders(), ui->GL->rotationMode);
         mx_mult(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
     }
 
@@ -243,7 +243,7 @@ void MainWindow::on_reset_rotate_clicked()
     ui->edit_yr->setValue(0);
     ui->edit_zr->setValue(0);
 
-    update_vertex();
+    updateVertex();
 }
 
 void MainWindow::on_reset_scale_clicked()
@@ -251,7 +251,7 @@ void MainWindow::on_reset_scale_clicked()
     ui->Zoom->setValue(0);
     ui->edit_scale->setValue(0);
 
-    update_vertex();
+    updateVertex();
 }
 
 void MainWindow::on_reset_move_clicked()
@@ -264,7 +264,7 @@ void MainWindow::on_reset_move_clicked()
     ui->edit_ytr->setValue(0);
     ui->edit_ztr->setValue(0);
 
-    update_vertex();
+    updateVertex();
 }
 
 void MainWindow::on_edit_xr_valueChanged(int arg1)
@@ -377,7 +377,7 @@ void MainWindow::on_no_points_toggled(bool checked)
 
 void MainWindow::on_point_size_valueChanged(int arg1)
 {
-    ui->GL->points_size = arg1;
+    ui->GL->pointsSize = arg1;
 
     if(ui->GL->points != 0) {
         ui->GL->update();
@@ -386,27 +386,27 @@ void MainWindow::on_point_size_valueChanged(int arg1)
 
 void MainWindow::on_dotted_line_toggled(bool checked)
 {
-    ui->GL->dotted_line = 2;
+    ui->GL->dottedLine = 2;
     ui->GL->update();
 }
 
 void MainWindow::on_default_line_toggled(bool checked)
 {
-    ui->GL->dotted_line = 1;
+    ui->GL->dottedLine = 1;
     ui->GL->update();
 }
 
 void MainWindow::on_no_lines_clicked()
 {
-    ui->GL->dotted_line = 0;
+    ui->GL->dottedLine = 0;
     ui->GL->update();
 }
 
 void MainWindow::on_line_size_edit_valueChanged(int arg1)
 {
-    ui->GL->line_size = arg1;
+    ui->GL->lineSize = arg1;
 
-    if(ui->GL->dotted_line != 0) {
+    if(ui->GL->dottedLine != 0) {
         ui->GL->update();
     }
 }
@@ -414,20 +414,20 @@ void MainWindow::on_line_size_edit_valueChanged(int arg1)
 void MainWindow::on_rotate_model_toggled(bool checked)
 {
     if(checked) {
-        ui->GL->rotation_mode = 0;
+        ui->GL->rotationMode = 0;
     }
 }
 
 void MainWindow::on_rotate_axes_toggled(bool checked)
 {
     if(checked) {
-        ui->GL->rotation_mode = 1;
+        ui->GL->rotationMode = 1;
     }
 }
 
 void MainWindow::on_load_file_clicked()
 {
-    QString openFileName = QFileDialog::getOpenFileName(this, "Choose wavefront obj file", QDir::homePath() + "/data-samples", "Wafefront obj (*.obj)");
+    QString openFileName = QFileDialog::getOpenFileName(this, "Choose wavefront obj file", QDir::homePath(), "Wafefront obj (*.obj)");
     if(!openFileName.isEmpty()) {
         ui->filename->setText(openFileName);
         on_filename_returnPressed();
@@ -456,15 +456,15 @@ void MainWindow::on_calc_cpu_toggled(bool checked)
 {
     if(checked) {
         ui->GL->transformToIdentity();
-        ui->GL->calculation_mode = 0;
-        update_vertex();
+        ui->GL->calculationMode = 0;
+        updateVertex();
     }
 }
 
 void MainWindow::on_calc_gpu_toggled(bool checked)
 {
     if(checked) {
-        ui->GL->calculation_mode = 1;
+        ui->GL->calculationMode = 1;
         ui->GL->update();
     }
 }
@@ -499,10 +499,10 @@ void MainWindow::saveSettings() {
     settings.setValue("vertex_color", ui->GL->clr_vert);
     settings.setValue("line_color", ui->GL->clr_line);
     settings.setValue("points", ui->GL->points);
-    settings.setValue("point_size", ui->GL->points_size);
-    settings.setValue("lines", ui->GL->dotted_line);
-    settings.setValue("line_size", ui->GL->line_size);
-    settings.setValue("calc_mode", ui->GL->calculation_mode);
+    settings.setValue("point_size", ui->GL->pointsSize);
+    settings.setValue("lines", ui->GL->dottedLine);
+    settings.setValue("line_size", ui->GL->lineSize);
+    settings.setValue("calc_mode", ui->GL->calculationMode);
     settings.setValue("projection", ui->GL->projection);
     settings.setValue("filename", ui->filename->text());
 }
@@ -520,15 +520,15 @@ void MainWindow::setFrontSettings() {
         ui->circle_points->setChecked(1);
     }
 
-    if(ui->GL->dotted_line == 0) {
+    if(ui->GL->dottedLine == 0) {
         ui->no_lines->setChecked(1);
-    } else if(ui->GL->dotted_line == 1) {
+    } else if(ui->GL->dottedLine == 1) {
         ui->default_line->setChecked(1);
     } else {
         ui->dotted_line->setChecked(1);
     }
 
-    if(ui->GL->calculation_mode == 0) {
+    if(ui->GL->calculationMode == 0) {
         ui->calc_cpu->setChecked(1);
     } else {
         ui->calc_gpu->setChecked(1);
@@ -540,8 +540,8 @@ void MainWindow::setFrontSettings() {
         ui->parallel->setChecked(1);
     }
 
-    ui->point_size->setValue(ui->GL->points_size);
-    ui->line_size_edit->setValue(ui->GL->line_size);
+    ui->point_size->setValue(ui->GL->pointsSize);
+    ui->line_size_edit->setValue(ui->GL->lineSize);
 
 }
 
@@ -554,10 +554,10 @@ void MainWindow::loadSettings() {
         ui->GL->clr_vert = settings.value("vertex_color").value<QColor>();
         ui->GL->clr_line = settings.value("line_color").value<QColor>();
         ui->GL->points = settings.value("points").value<int>();
-        ui->GL->points_size = settings.value("point_size").value<int>();
-        ui->GL->dotted_line = settings.value("lines").value<int>();
-        ui->GL->line_size = settings.value("line_size").value<int>();
-        ui->GL->calculation_mode = settings.value("calc_mode").value<int>();
+        ui->GL->pointsSize = settings.value("point_size").value<int>();
+        ui->GL->dottedLine = settings.value("lines").value<int>();
+        ui->GL->lineSize = settings.value("line_size").value<int>();
+        ui->GL->calculationMode = settings.value("calc_mode").value<int>();
         ui->GL->projection = settings.value("projection").value<int>();
         ui->filename->setText(settings.value("filename").value<QString>());
     }
@@ -589,8 +589,8 @@ void MainWindow::on_save_image_clicked()
             }
         }
 
-        if (!filePath.isEmpty()) {
-            ui->GL->createImage(filePath, format);
+        if (!filePath.isEmpty() && !ui->GL->createImage(filePath, format)) {
+            QMessageBox::warning(this, "Error", "Error when creating a snapshot of the model");
         }
     }
 }
@@ -599,11 +599,11 @@ void MainWindow::on_save_gif_clicked()
 {
     if(recording == false) {
         recording = true;
-        gif_count = 0;
-        dir.mkdir(screen_dir);
+        gifCount = 0;
+        dir.mkdir(screenDir);
         timer = 3;
         countdownTimer->start(1000);
-        ui->save_gif->setStyleSheet(QString("QPushButton {font-weight: bold;background-color: rgba(101, 0, 189, 1);color: rgb(255, 255, 255);font-size: 14px;border-radius: 20px;padding: 6px 12px;border: 3px solid rgba(189, 0, 195, 0.25);} QPushButton:pressed {background-color: rgb(76, 20, 98);}"));
+        ui->save_gif->setStyleSheet(QString("QPushButton {font-weight: bold;background-color: rgba(101, 0, 189, 1);color: rgb(255, 255, 255);font-size: 14px;border-radius: 20px;padding: 6px 12px;border: 3px solid rgba(189, 0, 195, 0.75);} QPushButton:pressed {background-color: rgb(76, 20, 98);}"));
         ui->save_gif->setText(QString::number(timer));
     }
 }
@@ -615,39 +615,31 @@ void MainWindow::countDown() {
     if(timer == 0) {
         countdownTimer->stop();
         ui->save_gif->setText("Recording");
-        periodicTimer->start(1000 / gif_fps);
+        periodicTimer->start(1000 / gifFps);
     }
 }
 
 void MainWindow::createSnapshot() {
-    gif_count++;
+    gifCount++;
 
     QString format = QString(".bmp");
 
-    ui->GL->createImage(abs_screen_dir + QString::number(gif_count) + format, "BMP");
+    ui->GL->createImage(absScreenDir + QString::number(gifCount) + format, "BMP");
 
-    if(gif_count == gif_fps * gif_length) {
+    if(gifCount == gifFps * gifLength) {
         periodicTimer->stop();
 
-        QFileDialog dialog(this, "Save gif as");
-        dialog.setAcceptMode(QFileDialog::AcceptSave);
-        dialog.setNameFilters(QStringList("GIF Files (*.gif)"));
+        QString filePath = QFileDialog::getSaveFileName(this, "Save gif as", "", "GIF Files (*.gif)");
 
-        if (dialog.exec() == QDialog::Accepted) {
-            QString filePath = dialog.selectedFiles().first();
-
-            if (dialog.selectedNameFilter() == "GIF Files (*.gif)") {
-                if (!filePath.endsWith(".gif", Qt::CaseInsensitive)) {
-                    filePath += ".gif";
-                }
+        if (!filePath.isEmpty()) {
+            if (!filePath.endsWith(".gif", Qt::CaseInsensitive)) {
+                filePath += ".gif";
             }
 
-            if (!filePath.isEmpty()) {
-                create_gif(filePath);
-            }
+            createGif(filePath);
         }
 
-        QDir imagesDir(dir.absoluteFilePath(screen_dir));
+        QDir imagesDir(dir.absoluteFilePath(screenDir));
         if (imagesDir.exists()) {
             imagesDir.removeRecursively();
         }
@@ -658,18 +650,18 @@ void MainWindow::createSnapshot() {
     }
 }
 
-void MainWindow::create_gif(QString path_to_gif) {
+void MainWindow::createGif(QString path_to_gif) {
     bool correct = true;
 
     QString format = QString(".bmp");
 
     GifWriter writer = {};
-    if (!GifBegin(&writer, path_to_gif.toStdString().c_str(), 640, 480, gif_fps)) {
+    if (!GifBegin(&writer, path_to_gif.toStdString().c_str(), 640, 480, gifFps)) {
         correct = false;
     }
 
-    for (int count = 1; count <= gif_fps * gif_length && correct; count++) {
-        QString framePath = abs_screen_dir + QString::number(count) + format;
+    for (int count = 1; count <= gifFps * gifLength && correct; count++) {
+        QString framePath = absScreenDir + QString::number(count) + format;
         QImage frame(framePath);
 
         if (frame.isNull()) {
@@ -682,7 +674,7 @@ void MainWindow::create_gif(QString path_to_gif) {
             convertedFrame = convertedFrame.scaled(640, 480);
         }
 
-        if (!GifWriteFrame(&writer, convertedFrame.bits(), 640, 480, gif_fps)) {
+        if (!GifWriteFrame(&writer, convertedFrame.bits(), 640, 480, gifFps)) {
             correct = false;
             break;
         }

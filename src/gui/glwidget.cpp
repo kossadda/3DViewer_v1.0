@@ -9,11 +9,11 @@ GLWidget::GLWidget(QWidget *parent)
     , clr_vert(0, 255, 255)
     , clr_line(255, 0, 100)
     , points(0)
-    , points_size(1)
-    , dotted_line(1)
-    , line_size(1)
-    , rotation_mode(0)
-    , calculation_mode(0)
+    , pointsSize(1)
+    , dottedLine(1)
+    , lineSize(1)
+    , rotationMode(0)
+    , calculationMode(0)
     , projection(0)
 {
     setlocale(LC_NUMERIC, "C");
@@ -67,8 +67,8 @@ void GLWidget::initializeGL() {
     m_program->bindAttributeLocation("vertex", 0);
     m_program->link();
     m_program->bind();
-    m_coeffMatrixLoc = m_program->uniformLocation("coeffMatrix");
-    m_colorLoc = m_program->uniformLocation("color");
+    coeffMatrixLoc = m_program->uniformLocation("coeffMatrix");
+    colorLoc = m_program->uniformLocation("color");
 
     rotateMatrix.setToIdentity();
     moveMatrix.setToIdentity();
@@ -176,23 +176,23 @@ void GLWidget::paintGL() {
     glClearColor(clr_back.redF(), clr_back.greenF(), clr_back.blueF(), 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    if(calculation_mode == 1) {
+    if(calculationMode == 1) {
       updateBuffer(object.vertexes.matrix);
       afinneGPU(sliders);
     } else {
       updateBuffer(data.vertexes.matrix);
     }
 
-    m_program->setUniformValue(m_coeffMatrixLoc, projectionMatrix * cameraMatrix * moveMatrix * rotateMatrix * scaleMatrix);
+    m_program->setUniformValue(coeffMatrixLoc, projectionMatrix * cameraMatrix * moveMatrix * rotateMatrix * scaleMatrix);
 
     if(vao.isCreated() && vbo.isCreated() && ebo.isCreated()) {
         vao.bind();
 
-        if(dotted_line != 0) {
+        if(dottedLine != 0) {
             m_program->setUniformValue("color", QVector4D(clr_line.redF(), clr_line.greenF(), clr_line.blueF(), clr_line.alphaF()));
-            glLineWidth(line_size);
+            glLineWidth(lineSize);
 
-            if(dotted_line == 2) {
+            if(dottedLine == 2) {
                 glEnable(GL_LINE_STIPPLE);
                 glLineStipple(1, 0x00FF);
             } else {
@@ -204,7 +204,7 @@ void GLWidget::paintGL() {
 
         if(points != 0) {
             m_program->setUniformValue("color", QVector4D(clr_vert.redF(), clr_vert.greenF(), clr_vert.blueF(), clr_vert.alphaF()));
-            glPointSize(points_size);
+            glPointSize(pointsSize);
 
             if(points == 2) {
                 glEnable(GL_POINT_SMOOTH);
@@ -243,15 +243,11 @@ void GLWidget::initModel(QString filepath) {
     update();
 }
 
-void GLWidget::createImage(QString filePath, QString format) {
+int GLWidget::createImage(QString filePath, QString format) {
     makeCurrent();
-
     QImage image = grabFramebuffer();
-    if (!image.save(filePath, format.toStdString().c_str())) {
-
-    } else {
-
-    }
-
+    int err = image.save(filePath, format.toStdString().c_str());
     doneCurrent();
+
+    return err;
 }

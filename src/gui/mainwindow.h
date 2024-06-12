@@ -34,7 +34,7 @@ private slots:
     void on_Y_move_valueChanged(int position);
     void on_Z_move_valueChanged(int position);
     void on_reset_clicked();
-    void update_vertex();
+    void updateVertex();
     void on_reset_rotate_clicked();
     void on_reset_scale_clicked();
     void on_reset_move_clicked();
@@ -70,7 +70,7 @@ private slots:
     void on_save_image_clicked();
     void on_save_gif_clicked();
     void createSnapshot();
-    void create_gif(QString path_to_gif);
+    void createGif(QString path_to_gif);
     void countDown();
     
 protected:
@@ -81,16 +81,16 @@ private:
     QPoint startPos;
     bool leftMouse;
     bool rightMouse;
-    int gif_count;
-    int gif_fps;
-    int gif_length;
+    int gifCount;
+    int gifFps;
+    int gifLength;
     int timer;
     bool recording;
     QTimer *periodicTimer;
     QTimer *countdownTimer;
     QDir dir;
-    QString screen_dir;
-    QString abs_screen_dir;
+    QString screenDir;
+    QString absScreenDir;
 
 public slots:
     void slotMousePress(QMouseEvent *event);
