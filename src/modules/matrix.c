@@ -11,6 +11,13 @@
 
 #include "./include/matrix.h"
 
+/**
+ * @brief Creates a matrix
+ * 
+ * @param[in] rows number of rows
+ * @param[in] cols number of columns
+ * @return matrix_t - created matrix
+ */
 matrix_t mx_create(int rows, int cols) {
   matrix_t create;
 
@@ -21,6 +28,11 @@ matrix_t mx_create(int rows, int cols) {
   return create;
 }
 
+/**
+ * @brief Clears the memory allocated to the matrix
+ * 
+ * @param[out] mx matrix
+ */
 void mx_remove(matrix_t *mx) {
   if (mx->matrix) {
     free(mx->matrix);
@@ -31,37 +43,57 @@ void mx_remove(matrix_t *mx) {
   mx->cols = 0;
 }
 
+/**
+ * @brief Multiplies a 4x4 matrix by a 4x1 column vector
+ * 
+ * @param[out] data vertices subject to affine transformations
+ * @param[in] vertexes initial values ​​of vertex coordinates
+ * @param[in] vector transformation matrix
+ * @param[in] rows number of vertices
+ */
 void mx_mult_vector(float *data, float *vertexes, float *vector, int rows) {
-  for (int k = 0; k < rows; k++, vertexes += 3, data += 3) {
+  for (int k = 0; k < rows; k++, vertexes += V_CNT, data += V_CNT) {
     float *vr = vector;
 
-    for (int i = 0; i < 3; i++, vr += 4) {
+    for (int i = 0; i < V_CNT; i++, vr += TR_MX_SIZE) {
       data[i] = vr[0] * vertexes[0] + vr[1] * vertexes[1] + vr[2] * vertexes[2] + vr[3];
     }
   }
 }
 
+/**
+ * @brief Multiplies a 4x4 matrix by a 4x4 matrix
+ * 
+ * @param[out] current effective transformation matrix
+ * @param[in] mul affine transformation matrix
+ */
 void mx_mult_4x4(float *current, float *mul) {
-  float tmp[4 * 4];
+  float tmp[TR_MX_SIZE * TR_MX_SIZE];
   float sum;
 
-  for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 4; j++) {
+  for (int i = 0; i < TR_MX_SIZE; i++) {
+    for (int j = 0; j < TR_MX_SIZE; j++) {
       sum = 0;
 
-      for (int k = 0; k < 4; k++) {
-        sum += current[i * 4 + k] * mul[k * 4 + j];
+      for (int k = 0; k < TR_MX_SIZE; k++) {
+        sum += current[i * TR_MX_SIZE + k] * mul[k * TR_MX_SIZE + j];
       }
 
-      tmp[i * 4 + j] = sum;
+      tmp[i * TR_MX_SIZE + j] = sum;
     }
   }
 
   mx_copy(current, tmp);
 }
 
+/**
+ * @brief Copies the values ​​of one 4x4 matrix to another
+ * 
+ * @param[out] copy where to copy
+ * @param[in] data where to copy from
+ */
 void mx_copy(float *copy, float *data) {
-  for (int i = 0; i < 4 * 4; i++) {
+  for (int i = 0; i < TR_MX_SIZE * TR_MX_SIZE; i++) {
     copy[i] = data[i];
   }
 }

@@ -11,6 +11,11 @@
 
 #include "./include/afine.h"
 
+/**
+ * @brief Initialize transformation matrices
+ * 
+ * @return afinne_t - object with allocated memory
+ */
 afinne_t init_afinne() {
   afinne_t mx;
 
@@ -32,6 +37,11 @@ afinne_t init_afinne() {
   return mx;
 }
 
+/**
+ * @brief Clears memory allocated for conversion matrices
+ * 
+ * @param[out] mx - matrix data struct
+ */
 void destroy_affine(afinne_t *mx) {
   if (mx->current) {
     free(mx->current);
@@ -69,6 +79,11 @@ void destroy_affine(afinne_t *mx) {
   }
 }
 
+/**
+ * @brief Normalizes model coordinates to a range [-1;1]
+ * 
+ * @param[out] data models data struct
+ */
 void normalize_vertex(data_t *data) {
   float *vertex = data->vertexes.matrix;
 
@@ -79,6 +94,13 @@ void normalize_vertex(data_t *data) {
   }
 }
 
+/**
+ * @brief Multiplies transformation matrices into one result matrix
+ * 
+ * @param[out] mx struct of transformation matrices
+ * @param[in] data bitwise representation of changes in transformation matrices
+ * @param[in] mode model rotation mode. 0 - around its axis, 1 - around the coordinate axes
+ */
 void transform_mx(afinne_t *mx, unsigned int data, int mode) {
   mx_copy(mx->current, mx->identity);
 

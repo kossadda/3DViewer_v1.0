@@ -16,6 +16,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/// @brief Number of vertex coordinates
+#define V_CNT 3
+
+/// @brief Transformation matrix dimension
+#define TR_MX_SIZE 4
+
 /// @brief Matrix struct
 typedef struct {
   float *matrix; ///< Matrix array

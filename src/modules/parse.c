@@ -16,10 +16,10 @@
 /**
  * @brief Parses the model. If the filename is NULL, the structure is simply initialized. If the filename is valid - model parsing
  * 
- * @param[out] filename path to obj file
+ * @param[in] filename path to obj file
  * @return data_t - structure filled with data about the model
  */
-data_t parse(const char *filename) {
+data_t parse(char *filename) {
   FILE *obj = NULL;
   data_t data;
 
@@ -44,7 +44,7 @@ data_t parse(const char *filename) {
  * @brief Initialize the model. If the obj is NULL, the structure is simply initialized. If the obj is valid - memory allocated
  * 
  * @param[out] data models data
- * @param[out] obj obj model file
+ * @param[in] obj obj model file
  */
 void init_data(data_t *data, FILE *obj) {
   data->vertex_count = 0;
@@ -66,7 +66,7 @@ void init_data(data_t *data, FILE *obj) {
       }
     }
 
-    data->vertexes = mx_create(data->vertex_count, V_DOTS_CNT);
+    data->vertexes = mx_create(data->vertex_count, V_CNT);
 
     rewind(obj);
 
@@ -113,6 +113,12 @@ void remove_data(data_t *data) {
   data->max_position = 0.0f;
 }
 
+/**
+ * @brief Fill the structure with data about the 3D model
+ * 
+ * @param[out] data models data struct
+ * @param[in] obj obj model file
+ */
 void get_data(data_t *data, FILE *obj) {
   char *token = NULL;
   char *line = NULL;
@@ -123,7 +129,7 @@ void get_data(data_t *data, FILE *obj) {
 
   while ((len = getline(&line, &n, obj)) != -1) {
     if (*line == 'v' && *(line + 1) == ' ') {
-      for (int j = 0; j < V_DOTS_CNT; j++, v_ptr++) {
+      for (int j = 0; j < V_CNT; j++, v_ptr++) {
         token = strtok((token) ? NULL : (line + 1), " ");
         *v_ptr = atof(token);
         if (data->max_position < fabsf(*v_ptr)) {
@@ -159,6 +165,12 @@ void get_data(data_t *data, FILE *obj) {
   line = NULL;
 }
 
+/**
+ * @brief Determines the number of vertices in one facet
+ * 
+ * @param[in] line string with vertices of one facet
+ * @return int - number of vertices
+ */
 int vert_count_in_facet(char *line) {
   char *token = NULL;
   int count = 0;
@@ -175,6 +187,12 @@ int vert_count_in_facet(char *line) {
   return count;
 }
 
+/**
+ * @brief Creates a copy of 3D model vertex data
+ * 
+ * @param[in] object 3D model data
+ * @return data_t - copy of the model
+ */
 data_t copy_data(data_t *object) {
   data_t data;
 
@@ -183,9 +201,9 @@ data_t copy_data(data_t *object) {
   data.full_cnt = object->full_cnt;
   data.max_position = object->max_position;
   data.facets = NULL;
-  data.vertexes = mx_create(data.vertex_count, V_DOTS_CNT);
+  data.vertexes = mx_create(data.vertex_count, V_CNT);
 
-  for (int i = 0; i < data.vertex_count * V_DOTS_CNT; i++) {
+  for (int i = 0; i < data.vertex_count * V_CNT; i++) {
     ///@todo memcpy
     data.vertexes.matrix[i] = object->vertexes.matrix[i];
   }

@@ -17,9 +17,6 @@
 
 #include "./matrix.h"
 
-/// @brief Number of vertex coordinates
-#define V_DOTS_CNT 3
-
 /// @brief Contains all 3D model data
 typedef struct {
   int vertex_count; ///< Number of model vertices
