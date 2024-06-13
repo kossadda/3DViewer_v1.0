@@ -138,7 +138,7 @@ int get_data(data_t *data, FILE *obj) {
       for (int j = 0; j < V_CNT; j++, v_ptr++) {
         token = strtok((token) ? NULL : (line + 1), " ");
 
-        if (token && (strlen(token) > 1 && !strpbrk(token, "0123456789"))) {
+        if (token && (*token != '\n' && !strpbrk(token, "0123456789"))) {
           err = true;
         } else if (token) {
           *v_ptr = atof(token);
