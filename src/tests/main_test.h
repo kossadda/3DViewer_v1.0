@@ -12,9 +12,9 @@
 #ifndef _MAIN_TEST_H_
 #define _MAIN_TEST_H_
 
-// #include "./include_test/blocks_test.h"
+#include "./include_test/parse_test.h"
 
-// #define SPACE_CHECKS_ON
+#define PARSE_ON
 
 #define GREEN "\033[0;32m"
 #define ORANGE "\033[1;33m"

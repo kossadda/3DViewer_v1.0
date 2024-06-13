@@ -21,7 +21,6 @@ static void test_function(Suite *(**array)(void), size_t size, char *name,
 static void conclusion(int passed_count, int failed_count, double time);
 static void function_declaration(char *function);
 static int test_suite(Suite *test, int *passed_count);
-static void greetings();
 static void line();
 static void declare_line(int mode);
 
@@ -36,18 +35,17 @@ int main(void) {
   int failed_count = 0;
   int passed_count = 0;
 
-  greetings();
   struct timeval start, end;
 
   gettimeofday(&start, NULL);
 
-// #ifdef SPACE_CHECKS_ON
-//   Suite *(*space_checks[])(void) = {
-//       space_checks_test,
-//   };
-//   test_function(space_checks, sizeof(space_checks) / sizeof(space_checks[0]),
-//                 "SPACE_CHECKS", &passed_count, &failed_count);
-// #endif
+#ifdef PARSE_ON
+  Suite *(*parse[])(void) = {
+      parse_test,
+  };
+  test_function(parse, sizeof(parse) / sizeof(parse[0]),
+                "PARSE", &passed_count, &failed_count);
+#endif
 
   gettimeofday(&end, NULL);
   double micros = (((double)((end.tv_sec - start.tv_sec) * 1000000.0) +
@@ -78,73 +76,6 @@ static int test_suite(Suite *test, int *passed_count) {
   srunner_free(suite_runner);
 
   return failed_count;
-}
-
-/**
- * @brief Prints greeting message.
- */
-static void greetings() {
-  printf(ORANGE
-         "\t\t\t\t __          __  _                            _          _   "
-         "         _   _\n");
-  printf(
-      "\t\t\t\t \\ \\        / / | |                          | |        | |   "
-      "       | | (_)            \n");
-  printf(
-      "\t\t\t\t  \\ \\  /\\  / /__| | ___ ___  _ __ ___   ___  | |_ ___   | |_ "
-      "___  ___| |_ _ _ __   __ _ \n");
-  printf(
-      "\t\t\t\t   \\ \\/  \\/ / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ | __/ _ \\  "
-      "| __/ _ \\/ __| __| | '_ \\ / _` |\n");
-  printf(
-      "\t\t\t\t    \\  /\\  /  __/ | (_| (_) | | | | | |  __/ | || (_) | | ||  "
-      "__/\\__ \\ |_| | | | | (_| |\n");
-  printf(
-      "\t\t\t\t     \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|  \\__\\___/  "
-      " \\__\\___||___/\\__|_|_| |_|\\__, |\n");
-  printf(
-      "\t\t\t\t                                                                "
-      "                   __/ |\n");
-  printf(
-      "\t\t\t\t                                                                "
-      "                  |___/ \n");
-  printf("\t\t\t\t                                    _\n");
-  printf("\t\t\t\t                                   | |\n");
-  printf("\t\t\t\t                                   | |__  _   _\n");
-  printf("\t\t\t\t                                   | '_ \\| | | |\n");
-  printf("\t\t\t\t                                   | |_) | |_| |\n");
-  printf("\t\t\t\t                                   |_.__/ \\__, |\n");
-  printf(
-      "\t\t\t\t                       _                   __/ |   _     _\n");
-  printf(
-      "\t\t\t\t                      | |                 |___/   | |   | |\n");
-  printf(
-      "\t\t\t\t                      | | _____  ___ ___  __ _  __| | __| | __ "
-      "_\n");
-  printf(
-      "\t\t\t\t                      | |/ / _ \\/ __/ __|/ _` |/ _` |/ _` |/ "
-      "_` |\n");
-  printf(
-      "\t\t\t\t                      |   < (_) \\__ \\__ \\ (_| | (_| | (_| | "
-      "(_| |\n");
-  printf(
-      "\t\t\t\t                      "
-      "|_|\\_\\___/|___/___/\\__,_|\\__,_|\\__,_|\\__,_|\n");
-  printf(
-      "\t\t\t\t                                                     | |        "
-      "       \n");
-  printf(
-      "\t\t\t\t                  ___ _ __ ___  _ __ ___   ___  _ __ | |__   "
-      "___  __ _ \n");
-  printf(
-      "\t\t\t\t                 / _ \\ '_ ` _ \\| '_ ` _ \\ / _ \\| '_ \\| '_ "
-      "\\ / _ \\/ _` |\n");
-  printf(
-      "\t\t\t\t                |  __/ | | | | | | | | | | (_) | | | | |_) |  "
-      "__/ (_| |\n");
-  printf(
-      "\t\t\t\t                 \\___|_| |_| |_|_| |_| |_|\\___/|_| |_|_.__/ "
-      "\\___|\\__,_|\n" RESET);
 }
 
 /**
