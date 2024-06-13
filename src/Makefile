@@ -94,7 +94,7 @@ TEST_OBJ_PATH = $(OBJ_DIR)/*_test.o
 #================= LIST OF FILES TO CLANG-FORMAT AND CPPCHECK =================#
 C_FILES = $(MODULES_C) $(TEST_C)
 H_FILES = $(MODULES_H) $(MAIN_H) $(TEST_H)
-ALL_FILES = $(C_FILES) $(H_FILES)
+ALL_FILES = $(C_FILES) $(GUI_MODULES) $(H_FILES)
 #==============================================================================#
 
 

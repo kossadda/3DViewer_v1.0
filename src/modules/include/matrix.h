@@ -15,6 +15,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /// @brief Number of vertex coordinates
 #define V_CNT 3
@@ -24,9 +25,9 @@
 
 /// @brief Matrix struct
 typedef struct {
-  float *matrix; ///< Matrix array
-  int rows; ///< Number of rows
-  int cols; ///< Number of columns
+  float *matrix;  ///< Matrix array
+  int rows;       ///< Number of rows
+  int cols;       ///< Number of columns
 } matrix_t;
 
 matrix_t mx_create(int rows, int cols);

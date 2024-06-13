@@ -12,8 +12,9 @@
 #ifndef _PARSE_H_
 #define _PARSE_H_
 
-#include "./objects.h"
 #include <ctype.h>
+
+#include "./objects.h"
 
 /// @brief 1 degree in radians
 #define RAD 0.0174532925199433

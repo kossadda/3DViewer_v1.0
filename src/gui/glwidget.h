@@ -49,7 +49,6 @@ public:
     int pointsSize;
     int dottedLine;
     int lineSize;
-    int rotationMode;
     int calculationMode;
     float sliders[7];
     int projection;

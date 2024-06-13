@@ -14,16 +14,19 @@
 #include "./include/parse.h"
 
 /**
- * @brief Parses the model. If the filename is NULL, the structure is simply initialized. If the filename is valid - model parsing
- * 
+ * @brief Parses the model. If the filename is NULL, the structure is simply
+ * initialized. If the filename is valid - model parsing
+ *
  * @param[in] filename path to obj file
- * @return data_t - structure filled with data about the model
+ * @param[out] data models data
+ * @retval false - valid parse
+ * @retval true - invalid parse
  */
 int parse(char *filename, data_t *data) {
   FILE *obj = NULL;
   int err = false;
 
-  if(filename) {
+  if (filename) {
     obj = fopen(filename, "r");
   }
 
@@ -32,8 +35,8 @@ int parse(char *filename, data_t *data) {
   if (obj && !err) {
     err = get_data(data, obj);
   }
-  
-  if(filename) {
+
+  if (filename) {
     fclose(obj);
   }
 
@@ -41,10 +44,13 @@ int parse(char *filename, data_t *data) {
 }
 
 /**
- * @brief Initialize the model. If the obj is NULL, the structure is simply initialized. If the obj is valid - memory allocated
- * 
+ * @brief Initialize the model. If the obj is NULL, the structure is simply
+ * initialized. If the obj is valid - memory allocated
+ *
  * @param[out] data models data
  * @param[in] obj obj model file
+ * @retval false - correct memory allocate
+ * @retval true - memory allocate failed
  */
 int init_data(data_t *data, FILE *obj) {
   int err = false;
@@ -53,39 +59,34 @@ int init_data(data_t *data, FILE *obj) {
   data->full_cnt = 0;
   data->max_position = 0.0f;
 
-  if(obj != NULL) {
+  if (obj != NULL) {
     char *line = NULL;
     size_t n = 0;
     ssize_t len;
 
     while ((len = getline(&line, &n, obj)) != -1) {
-      if (*line == 'v' && *(line + 1) == ' ') {
+      char *line_ptr = line;
+      while (*line_ptr == ' ') line_ptr++;
+
+      if (*line_ptr == 'v' && *(line_ptr + 1) == ' ') {
         data->vertex_count++;
-      } else if (*line == 'f' && *(line + 1) == ' ') {
-        ///@todo move full_cnt here
+      } else if (*line_ptr == 'f' && *(line_ptr + 1) == ' ') {
+        data->full_cnt += vert_count_in_facet(line_ptr + 2);
         data->facet_count++;
       }
     }
 
+    data->full_cnt *= 2;
     data->vertexes = mx_create(data->vertex_count, V_CNT);
-    if (data->vertexes.matrix == NULL) err = true;
+    data->facets = (int *)calloc(data->full_cnt, sizeof(int));
 
-    rewind(obj);
-
-    while ((len = getline(&line, &n, obj)) != -1) {
-      if (*line == 'f' && *(line + 1) == ' ') {
-        data->full_cnt += vert_count_in_facet(line + 2);
-      }
+    if (!data->facets || !data->vertexes.matrix) {
+      err = true;
     }
 
-    data->full_cnt *= 2;
-
-    data->facets = (int *)calloc(data->full_cnt, sizeof(int));
-    if (data->facets == NULL) err = true;
-
-    if(line) {
-        free(line);
-        line = NULL;
+    if (line) {
+      free(line);
+      line = NULL;
     }
 
     rewind(obj);
@@ -101,7 +102,7 @@ int init_data(data_t *data, FILE *obj) {
 
 /**
  * @brief Clear model of data
- * 
+ *
  * @param[out] data models data
  */
 void remove_data(data_t *data) {
@@ -120,23 +121,27 @@ void remove_data(data_t *data) {
 
 /**
  * @brief Fill the structure with data about the 3D model
- * 
+ *
  * @param[out] data models data struct
  * @param[in] obj obj model file
+ * @retval false - valid parse
+ * @retval true - invalid parse
  */
 int get_data(data_t *data, FILE *obj) {
   int err = false;
-  char *token = NULL;
-  char *line = NULL;
+  char *token = NULL, *line = NULL;
   size_t n = 0;
   ssize_t len;
   float *v_ptr = data->vertexes.matrix;
   int *f_ptr = data->facets;
 
   while ((len = getline(&line, &n, obj)) != -1) {
-    if (*line == 'v' && *(line + 1) == ' ') {
+    char *line_ptr = line;
+    while (*line_ptr == ' ') line_ptr++;
+
+    if (*line_ptr == 'v' && *(line_ptr + 1) == ' ') {
       for (int j = 0; j < V_CNT; j++, v_ptr++) {
-        token = strtok((token) ? NULL : (line + 1), " ");
+        token = strtok((token) ? NULL : (line_ptr + 1), " ");
 
         if (token && (*token != '\n' && !strpbrk(token, "0123456789"))) {
           err = true;
@@ -150,27 +155,25 @@ int get_data(data_t *data, FILE *obj) {
       }
 
       token = NULL;
-    } else if (*line == 'f' && *(line + 1) == ' ') {
+    } else if (*line_ptr == 'f' && *(line_ptr + 1) == ' ') {
       int *begin = f_ptr;
 
-      token = strtok(line + 1, " ");
-      
-      while (token != NULL) {
-        int vertex = atoi(token);
+      token = strtok(line_ptr + 1, " ");
+
+      for (int vertex; token && !err; f_ptr++) {
+        vertex = atoi(token);
 
         if (!vertex) {
           err = true;
         } else if (f_ptr == begin) {
-          *f_ptr++ = vertex - 1;
+          *f_ptr = vertex - 1;
         } else {
           *f_ptr++ = vertex - 1;
           *f_ptr = *(f_ptr - 1);
-          ///@todo prefix/postfix
-          f_ptr++;
         }
 
         token = strtok(NULL, " ");
-        if(token && !strpbrk(token, "0123456789")) token = NULL;
+        if (token && !strpbrk(token, "0123456789")) token = NULL;
       }
 
       *f_ptr++ = *begin;
@@ -188,7 +191,7 @@ int get_data(data_t *data, FILE *obj) {
 
 /**
  * @brief Determines the number of vertices in one facet
- * 
+ *
  * @param[in] line string with vertices of one facet
  * @return int - number of vertices
  */
@@ -199,7 +202,7 @@ int vert_count_in_facet(char *line) {
   char str[strlen(line) + 1];
   sprintf(str, "%s", line);
 
-  for(int i = strlen(str) - 1; i >= 0 && isdigit(str[i]) == 0; i--) {
+  for (int i = strlen(str) - 1; i >= 0 && isdigit(str[i]) == 0; i--) {
     str[i] = '\0';
   }
 
@@ -210,7 +213,7 @@ int vert_count_in_facet(char *line) {
 
 /**
  * @brief Creates a copy of 3D model vertex data
- * 
+ *
  * @param[in] object 3D model data
  * @return data_t - copy of the model
  */
@@ -224,10 +227,8 @@ data_t copy_data(data_t *object) {
   data.facets = NULL;
   data.vertexes = mx_create(data.vertex_count, V_CNT);
 
-  for (int i = 0; i < data.vertex_count * V_CNT; i++) {
-    ///@todo memcpy
-    data.vertexes.matrix[i] = object->vertexes.matrix[i];
-  }
+  memcpy(data.vertexes.matrix, object->vertexes.matrix,
+         data.vertex_count * V_CNT * sizeof(float));
 
   return data;
 }

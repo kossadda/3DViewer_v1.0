@@ -13,7 +13,7 @@
 
 /**
  * @brief Creates a matrix
- * 
+ *
  * @param[in] rows number of rows
  * @param[in] cols number of columns
  * @return matrix_t - created matrix
@@ -30,7 +30,7 @@ matrix_t mx_create(int rows, int cols) {
 
 /**
  * @brief Clears the memory allocated to the matrix
- * 
+ *
  * @param[out] mx matrix
  */
 void mx_remove(matrix_t *mx) {
@@ -45,7 +45,7 @@ void mx_remove(matrix_t *mx) {
 
 /**
  * @brief Multiplies a 4x4 matrix by a 4x1 column vector
- * 
+ *
  * @param[out] data vertices subject to affine transformations
  * @param[in] vertexes initial values ​​of vertex coordinates
  * @param[in] vector transformation matrix
@@ -56,14 +56,15 @@ void mx_mult_vector(float *data, float *vertexes, float *vector, int rows) {
     float *vr = vector;
 
     for (int i = 0; i < V_CNT; i++, vr += TR_MX_SIZE) {
-      data[i] = vr[0] * vertexes[0] + vr[1] * vertexes[1] + vr[2] * vertexes[2] + vr[3];
+      data[i] = vr[0] * vertexes[0] + vr[1] * vertexes[1] +
+                vr[2] * vertexes[2] + vr[3];
     }
   }
 }
 
 /**
  * @brief Multiplies a 4x4 matrix by a 4x4 matrix
- * 
+ *
  * @param[out] current effective transformation matrix
  * @param[in] mul affine transformation matrix
  */
@@ -88,12 +89,10 @@ void mx_mult_4x4(float *current, float *mul) {
 
 /**
  * @brief Copies the values ​​of one 4x4 matrix to another
- * 
+ *
  * @param[out] copy where to copy
  * @param[in] data where to copy from
  */
 void mx_copy(float *copy, float *data) {
-  for (int i = 0; i < TR_MX_SIZE * TR_MX_SIZE; i++) {
-    copy[i] = data[i];
-  }
+  memcpy(copy, data, TR_MX_SIZE * TR_MX_SIZE * sizeof(float));
 }

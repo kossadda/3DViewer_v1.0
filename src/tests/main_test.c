@@ -43,8 +43,8 @@ int main(void) {
   Suite *(*parse[])(void) = {
       parse_test,
   };
-  test_function(parse, sizeof(parse) / sizeof(parse[0]),
-                "PARSE", &passed_count, &failed_count);
+  test_function(parse, sizeof(parse) / sizeof(parse[0]), "PARSE", &passed_count,
+                &failed_count);
 #endif
 
   gettimeofday(&end, NULL);

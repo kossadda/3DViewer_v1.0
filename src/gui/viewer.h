@@ -68,8 +68,6 @@ private slots:
     void on_default_line_toggled(bool checked);
     void on_no_lines_clicked();
     void on_line_size_edit_valueChanged(int arg1);
-    void on_rotate_model_toggled(bool checked);
-    void on_rotate_axes_toggled(bool checked);
     void on_load_file_clicked();
     void on_filename_returnPressed();
     void on_calc_cpu_toggled(bool checked);

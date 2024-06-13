@@ -29,9 +29,9 @@
 /// @brief Bit multiplying the result matrix by the Z-axis rotate matrix
 #define ROTATE_Z 1u << 4
 
-afinne_t init_afinne();
+int init_afinne(afinne_t *mx);
 void destroy_affine(afinne_t *mx);
 void normalize_vertex(data_t *data);
-void transform_mx(afinne_t *mx, unsigned int data, int mode);
+void transform_mx(afinne_t *mx, unsigned int data);
 
 #endif  //_AFINE_H_
