@@ -19,25 +19,25 @@
  * @param[in] filename path to obj file
  * @return data_t - structure filled with data about the model
  */
-data_t parse(char *filename) {
+int parse(char *filename, data_t *data) {
   FILE *obj = NULL;
-  data_t data;
+  int err = false;
 
   if(filename) {
     obj = fopen(filename, "r");
   }
 
-  init_data(&data, obj);
+  err = init_data(data, obj);
 
-  if (obj) {
-    get_data(&data, obj);
+  if (obj && !err) {
+    err = get_data(data, obj);
   }
   
   if(filename) {
     fclose(obj);
   }
 
-  return data;
+  return err;
 }
 
 /**
@@ -46,7 +46,8 @@ data_t parse(char *filename) {
  * @param[out] data models data
  * @param[in] obj obj model file
  */
-void init_data(data_t *data, FILE *obj) {
+int init_data(data_t *data, FILE *obj) {
+  int err = false;
   data->vertex_count = 0;
   data->facet_count = 0;
   data->full_cnt = 0;
@@ -67,18 +68,20 @@ void init_data(data_t *data, FILE *obj) {
     }
 
     data->vertexes = mx_create(data->vertex_count, V_CNT);
+    if (data->vertexes.matrix == NULL) err = true;
 
     rewind(obj);
 
     while ((len = getline(&line, &n, obj)) != -1) {
       if (*line == 'f' && *(line + 1) == ' ') {
-        data->full_cnt += vert_count_in_facet(line + 1);
+        data->full_cnt += vert_count_in_facet(line + 2);
       }
     }
 
     data->full_cnt *= 2;
 
     data->facets = (int *)calloc(data->full_cnt, sizeof(int));
+    if (data->facets == NULL) err = true;
 
     if(line) {
         free(line);
@@ -92,6 +95,8 @@ void init_data(data_t *data, FILE *obj) {
     data->vertexes.rows = 0;
     data->vertexes.cols = 0;
   }
+
+  return err;
 }
 
 /**
@@ -119,7 +124,8 @@ void remove_data(data_t *data) {
  * @param[out] data models data struct
  * @param[in] obj obj model file
  */
-void get_data(data_t *data, FILE *obj) {
+int get_data(data_t *data, FILE *obj) {
+  int err = false;
   char *token = NULL;
   char *line = NULL;
   size_t n = 0;
@@ -131,7 +137,13 @@ void get_data(data_t *data, FILE *obj) {
     if (*line == 'v' && *(line + 1) == ' ') {
       for (int j = 0; j < V_CNT; j++, v_ptr++) {
         token = strtok((token) ? NULL : (line + 1), " ");
-        *v_ptr = atof(token);
+
+        if (token && (strlen(token) > 1 && !strpbrk(token, "0123456789"))) {
+          err = true;
+        } else if (token) {
+          *v_ptr = atof(token);
+        }
+
         if (data->max_position < fabsf(*v_ptr)) {
           data->max_position = fabs(*v_ptr);
         }
@@ -144,14 +156,19 @@ void get_data(data_t *data, FILE *obj) {
       token = strtok(line + 1, " ");
       
       while (token != NULL) {
-        if (f_ptr == begin) {
-          *f_ptr++ = atoi(token) - 1;
+        int vertex = atoi(token);
+
+        if (!vertex) {
+          err = true;
+        } else if (f_ptr == begin) {
+          *f_ptr++ = vertex - 1;
         } else {
-          *f_ptr++ = atoi(token) - 1;
+          *f_ptr++ = vertex - 1;
           *f_ptr = *(f_ptr - 1);
           ///@todo prefix/postfix
           f_ptr++;
         }
+
         token = strtok(NULL, " ");
         if(token && !strpbrk(token, "0123456789")) token = NULL;
       }
@@ -161,8 +178,12 @@ void get_data(data_t *data, FILE *obj) {
     }
   }
 
-  free(line);
-  line = NULL;
+  if (line) {
+    free(line);
+    line = NULL;
+  }
+
+  return err;
 }
 
 /**
@@ -176,10 +197,10 @@ int vert_count_in_facet(char *line) {
   int count = 0;
 
   char str[strlen(line) + 1];
-  sprintf(str, "%s", line + 1);
+  sprintf(str, "%s", line);
 
-  for (char *ptr = str + strlen(str) - 1; isdigit(*ptr) == 0; ptr--) {
-    *ptr = '\0';
+  for(int i = strlen(str) - 1; i >= 0 && isdigit(str[i]) == 0; i--) {
+    str[i] = '\0';
   }
 
   while ((token = strtok((token) ? NULL : str, " ")) != NULL) count++;

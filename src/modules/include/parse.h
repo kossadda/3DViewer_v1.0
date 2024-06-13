@@ -18,11 +18,11 @@
 /// @brief 1 degree in radians
 #define RAD 0.0174532925199433
 
-data_t parse(char *filename);
+int parse(char *filename, data_t *data);
 data_t copy_data(data_t *object);
-void init_data(data_t *data, FILE *obj);
+int init_data(data_t *data, FILE *obj);
 void remove_data(data_t *data);
-void get_data(data_t *data, FILE *obj);
+int get_data(data_t *data, FILE *obj);
 int vert_count_in_facet(char *line);
 
 #endif  // _PARSE_H_

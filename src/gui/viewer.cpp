@@ -455,11 +455,14 @@ void viewer::on_filename_returnPressed()
     } else if(fileInfo.suffix() != "obj") {
         QMessageBox::warning(this, "Error", "Enter path to obj file");
     } else {
-        ui->GL->initModel(fileInfo.absoluteFilePath());
-        ui->info_model->setText("Verticies: " + QString::number(ui->GL->data.vertex_count) + "\nFacets: " + QString::number(ui->GL->data.facet_count));
-        on_reset_rotate_clicked();
-        on_reset_move_clicked();
-        on_reset_scale_clicked();
+        if(!ui->GL->initModel(fileInfo.absoluteFilePath())) {
+            ui->info_model->setText("Verticies: " + QString::number(ui->GL->data.vertex_count) + "\nFacets: " + QString::number(ui->GL->data.facet_count));
+            on_reset_rotate_clicked();
+            on_reset_move_clicked();
+            on_reset_scale_clicked();
+        } else {
+            QMessageBox::warning(this, "Error", "Invalid obj file");
+        }
     }
 }
 

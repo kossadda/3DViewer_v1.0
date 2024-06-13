@@ -27,7 +27,7 @@ GLWidget::GLWidget(QWidget *parent)
     , projection(0)
 {
     setlocale(LC_NUMERIC, "C");
-    data = parse(NULL);
+    parse(NULL, &data);
     object = copy_data(&data);
     std::fill(std::begin(sliders), std::end(sliders), 0.0f);
     sliders[6] = 1.0f;
@@ -241,16 +241,22 @@ void GLWidget::wheelEvent(QWheelEvent *event) {
     emit mouseWheel(event);
 }
 
-void GLWidget::initModel(QString filepath) {
+int GLWidget::initModel(QString filepath) {
     std::string str = filepath.toStdString();
     remove_data(&data);
     remove_data(&object);
-    data = parse((char *)str.c_str());
-    normalize_vertex(&data);
-    object = copy_data(&data);
-    destroyBuffers();
-    initBuffers();
-    update();
+
+    int err = parse((char *)str.c_str(), &data);
+
+    if (!err) {
+        normalize_vertex(&data);
+        object = copy_data(&data);
+        destroyBuffers();
+        initBuffers();
+        update();
+    }
+
+    return err;
 }
 
 int GLWidget::createImage(QString filePath, QString format) {
