@@ -1,11 +1,22 @@
-#include "mainwindow.h"
-#include "./ui_mainwindow.h"
+/**
+ * @file viewer.cpp
+ * @author kossadda (https://github.com/kossadda)
+ * @brief viewer class (main program) description module
+ * @version 1.0
+ * @date 2024-06-13
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
+#include "viewer.h"
+#include "./ui_viewer.h"
 
 #include "./gif.h"
 
-MainWindow::MainWindow(QWidget *parent)
+viewer::viewer(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::viewer)
     , leftMouse(false)
     , rightMouse(false)
     , periodicTimer(new QTimer(this))
@@ -23,12 +34,12 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowIcon(icon);
     ui->setupUi(this);
 
-    connect(ui->GL, &GLWidget::mousePress, this, &MainWindow::slotMousePress);
-    connect(ui->GL, &GLWidget::mouseMove, this, &MainWindow::slotMouseMove);
-    connect(ui->GL, &GLWidget::mouseWheel, this, &MainWindow::slotMouseWheel);
+    connect(ui->GL, &GLWidget::mousePress, this, &viewer::slotMousePress);
+    connect(ui->GL, &GLWidget::mouseMove, this, &viewer::slotMouseMove);
+    connect(ui->GL, &GLWidget::mouseWheel, this, &viewer::slotMouseWheel);
 
-    connect(periodicTimer, &QTimer::timeout, this, &MainWindow::createSnapshot);
-    connect(countdownTimer, &QTimer::timeout, this, &MainWindow::countDown);
+    connect(periodicTimer, &QTimer::timeout, this, &viewer::createSnapshot);
+    connect(countdownTimer, &QTimer::timeout, this, &viewer::countDown);
 
     QButtonGroup *group1 = new QButtonGroup(ui->other_frame);
     QButtonGroup *group2 = new QButtonGroup(ui->other_frame);
@@ -42,12 +53,12 @@ MainWindow::MainWindow(QWidget *parent)
     loadSettings();
 }
 
-MainWindow::~MainWindow()
+viewer::~viewer()
 {
     delete ui;
 }
 
-void MainWindow::on_Zoom_valueChanged(int position)
+void viewer::on_Zoom_valueChanged(int position)
 {
     ui->edit_scale->setValue(position);
     ui->GL->mx.scale[0] = ui->GL->mx.scale[5] = ui->GL->mx.scale[10] = (float)(position + 100.0f) / 100.0f;
@@ -56,7 +67,7 @@ void MainWindow::on_Zoom_valueChanged(int position)
     updateVertex();
 }
 
-void MainWindow::on_X_rotate_valueChanged(int position)
+void viewer::on_X_rotate_valueChanged(int position)
 {
     ui->edit_xr->setValue(position);
     float rt = (float)position * RAD;
@@ -68,7 +79,7 @@ void MainWindow::on_X_rotate_valueChanged(int position)
     updateVertex();
 }
 
-void MainWindow::on_Y_rotate_valueChanged(int position)
+void viewer::on_Y_rotate_valueChanged(int position)
 {
     ui->edit_yr->setValue(position);
     float rt = (float)position * RAD;
@@ -80,7 +91,7 @@ void MainWindow::on_Y_rotate_valueChanged(int position)
     updateVertex();
 }
 
-void MainWindow::on_Z_rotate_valueChanged(int position)
+void viewer::on_Z_rotate_valueChanged(int position)
 {
     ui->edit_zr->setValue(position);
     float rt = (float)position * RAD;
@@ -92,7 +103,7 @@ void MainWindow::on_Z_rotate_valueChanged(int position)
     updateVertex();
 }
 
-void MainWindow::on_X_move_valueChanged(int position)
+void viewer::on_X_move_valueChanged(int position)
 {
     ui->edit_xtr->setValue(position);
     ui->GL->mx.move[3] = (float)position / 60.0f;
@@ -101,7 +112,7 @@ void MainWindow::on_X_move_valueChanged(int position)
     updateVertex();
 }
 
-void MainWindow::on_Y_move_valueChanged(int position)
+void viewer::on_Y_move_valueChanged(int position)
 {
     ui->edit_ytr->setValue(position);
     ui->GL->mx.move[7] = (float)position / 60.0f;
@@ -110,7 +121,7 @@ void MainWindow::on_Y_move_valueChanged(int position)
     updateVertex();
 }
 
-void MainWindow::on_Z_move_valueChanged(int position)
+void viewer::on_Z_move_valueChanged(int position)
 {
     ui->edit_ztr->setValue(position);
     ui->GL->mx.move[11] = (float)position / 60.0f;
@@ -119,7 +130,7 @@ void MainWindow::on_Z_move_valueChanged(int position)
     updateVertex();
 }
 
-unsigned int MainWindow::check_sliders() {
+unsigned int viewer::check_sliders() {
     unsigned int res = 0;
 
     if(ui->X_rotate->value() != 0) {
@@ -145,7 +156,7 @@ unsigned int MainWindow::check_sliders() {
     return res;
 }
 
-void MainWindow::on_reset_clicked()
+void viewer::on_reset_clicked()
 {
     ui->X_move->setValue(0);
     ui->Y_move->setValue(0);
@@ -177,7 +188,7 @@ void MainWindow::on_reset_clicked()
     updateVertex();
 }
 
-void MainWindow::updateVertex() {
+void viewer::updateVertex() {
     if(ui->GL->calculationMode == 0) {
         transform_mx(&ui->GL->mx, check_sliders(), ui->GL->rotationMode);
         mx_mult_vector(ui->GL->data.vertexes.matrix, ui->GL->object.vertexes.matrix, ui->GL->mx.current, ui->GL->data.vertex_count);
@@ -186,7 +197,7 @@ void MainWindow::updateVertex() {
     ui->GL->update();
 }
 
-void MainWindow::slotMousePress(QMouseEvent *event) {
+void viewer::slotMousePress(QMouseEvent *event) {
     startPos = event->pos();
     if (event->button() == Qt::LeftButton) {
         leftMouse = true;
@@ -200,7 +211,7 @@ void MainWindow::slotMousePress(QMouseEvent *event) {
     }
 }
 
-void MainWindow::slotMouseMove(QMouseEvent *event) {
+void viewer::slotMouseMove(QMouseEvent *event) {
     bool shiftPressed = (event->modifiers() & Qt::ShiftModifier) != 0;
 
     if (leftMouse) {
@@ -230,11 +241,11 @@ void MainWindow::slotMouseMove(QMouseEvent *event) {
     }
 }
 
-void MainWindow::slotMouseWheel(QWheelEvent *event) {
+void viewer::slotMouseWheel(QWheelEvent *event) {
     ui->Zoom->setValue(ui->Zoom->value() + ((event->angleDelta().y() > 0) ? 10 : -10));
 }
 
-void MainWindow::on_reset_rotate_clicked()
+void viewer::on_reset_rotate_clicked()
 {
     ui->X_rotate->setValue(0);
     ui->Y_rotate->setValue(0);
@@ -246,7 +257,7 @@ void MainWindow::on_reset_rotate_clicked()
     updateVertex();
 }
 
-void MainWindow::on_reset_scale_clicked()
+void viewer::on_reset_scale_clicked()
 {
     ui->Zoom->setValue(0);
     ui->edit_scale->setValue(0);
@@ -254,7 +265,7 @@ void MainWindow::on_reset_scale_clicked()
     updateVertex();
 }
 
-void MainWindow::on_reset_move_clicked()
+void viewer::on_reset_move_clicked()
 {
     ui->X_move->setValue(0);
     ui->Y_move->setValue(0);
@@ -267,42 +278,42 @@ void MainWindow::on_reset_move_clicked()
     updateVertex();
 }
 
-void MainWindow::on_edit_xr_valueChanged(int arg1)
+void viewer::on_edit_xr_valueChanged(int arg1)
 {
     ui->X_rotate->setValue(arg1);
 }
 
-void MainWindow::on_edit_yr_valueChanged(int arg1)
+void viewer::on_edit_yr_valueChanged(int arg1)
 {
     ui->Y_rotate->setValue(arg1);
 }
 
-void MainWindow::on_edit_zr_valueChanged(int arg1)
+void viewer::on_edit_zr_valueChanged(int arg1)
 {
     ui->Z_rotate->setValue(arg1);
 }
 
-void MainWindow::on_edit_scale_valueChanged(int arg1)
+void viewer::on_edit_scale_valueChanged(int arg1)
 {
     ui->Zoom->setValue(arg1);
 }
 
-void MainWindow::on_edit_xtr_valueChanged(int arg1)
+void viewer::on_edit_xtr_valueChanged(int arg1)
 {
     ui->X_move->setValue(arg1);
 }
 
-void MainWindow::on_edit_ytr_valueChanged(int arg1)
+void viewer::on_edit_ytr_valueChanged(int arg1)
 {
     ui->Y_move->setValue(arg1);
 }
 
-void MainWindow::on_edit_ztr_valueChanged(int arg1)
+void viewer::on_edit_ztr_valueChanged(int arg1)
 {
     ui->Z_move->setValue(arg1);
 }
 
-void MainWindow::on_back_color_clicked()
+void viewer::on_back_color_clicked()
 {
     QColorDialog colorDialog(this);
 
@@ -317,7 +328,7 @@ void MainWindow::on_back_color_clicked()
     ui->GL->update();
 }
 
-void MainWindow::on_vertex_color_clicked()
+void viewer::on_vertex_color_clicked()
 {
     QColorDialog colorDialog(this);
 
@@ -333,7 +344,7 @@ void MainWindow::on_vertex_color_clicked()
 }
 
 
-void MainWindow::on_lines_color_clicked()
+void viewer::on_lines_color_clicked()
 {
     QColorDialog colorDialog(this);
 
@@ -348,7 +359,7 @@ void MainWindow::on_lines_color_clicked()
     ui->GL->update();
 }
 
-void MainWindow::on_square_points_toggled(bool checked)
+void viewer::on_square_points_toggled(bool checked)
 {
     if(checked == true) {
         ui->GL->points = 1;
@@ -357,7 +368,7 @@ void MainWindow::on_square_points_toggled(bool checked)
     ui->GL->update();
 }
 
-void MainWindow::on_circle_points_toggled(bool checked)
+void viewer::on_circle_points_toggled(bool checked)
 {
     if(checked == true) {
         ui->GL->points = 2;
@@ -366,7 +377,7 @@ void MainWindow::on_circle_points_toggled(bool checked)
     ui->GL->update();
 }
 
-void MainWindow::on_no_points_toggled(bool checked)
+void viewer::on_no_points_toggled(bool checked)
 {
     if(checked == true) {
         ui->GL->points = 0;
@@ -375,7 +386,7 @@ void MainWindow::on_no_points_toggled(bool checked)
     ui->GL->update();
 }
 
-void MainWindow::on_point_size_valueChanged(int arg1)
+void viewer::on_point_size_valueChanged(int arg1)
 {
     ui->GL->pointsSize = arg1;
 
@@ -384,25 +395,25 @@ void MainWindow::on_point_size_valueChanged(int arg1)
     }
 }
 
-void MainWindow::on_dotted_line_toggled(bool checked)
+void viewer::on_dotted_line_toggled(bool checked)
 {
     ui->GL->dottedLine = 2;
     ui->GL->update();
 }
 
-void MainWindow::on_default_line_toggled(bool checked)
+void viewer::on_default_line_toggled(bool checked)
 {
     ui->GL->dottedLine = 1;
     ui->GL->update();
 }
 
-void MainWindow::on_no_lines_clicked()
+void viewer::on_no_lines_clicked()
 {
     ui->GL->dottedLine = 0;
     ui->GL->update();
 }
 
-void MainWindow::on_line_size_edit_valueChanged(int arg1)
+void viewer::on_line_size_edit_valueChanged(int arg1)
 {
     ui->GL->lineSize = arg1;
 
@@ -411,21 +422,21 @@ void MainWindow::on_line_size_edit_valueChanged(int arg1)
     }
 }
 
-void MainWindow::on_rotate_model_toggled(bool checked)
+void viewer::on_rotate_model_toggled(bool checked)
 {
     if(checked) {
         ui->GL->rotationMode = 0;
     }
 }
 
-void MainWindow::on_rotate_axes_toggled(bool checked)
+void viewer::on_rotate_axes_toggled(bool checked)
 {
     if(checked) {
         ui->GL->rotationMode = 1;
     }
 }
 
-void MainWindow::on_load_file_clicked()
+void viewer::on_load_file_clicked()
 {
     QString openFileName = QFileDialog::getOpenFileName(this, "Choose wavefront obj file", QDir::homePath(), "Wafefront obj (*.obj)");
     if(!openFileName.isEmpty()) {
@@ -434,7 +445,7 @@ void MainWindow::on_load_file_clicked()
     }
 }
 
-void MainWindow::on_filename_returnPressed()
+void viewer::on_filename_returnPressed()
 {
     QFileInfo fileInfo(ui->filename->text());
     if (!fileInfo.isAbsolute()) {
@@ -452,7 +463,7 @@ void MainWindow::on_filename_returnPressed()
     }
 }
 
-void MainWindow::on_calc_cpu_toggled(bool checked)
+void viewer::on_calc_cpu_toggled(bool checked)
 {
     if(checked) {
         ui->GL->transformToIdentity();
@@ -461,7 +472,7 @@ void MainWindow::on_calc_cpu_toggled(bool checked)
     }
 }
 
-void MainWindow::on_calc_gpu_toggled(bool checked)
+void viewer::on_calc_gpu_toggled(bool checked)
 {
     if(checked) {
         ui->GL->calculationMode = 1;
@@ -469,7 +480,7 @@ void MainWindow::on_calc_gpu_toggled(bool checked)
     }
 }
 
-void MainWindow::on_central_toggled(bool checked)
+void viewer::on_central_toggled(bool checked)
 {
     if(checked) {
         ui->GL->projection = 0;
@@ -478,7 +489,7 @@ void MainWindow::on_central_toggled(bool checked)
     }
 }
 
-void MainWindow::on_parallel_toggled(bool checked)
+void viewer::on_parallel_toggled(bool checked)
 {
     if(checked) {
         ui->GL->projection = 1;
@@ -487,12 +498,12 @@ void MainWindow::on_parallel_toggled(bool checked)
     }
 }
 
-void MainWindow::closeEvent(QCloseEvent *event) {
+void viewer::closeEvent(QCloseEvent *event) {
     saveSettings();
     QMainWindow::closeEvent(event);
 }
 
-void MainWindow::saveSettings() {
+void viewer::saveSettings() {
     QSettings settings("3DViewer", "3DViewerApp");
     settings.setValue("geometry", saveGeometry());
     settings.setValue("back_color", ui->GL->clr_back);
@@ -507,7 +518,7 @@ void MainWindow::saveSettings() {
     settings.setValue("filename", ui->filename->text());
 }
 
-void MainWindow::setFrontSettings() {
+void viewer::setFrontSettings() {
     ui->back_color->setStyleSheet("border-radius: 17px;border: 3px solid rgba(189, 0, 195, 0.25);background-color: " + ui->GL->clr_back.name() +  ";");
     ui->vertex_color->setStyleSheet("border-radius: 17px;border: 3px solid rgba(189, 0, 195, 0.25);background-color: " + ui->GL->clr_vert.name() +  ";");
     ui->lines_color->setStyleSheet("border-radius: 17px;border: 3px solid rgba(189, 0, 195, 0.25);background-color: " + ui->GL->clr_line.name() +  ";");
@@ -545,7 +556,7 @@ void MainWindow::setFrontSettings() {
 
 }
 
-void MainWindow::loadSettings() {
+void viewer::loadSettings() {
     QSettings settings("3DViewer", "3DViewerApp");
 
     if (settings.contains("geometry")) {
@@ -566,7 +577,7 @@ void MainWindow::loadSettings() {
     ui->GL->update();
 }
 
-void MainWindow::on_save_image_clicked()
+void viewer::on_save_image_clicked()
 {
     QFileDialog dialog(this, "Save image as");
     dialog.setAcceptMode(QFileDialog::AcceptSave);
@@ -595,7 +606,7 @@ void MainWindow::on_save_image_clicked()
     }
 }
 
-void MainWindow::on_save_gif_clicked()
+void viewer::on_save_gif_clicked()
 {
     if(recording == false) {
         recording = true;
@@ -608,7 +619,7 @@ void MainWindow::on_save_gif_clicked()
     }
 }
 
-void MainWindow::countDown() {
+void viewer::countDown() {
     timer--;
     ui->save_gif->setText(QString::number(timer));
 
@@ -619,7 +630,7 @@ void MainWindow::countDown() {
     }
 }
 
-void MainWindow::createSnapshot() {
+void viewer::createSnapshot() {
     gifCount++;
 
     QString format = QString(".bmp");
@@ -650,7 +661,7 @@ void MainWindow::createSnapshot() {
     }
 }
 
-void MainWindow::createGif(QString path_to_gif) {
+void viewer::createGif(QString path_to_gif) {
     bool correct = true;
 
     QString format = QString(".bmp");

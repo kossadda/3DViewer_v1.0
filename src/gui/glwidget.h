@@ -1,3 +1,14 @@
+/**
+ * @file glwidget.h
+ * @author kossadda (https://github.com/kossadda)
+ * @brief Header class GLWidget
+ * @version 1.0
+ * @date 2024-06-13
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 

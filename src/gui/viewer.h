@@ -1,5 +1,18 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+/**
+ * @file viewer.h
+ * @author kossadda (https://github.com/kossadda)
+ * @brief Header class viewer (main program)
+ * @version 1.0
+ * @date 2024-06-13
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
+#ifndef VIEWER_H
+#define VIEWER_H
+
+#include "./glwidget.h"
 
 #include <QMainWindow>
 #include <QSlider>
@@ -8,21 +21,20 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QTimer>
-#include "./glwidget.h"
 #include <QThread>
 #include <QDir>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui { class viewer; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class viewer : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    viewer(QWidget *parent = nullptr);
+    ~viewer();
     unsigned int check_sliders();
 
 private slots:
@@ -77,7 +89,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
-    Ui::MainWindow *ui;
+    Ui::viewer *ui;
     QPoint startPos;
     bool leftMouse;
     bool rightMouse;
@@ -98,4 +110,4 @@ public slots:
     void slotMouseWheel(QWheelEvent *event);
 };
 
-#endif // MAINWINDOW_H
+#endif // VIEWER_H

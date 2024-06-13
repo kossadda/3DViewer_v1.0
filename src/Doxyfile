@@ -35,7 +35,7 @@ FILE_PATTERNS          = *.c \
 
 RECURSIVE              = YES
 
-EXCLUDE                = ./tests
+EXCLUDE                = ./tests ./gui
 
 USE_MDFILE_AS_MAINPAGE = ./../README.md
 

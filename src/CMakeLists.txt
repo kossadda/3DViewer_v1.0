@@ -19,9 +19,9 @@ set(VIEWER_LIB ${CMAKE_CURRENT_SOURCE_DIR}/viewer.a)
 
 set(PROJECT_SOURCES
   ./gui/main.cpp
-  ./gui/mainwindow.cpp
-  ./gui/mainwindow.ui
-  ./gui/mainwindow.h
+  ./gui/viewer.cpp
+  ./gui/viewer.ui
+  ./gui/viewer.h
   ./gui/glwidget.cpp
   ./gui/glwidget.h
   ./gui/gif.h

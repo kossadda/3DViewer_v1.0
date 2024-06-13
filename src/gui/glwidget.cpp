@@ -1,5 +1,15 @@
+/**
+ * @file glwidget.cpp
+ * @author kossadda (https://github.com/kossadda)
+ * @brief GLWidget class description module
+ * @version 1.0
+ * @date 2024-06-13
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #include "glwidget.h"
-#include <iostream>
 
 GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent)
