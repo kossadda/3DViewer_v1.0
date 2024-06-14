@@ -32,10 +32,12 @@ START_TEST(parse_test_1) {
     ck_assert_int_eq(data.facets[i], f_begin[i]);
     ck_assert_int_eq(data.facets[data.full_cnt - 6 + i], f_end[i]);
   }
+
+  remove_data(&data);
 }
 
 START_TEST(parse_test_2) {
-  char *path = "./../../../data-samples/cottage.obj";
+  char *path = "./../data-samples/cottage.obj";
   data_t data;
   parse(path, &data);
   float v_begin[] = {-63.196327f, 0.077648f, 63.196327f};
@@ -53,10 +55,12 @@ START_TEST(parse_test_2) {
     ck_assert_int_eq(data.facets[i], f_begin[i]);
     ck_assert_int_eq(data.facets[data.full_cnt - 8 + i], f_end[i]);
   }
+
+  remove_data(&data);
 }
 
 START_TEST(parse_test_3) {
-  char *path = "./../../../data-samples/bootle.obj";
+  char *path = "./../data-samples/bootle.obj";
   data_t data;
   parse(path, &data);
   float v_begin[] = {0.185778f, 0.464630f, 0.071157f};
@@ -74,12 +78,52 @@ START_TEST(parse_test_3) {
     ck_assert_int_eq(data.facets[i], f_begin[i]);
     ck_assert_int_eq(data.facets[data.full_cnt - 4 + i], f_end[i]);
   }
+
+  remove_data(&data);
+}
+
+START_TEST(parse_no_file_1) {
+  data_t data;
+
+  ck_assert_int_eq(parse(NULL, &data), false);
+  remove_data(&data);
+}
+
+START_TEST(parse_no_file_2) {
+  char *path = "./../data-samples/not_exist.obj";
+  data_t data;
+
+  ck_assert_int_eq(parse(path, &data), true);
 }
 
 START_TEST(parse_invalid_1) {
-  char *path = "./../../../data-samples/invalid.obj";
+  char *path = "./../data-samples/invalid.obj";
   data_t data;
+
   ck_assert_int_eq(parse(path, &data), true);
+  remove_data(&data);
+}
+
+START_TEST(parse_invalid_2) {
+  char *path = "./../data-samples/empty.obj";
+  data_t data;
+
+  ck_assert_int_eq(parse(path, &data), true);
+  remove_data(&data);
+}
+
+START_TEST(copy_data_test) {
+  char *path = "./../data-samples/cube.obj";
+  data_t data;
+  parse(path, &data);
+  data_t copy = copy_data(&data);
+  
+  for(int i = 0; i < copy.vertex_count * V_CNT; i++) {
+    ck_assert_float_eq(data.vertexes.matrix[i], copy.vertexes.matrix[i]);
+  }
+
+  remove_data(&data);
+  remove_data(&copy);
 }
 
 // ============================================================================
@@ -91,7 +135,11 @@ Suite *parse_test(void) {
   tcase_add_test(tc_parse_test, parse_test_1);
   tcase_add_test(tc_parse_test, parse_test_2);
   tcase_add_test(tc_parse_test, parse_test_3);
+  tcase_add_test(tc_parse_test, parse_no_file_1);
+  tcase_add_test(tc_parse_test, parse_no_file_2);
   tcase_add_test(tc_parse_test, parse_invalid_1);
+  tcase_add_test(tc_parse_test, parse_invalid_2);
+  tcase_add_test(tc_parse_test, copy_data_test);
   suite_add_tcase(viewer, tc_parse_test);
 
   return viewer;

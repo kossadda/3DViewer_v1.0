@@ -45,11 +45,8 @@ CFLAGS = -Wall -Wextra -pedantic -std=c11 -g
 # CHECK LIBRARY FOR LINKING
 LDFLAGS = -lcheck -lsubunit -lm
 
-# CHECK & GCOV LIBRARY FOR LINKING
-LDGCOV = $(LDFLAGS) -lgcov
-
 # FLAGS FOR COVERING MODULES
-GCOV_FLAGS = -fprofile-arcs -ftest-coverage
+GCOV_FLAGS = -fprofile-arcs -ftest-coverage -lgcov $(LDFLAGS)
 
 # FLAGS FOR VALGRING TEST
 VAL = --tool=memcheck --leak-check=yes
@@ -87,7 +84,7 @@ TEST_DIRS = $(shell find $(TEST_DIR) -type d)
 TEST_C = $(shell find $(TEST_DIR) -type f -name "*.c")
 TEST_H = $(shell find $(TEST_DIR) -type f -name "*.h")
 TEST_O = $(notdir $(TEST_C:%.c=%.o))
-TEST_OBJ_PATH = $(OBJ_DIR)/*_test.o
+TEST_OBJ_PATH = $(addprefix $(OBJ_DIR)/, $(TEST_O))
 #==============================================================================#
 
 
@@ -137,13 +134,13 @@ $(LIBRARY): $(OBJ_DIR) $(MODULES_O) $(MODULES_H) $(MAIN_H)
 	@ar rcs $@ $(MODULES_OBJ_PATH)
 	@ranlib $@
 
-$(TARGET): $(OBJ_DIR) $(TEST_O) $(LIBRARY)
+$(TARGET): $(LIBRARY) $(TEST_O)
 	@$(CC) $(TEST_OBJ_PATH) $(LIBRARY) $(LDFLAGS) -o $@
 	@-./$@
 
-$(GCOV): $(OBJ_DIR) $(REPORT_DIR) $(TEST_O)
-	$(CC) $(TEST_OBJ_PATH) $(EXCLUDE) $(LDFLAGS) $(GCOV_FLAGS) -o $(addprefix $(OBJ_DIR)/, $(TARGET))
-	-./$(addprefix $(OBJ_DIR)/, $(TARGET))
+$(GCOV): $(REPORT_DIR) $(LIBRARY) $(TEST_O)
+	$(CC) $(TEST_OBJ_PATH) $(MODULES_C) $(GCOV_FLAGS) -o $(addprefix $(OBJ_DIR)/, $(TARGET))
+	./$(addprefix $(OBJ_DIR)/, $(TARGET))
 	gcovr -r . --html --html-details -o $(REPORT_DIR)/coverage.html
 	xdg-open $(REPORT_DIR)/coverage.html
 
@@ -242,12 +239,21 @@ debug:
 clang_fix:
 	clang-format -style=Google -i $(ALL_FILES)
 
+docker_build:
+	docker build -t $(PROJECT_NAME) .
+	-docker run -d --name $(PROJECT_NAME) $(PROJECT_NAME)
+	-docker cp $(PROJECT_NAME):/$(PROJECT_NAME)/bin ./..
+	-docker stop $(PROJECT_NAME)
+	-docker rm -f $(PROJECT_NAME)
+	-docker rmi -f $(PROJECT_NAME):latest
+
 dependencies:
 	sudo apt install cppcheck
 	sudo apt install clang-format
 	sudo apt-get install check
 	sudo apt install doxygen
 	sudo apt-get install graphviz
-	apt install cmake
-	apt install qtbase5-dev
+	sudo apt install cmake
+	sudo apt install qtbase5-dev
+	sudo apt install libqt5opengl5-dev
 #==============================================================================#

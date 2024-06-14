@@ -14,12 +14,15 @@
 void vf_print(data_t data);
 
 int main() {
+  char *path = "/home/kossadda/develop/3DViewer_v1.0/data-samples/empty.obj";
   data_t data;
-  parse("/home/kossadda/develop/3DViewer_v1.0/data-samples/bootle.obj", &data);
+  printf("%d\n", parse(path, &data));
+  // data_t data;
+  // parse("./../data-samples/bootle.obj", &data);
   
-  vf_print(data);
+  // vf_print(data);
 
-  remove_data(&data);
+  // remove_data(&data);
 }
 
 void vf_print(data_t data) {

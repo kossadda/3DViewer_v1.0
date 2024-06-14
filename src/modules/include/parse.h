@@ -21,9 +21,6 @@
 
 int parse(char *filename, data_t *data);
 data_t copy_data(data_t *object);
-int init_data(data_t *data, FILE *obj);
 void remove_data(data_t *data);
-int get_data(data_t *data, FILE *obj);
-int vert_count_in_facet(char *line);
 
 #endif  // _PARSE_H_

@@ -13,6 +13,10 @@
 
 #include "./include/parse.h"
 
+static int init_data(data_t *data, FILE *obj);
+static int get_data(data_t *data, FILE *obj);
+static int vert_count_in_facet(char *line);
+
 /**
  * @brief Parses the model. If the filename is NULL, the structure is simply
  * initialized. If the filename is valid - model parsing
@@ -28,15 +32,19 @@ int parse(char *filename, data_t *data) {
 
   if (filename) {
     obj = fopen(filename, "r");
+    if(!obj) err = true;
   }
 
-  err = init_data(data, obj);
+  if (!err) {
+    err = init_data(data, obj);
+  } 
 
   if (obj && !err) {
     err = get_data(data, obj);
+    if(!data->vertex_count) err = true;
   }
 
-  if (filename) {
+  if (obj) {
     fclose(obj);
   }
 
@@ -52,7 +60,7 @@ int parse(char *filename, data_t *data) {
  * @retval false - correct memory allocate
  * @retval true - memory allocate failed
  */
-int init_data(data_t *data, FILE *obj) {
+static int init_data(data_t *data, FILE *obj) {
   int err = false;
   data->vertex_count = 0;
   data->facet_count = 0;
@@ -127,7 +135,7 @@ void remove_data(data_t *data) {
  * @retval false - valid parse
  * @retval true - invalid parse
  */
-int get_data(data_t *data, FILE *obj) {
+static int get_data(data_t *data, FILE *obj) {
   int err = false;
   char *token = NULL, *line = NULL;
   size_t n = 0;
@@ -195,7 +203,7 @@ int get_data(data_t *data, FILE *obj) {
  * @param[in] line string with vertices of one facet
  * @return int - number of vertices
  */
-int vert_count_in_facet(char *line) {
+static int vert_count_in_facet(char *line) {
   char *token = NULL;
   int count = 0;
 

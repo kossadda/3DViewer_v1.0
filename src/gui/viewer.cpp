@@ -405,8 +405,7 @@ void viewer::on_filename_returnPressed() {
   } else if (fileInfo.suffix() != "obj") {
     QMessageBox::warning(this, "Error", "Enter path to obj file");
   } else {
-    if (!ui->GL->initModel(fileInfo.absoluteFilePath()) &&
-        ui->GL->data.vertex_count) {
+    if (!ui->GL->initModel(fileInfo.absoluteFilePath())) {
       ui->info_model->setText(
           "Verticies: " + QString::number(ui->GL->data.vertex_count) +
           "\nFacets: " + QString::number(ui->GL->data.facet_count));

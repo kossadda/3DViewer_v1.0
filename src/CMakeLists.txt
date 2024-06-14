@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(OpenGL_GL_PREFERENCE "GLVND")
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS OpenGL)
@@ -48,7 +49,7 @@ target_link_libraries(3DViewer PRIVATE Qt${QT_VERSION_MAJOR}::OpenGLWidgets)
 target_link_libraries(3DViewer PRIVATE ${VIEWER_LIB})
 
 target_include_directories(3DViewer PRIVATE
-    /home/kossadda/develop/3DViewer_v1.0/src/gui/
+  ./gui
 )
 
 set_target_properties(3DViewer PROPERTIES
