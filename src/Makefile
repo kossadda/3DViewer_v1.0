@@ -112,10 +112,7 @@ vpath %.o $(OBJ_DIR)
 #                                   |___/                                      #
 ################################################################################
 
-temp: $(LIBRARY)
-	@mkdir -p $(BUILD)
-	@cd $(BUILD) && cmake ./../src && make	
-	@./$(BUILD)/$(PROJECT_NAME)
+temp: install run
 
 #================================= MAIN TARGETS ===============================#
 .PHONY: $(LIBRARY) $(TARGET) $(GCOV)
@@ -127,8 +124,7 @@ install: uninstall $(LIBRARY)
 	cd $(BUILD) && cmake ./../src && make	
 
 uninstall: clean
-	@rm -f ./brick_game/tetris/modules/score.txt
-	@rm -rf $(BUILD)
+	rm -rf $(BUILD)
 
 $(LIBRARY): $(OBJ_DIR) $(MODULES_O) $(MODULES_H) $(MAIN_H)
 	@ar rcs $@ $(MODULES_OBJ_PATH)
@@ -160,19 +156,19 @@ dist: uninstall
 	@rm -rf $(DIST_DIR)/$(PROJECT_NAME)
 
 clean:
-	@rm -rf $(OBJ_DIR)
-	@rm -rf $(REPORT_DIR)
-	@rm -rf $(DVI_DIR)
-	@rm -rf $(DIST_DIR)
-	@rm -rf $(GCOV)
-	@rm -rf ../build*
-	@rm -rf build*
-	@rm -rf ~/.config/3DViewer
-	@rm -f $(TARGET)
-	@rm -f ./CMake*.user
-	@rm -f *.a *.o
-	@rm -f *.gc*
-	@rm -f main
+	rm -rf $(OBJ_DIR)
+	rm -rf $(REPORT_DIR)
+	rm -rf $(DVI_DIR)
+	rm -rf $(DIST_DIR)
+	rm -rf $(GCOV)
+	rm -rf ../build*
+	rm -rf build*
+	rm -rf ~/.config/3DViewer
+	rm -f $(TARGET)
+	rm -f ./CMake*.user
+	rm -f *.a *.o
+	rm -f *.gc*
+	rm -f main
 
 rebuild: uninstall install
 #==============================================================================#

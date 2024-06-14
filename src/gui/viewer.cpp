@@ -29,7 +29,8 @@ viewer::viewer(QWidget *parent)
       absScreenDir(dir.absolutePath() + QString("/") + screenDir +
                    QString("/")),
       timer(3),
-      recording(false) {
+      recording(false),
+      dialog(QFileDialog(this, "Choose wavefront obj file", QDir::homePath(), "Wavefront obj (*.obj)")) {
   QIcon icon(":icon.png");
   this->setWindowIcon(icon);
   ui->setupUi(this);
@@ -386,10 +387,10 @@ void viewer::on_line_size_edit_valueChanged(int arg1) {
 }
 
 void viewer::on_load_file_clicked() {
-  QString openFileName =
-      QFileDialog::getOpenFileName(this, "Choose wavefront obj file",
-                                   QDir::homePath(), "Wafefront obj (*.obj)");
-  if (!openFileName.isEmpty()) {
+  dialog.setStyleSheet("background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
+
+  if(dialog.exec() == QDialog::Accepted) {
+    QString openFileName = dialog.selectedFiles().first();
     ui->filename->setText(openFileName);
     on_filename_returnPressed();
   }
