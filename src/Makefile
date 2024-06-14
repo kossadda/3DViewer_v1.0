@@ -119,7 +119,7 @@ temp: install run
 
 all: install run
 
-install: uninstall $(LIBRARY)
+install: $(LIBRARY)
 	@mkdir -p $(BUILD)
 	cd $(BUILD) && cmake ./../src && make	
 

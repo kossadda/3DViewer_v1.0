@@ -101,7 +101,10 @@ private:
     QDir dir;
     QString screenDir;
     QString absScreenDir;
-    QFileDialog dialog;
+    QFileDialog loadFile;
+    QFileDialog saveImg;
+    QFileDialog saveGif;
+    QColorDialog colorDialog;
 
 public slots:
     void slotMousePress(QMouseEvent *event);

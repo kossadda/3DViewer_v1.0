@@ -30,10 +30,20 @@ viewer::viewer(QWidget *parent)
                    QString("/")),
       timer(3),
       recording(false),
-      dialog(QFileDialog(this, "Choose wavefront obj file", QDir::homePath(), "Wavefront obj (*.obj)")) {
+      loadFile(QFileDialog(this, "Choose wavefront obj file", QDir::homePath(), "Wavefront obj (*.obj)")),
+      saveImg(QFileDialog(this, "Save image as", QDir::homePath())),
+      saveGif(QFileDialog(this, "Save gif as", QDir::homePath(), "GIF Files (*.gif)")),
+      colorDialog(QColorDialog(this)) {
   QIcon icon(":icon.png");
   this->setWindowIcon(icon);
   ui->setupUi(this);
+
+  saveImg.setAcceptMode(QFileDialog::AcceptSave);
+  saveGif.setNameFilters(QStringList("BMP Files (*.bmp)") << "JPEG Files (*.jpeg)");
+  loadFile.setStyleSheet("background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
+  saveImg.setStyleSheet("background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
+  saveGif.setStyleSheet("background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
+  colorDialog.setStyleSheet("background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
 
   connect(ui->GL, &GLWidget::mousePress, this, &viewer::slotMousePress);
   connect(ui->GL, &GLWidget::mouseMove, this, &viewer::slotMouseMove);
@@ -284,8 +294,6 @@ void viewer::on_edit_ytr_valueChanged(int arg1) { ui->Y_move->setValue(arg1); }
 void viewer::on_edit_ztr_valueChanged(int arg1) { ui->Z_move->setValue(arg1); }
 
 void viewer::on_back_color_clicked() {
-  QColorDialog colorDialog(this);
-
   colorDialog.setCurrentColor(ui->GL->clr_back);
 
   if (colorDialog.exec() == QDialog::Accepted) {
@@ -300,8 +308,6 @@ void viewer::on_back_color_clicked() {
 }
 
 void viewer::on_vertex_color_clicked() {
-  QColorDialog colorDialog(this);
-
   colorDialog.setCurrentColor(ui->GL->clr_vert);
 
   if (colorDialog.exec() == QDialog::Accepted) {
@@ -316,8 +322,6 @@ void viewer::on_vertex_color_clicked() {
 }
 
 void viewer::on_lines_color_clicked() {
-  QColorDialog colorDialog(this);
-
   colorDialog.setCurrentColor(ui->GL->clr_line);
 
   if (colorDialog.exec() == QDialog::Accepted) {
@@ -387,11 +391,8 @@ void viewer::on_line_size_edit_valueChanged(int arg1) {
 }
 
 void viewer::on_load_file_clicked() {
-  dialog.setStyleSheet("background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
-
-  if(dialog.exec() == QDialog::Accepted) {
-    QString openFileName = dialog.selectedFiles().first();
-    ui->filename->setText(openFileName);
+  if(loadFile.exec() == QDialog::Accepted) {
+    ui->filename->setText(loadFile.selectedFiles().first());
     on_filename_returnPressed();
   }
 }
@@ -538,14 +539,9 @@ void viewer::loadSettings() {
 }
 
 void viewer::on_save_image_clicked() {
-  QFileDialog dialog(this, "Save image as");
-  dialog.setAcceptMode(QFileDialog::AcceptSave);
-  dialog.setNameFilters(QStringList("BMP Files (*.bmp)")
-                        << "JPEG Files (*.jpeg)");
-
-  if (dialog.exec() == QDialog::Accepted) {
-    QString filePath = dialog.selectedFiles().first();
-    QString selectedFilter = dialog.selectedNameFilter();
+  if (saveImg.exec() == QDialog::Accepted) {
+    QString filePath = saveImg.selectedFiles().first();
+    QString selectedFilter = saveImg.selectedNameFilter();
 
     QString format;
     if (selectedFilter == "BMP Files (*.bmp)") {
@@ -604,10 +600,8 @@ void viewer::createSnapshot() {
   if (gifCount == gifFps * gifLength) {
     periodicTimer->stop();
 
-    QString filePath = QFileDialog::getSaveFileName(this, "Save gif as", "",
-                                                    "GIF Files (*.gif)");
-
-    if (!filePath.isEmpty()) {
+    if (saveGif.exec() == QFileDialog::Accepted) {
+      QString filePath = saveGif.selectedFiles().first();
       if (!filePath.endsWith(".gif", Qt::CaseInsensitive)) {
         filePath += ".gif";
       }
