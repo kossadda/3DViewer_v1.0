@@ -14,7 +14,8 @@
 void vf_print(data_t data);
 
 int main() {
-  data_t data = parse("/home/kossadda/data-samples/new/City.obj");
+  data_t data;
+  parse("/home/kossadda/develop/3DViewer_v1.0/data-samples/bootle.obj", &data);
   
   vf_print(data);
 
@@ -24,7 +25,7 @@ int main() {
 void vf_print(data_t data) {
   for(int i = 0; i < data.vertex_count; i++) {
     printf("%d) ", i + 1);
-    for(int j = 0; j < V_DOTS_CNT; j++) {
+    for(int j = 0; j < V_CNT; j++) {
       printf("%.6f ", data.vertexes.matrix[i * data.vertexes.cols + j]);
     }
     printf("\n");
