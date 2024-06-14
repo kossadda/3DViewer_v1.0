@@ -21,7 +21,7 @@
 
 
 #================================== COMPILER ==================================#
-PROJECT_NAME = viewer
+PROJECT_NAME = 3d_viewer
 CC = gcc
 #==============================================================================#
 
@@ -115,7 +115,7 @@ vpath %.o $(OBJ_DIR)
 temp: $(LIBRARY)
 	@mkdir -p $(BUILD)
 	@cd $(BUILD) && cmake ./../src && make	
-	@./$(BUILD)/3DViewer
+	@./$(BUILD)/$(PROJECT_NAME)
 
 #================================= MAIN TARGETS ===============================#
 .PHONY: $(LIBRARY) $(TARGET) $(GCOV)
