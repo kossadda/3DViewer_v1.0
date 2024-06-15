@@ -32,16 +32,16 @@ int parse(char *filename, data_t *data) {
 
   if (filename) {
     obj = fopen(filename, "r");
-    if(!obj) err = true;
+    if (!obj) err = true;
   }
 
   if (!err) {
     err = init_data(data, obj);
-  } 
+  }
 
   if (obj && !err) {
     err = get_data(data, obj);
-    if(!data->vertex_count) err = true;
+    if (!data->vertex_count) err = true;
   }
 
   if (obj) {

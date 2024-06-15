@@ -13,7 +13,7 @@
 
 /**
  * @brief Initialize transformation matrices
- * 
+ *
  * @param[out] mx matrix data struct
  * @retval false - correct memory allocate
  * @retval true - memory allocate failed
@@ -84,9 +84,9 @@ void destroy_affine(afinne_t *mx) {
     mx->rotate_y = NULL;
   }
 
-  if (mx->rotate_y) {
-    free(mx->rotate_y);
-    mx->rotate_y = NULL;
+  if (mx->rotate_z) {
+    free(mx->rotate_z);
+    mx->rotate_z = NULL;
   }
 }
 

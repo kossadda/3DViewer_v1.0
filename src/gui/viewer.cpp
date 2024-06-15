@@ -30,20 +30,27 @@ viewer::viewer(QWidget *parent)
                    QString("/")),
       timer(3),
       recording(false),
-      loadFile(QFileDialog(this, "Choose wavefront obj file", QDir::homePath(), "Wavefront obj (*.obj)")),
+      loadFile(QFileDialog(this, "Choose wavefront obj file", QDir::homePath(),
+                           "Wavefront obj (*.obj)")),
       saveImg(QFileDialog(this, "Save image as", QDir::homePath())),
-      saveGif(QFileDialog(this, "Save gif as", QDir::homePath(), "GIF Files (*.gif)")),
+      saveGif(QFileDialog(this, "Save gif as", QDir::homePath(),
+                          "GIF Files (*.gif)")),
       colorDialog(QColorDialog(this)) {
   QIcon icon(":icon.png");
   this->setWindowIcon(icon);
   ui->setupUi(this);
 
   saveImg.setAcceptMode(QFileDialog::AcceptSave);
-  saveGif.setNameFilters(QStringList("BMP Files (*.bmp)") << "JPEG Files (*.jpeg)");
-  loadFile.setStyleSheet("background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
-  saveImg.setStyleSheet("background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
-  saveGif.setStyleSheet("background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
-  colorDialog.setStyleSheet("background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
+  saveGif.setNameFilters(QStringList("BMP Files (*.bmp)")
+                         << "JPEG Files (*.jpeg)");
+  loadFile.setStyleSheet(
+      "background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
+  saveImg.setStyleSheet(
+      "background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
+  saveGif.setStyleSheet(
+      "background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
+  colorDialog.setStyleSheet(
+      "background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");
 
   connect(ui->GL, &GLWidget::mousePress, this, &viewer::slotMousePress);
   connect(ui->GL, &GLWidget::mouseMove, this, &viewer::slotMouseMove);
@@ -391,7 +398,7 @@ void viewer::on_line_size_edit_valueChanged(int arg1) {
 }
 
 void viewer::on_load_file_clicked() {
-  if(loadFile.exec() == QDialog::Accepted) {
+  if (loadFile.exec() == QDialog::Accepted) {
     ui->filename->setText(loadFile.selectedFiles().first());
     on_filename_returnPressed();
   }

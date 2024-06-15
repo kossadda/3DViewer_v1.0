@@ -24,11 +24,13 @@ START_TEST(parse_test_1) {
 
   ck_assert_int_eq(data.vertex_count, 8);
   ck_assert_int_eq(data.facet_count, 12);
-  for(int i = 0; i < V_CNT; i++) {
+  for (int i = 0; i < V_CNT; i++) {
     ck_assert_float_eq_tol(data.vertexes.matrix[i], v_begin[i], 1.0e-6);
-    ck_assert_float_eq_tol(data.vertexes.matrix[data.vertex_count * V_CNT - V_CNT + i], v_end[i], 1.0e-6);
+    ck_assert_float_eq_tol(
+        data.vertexes.matrix[data.vertex_count * V_CNT - V_CNT + i], v_end[i],
+        1.0e-6);
   }
-  for(int i = 0; i < 6; i++) {
+  for (int i = 0; i < 6; i++) {
     ck_assert_int_eq(data.facets[i], f_begin[i]);
     ck_assert_int_eq(data.facets[data.full_cnt - 6 + i], f_end[i]);
   }
@@ -47,11 +49,13 @@ START_TEST(parse_test_2) {
 
   ck_assert_int_eq(data.vertex_count, 353);
   ck_assert_int_eq(data.facet_count, 259);
-  for(int i = 0; i < V_CNT; i++) {
+  for (int i = 0; i < V_CNT; i++) {
     ck_assert_float_eq_tol(data.vertexes.matrix[i], v_begin[i], 1.0e-6);
-    ck_assert_float_eq_tol(data.vertexes.matrix[data.vertex_count * V_CNT - V_CNT + i], v_end[i], 1.0e-6);
+    ck_assert_float_eq_tol(
+        data.vertexes.matrix[data.vertex_count * V_CNT - V_CNT + i], v_end[i],
+        1.0e-6);
   }
-  for(int i = 0; i < 8; i++) {
+  for (int i = 0; i < 8; i++) {
     ck_assert_int_eq(data.facets[i], f_begin[i]);
     ck_assert_int_eq(data.facets[data.full_cnt - 8 + i], f_end[i]);
   }
@@ -70,11 +74,13 @@ START_TEST(parse_test_3) {
 
   ck_assert_int_eq(data.vertex_count, 26105);
   ck_assert_int_eq(data.facet_count, 65480);
-  for(int i = 0; i < V_CNT; i++) {
+  for (int i = 0; i < V_CNT; i++) {
     ck_assert_float_eq_tol(data.vertexes.matrix[i], v_begin[i], 1.0e-6);
-    ck_assert_float_eq_tol(data.vertexes.matrix[data.vertex_count * V_CNT - V_CNT + i], v_end[i], 1.0e-6);
+    ck_assert_float_eq_tol(
+        data.vertexes.matrix[data.vertex_count * V_CNT - V_CNT + i], v_end[i],
+        1.0e-6);
   }
-  for(int i = 0; i < 4; i++) {
+  for (int i = 0; i < 4; i++) {
     ck_assert_int_eq(data.facets[i], f_begin[i]);
     ck_assert_int_eq(data.facets[data.full_cnt - 4 + i], f_end[i]);
   }
@@ -117,8 +123,8 @@ START_TEST(copy_data_test) {
   data_t data;
   parse(path, &data);
   data_t copy = copy_data(&data);
-  
-  for(int i = 0; i < copy.vertex_count * V_CNT; i++) {
+
+  for (int i = 0; i < copy.vertex_count * V_CNT; i++) {
     ck_assert_float_eq(data.vertexes.matrix[i], copy.vertexes.matrix[i]);
   }
 

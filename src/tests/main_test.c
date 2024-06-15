@@ -43,14 +43,24 @@ int main(void) {
   Suite *(*parse[])(void) = {
       parse_test,
   };
-  test_function(parse, sizeof(parse) / sizeof(parse[0]), "PARSE", &passed_count, &failed_count);
+  test_function(parse, sizeof(parse) / sizeof(parse[0]), "PARSE", &passed_count,
+                &failed_count);
 #endif
 
 #ifdef MATRIX_ON
   Suite *(*matrix[])(void) = {
       matrix_test,
   };
-  test_function(matrix, sizeof(matrix) / sizeof(matrix[0]), "MATRIX", &passed_count, &failed_count);
+  test_function(matrix, sizeof(matrix) / sizeof(matrix[0]), "MATRIX",
+                &passed_count, &failed_count);
+#endif
+
+#ifdef AFINE_ON
+  Suite *(*afine[])(void) = {
+      afine_test,
+  };
+  test_function(afine, sizeof(afine) / sizeof(afine[0]), "AFINE", &passed_count,
+                &failed_count);
 #endif
 
   gettimeofday(&end, NULL);

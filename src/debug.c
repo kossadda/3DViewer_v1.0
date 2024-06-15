@@ -11,12 +11,17 @@
 
 #include "./modules/include/common.h"
 
-void vf_print(data_t data);
+// void vf_print(data_t data);
 
+/**
+ * @brief Debug
+ * 
+ * @return int 
+ */
 int main() {
-  char *path = "/home/kossadda/develop/3DViewer_v1.0/data-samples/empty.obj";
-  data_t data;
-  printf("%d\n", parse(path, &data));
+  // char *path = "/home/kossadda/develop/3DViewer_v1.0/data-samples/empty.obj";
+  // data_t data;
+  // printf("%d\n", parse(path, &data));
   // data_t data;
   // parse("./../data-samples/bootle.obj", &data);
   
@@ -25,30 +30,30 @@ int main() {
   // remove_data(&data);
 }
 
-void vf_print(data_t data) {
-  for(int i = 0; i < data.vertex_count; i++) {
-    printf("%d) ", i + 1);
-    for(int j = 0; j < V_CNT; j++) {
-      printf("%.6f ", data.vertexes.matrix[i * data.vertexes.cols + j]);
-    }
-    printf("\n");
-  }  
+// void vf_print(data_t data) {
+//   for(int i = 0; i < data.vertex_count; i++) {
+//     printf("%d) ", i + 1);
+//     for(int j = 0; j < V_CNT; j++) {
+//       printf("%.6f ", data.vertexes.matrix[i * data.vertexes.cols + j]);
+//     }
+//     printf("\n");
+//   }  
 
-  printf("\n\nFacets:\n\n");
+//   printf("\n\nFacets:\n\n");
 
-  int *ptr = data.facets;
+//   int *ptr = data.facets;
 
-  for(int i = 0; i < data.full_cnt; i++) {
-    printf("%d ", data.facets[i]);
-    if(i && data.facets[i - 1] != data.facets[i] && *ptr == data.facets[i] && ptr != data.facets + i) {
-      ptr = data.facets + i + 1;
-      printf("\n");
-    }
+//   for(int i = 0; i < data.full_cnt; i++) {
+//     printf("%d ", data.facets[i]);
+//     if(i && data.facets[i - 1] != data.facets[i] && *ptr == data.facets[i] && ptr != data.facets + i) {
+//       ptr = data.facets + i + 1;
+//       printf("\n");
+//     }
 
-  }
+//   }
 
-  printf("\n\n");
-}
+//   printf("\n\n");
+// }
 
 // void fill(matrix_t *mx, float *arr) {
 //     for(int i = 0; i < mx->rows * mx->cols; i++) {

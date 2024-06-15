@@ -12,11 +12,13 @@
 #ifndef _MAIN_TEST_H_
 #define _MAIN_TEST_H_
 
-#include "./include_test/parse_test.h"
+#include "./include_test/afine_test.h"
 #include "./include_test/matrix_test.h"
+#include "./include_test/parse_test.h"
 
 #define PARSE_ON
 #define MATRIX_ON
+#define AFINE_ON
 
 #define GREEN "\033[0;32m"
 #define ORANGE "\033[1;33m"
