@@ -40,8 +40,9 @@ viewer::viewer(QWidget *parent)
   this->setWindowIcon(icon);
   ui->setupUi(this);
 
+  saveGif.setAcceptMode(QFileDialog::AcceptSave);
   saveImg.setAcceptMode(QFileDialog::AcceptSave);
-  saveGif.setNameFilters(QStringList("BMP Files (*.bmp)")
+  saveImg.setNameFilters(QStringList("BMP Files (*.bmp)")
                          << "JPEG Files (*.jpeg)");
   loadFile.setStyleSheet(
       "background-color: rgb(30, 30, 30);color: rgb(255, 255, 255)");

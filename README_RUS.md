@@ -15,10 +15,7 @@
 
 ## [Внешний вид](#3dviewer-v10)
 
-<video width="800" height="540" controls>
-  <source src="./misc/images/3d_viewer.mp4" type="video/mp4">
-  Ваш браузер не поддерживает тег видео.
-</video>
+![Viewer](./misc/images/3d_viewer.gif) <br>
 
 ## [Описание проекта](#3dviewer-v10)
 

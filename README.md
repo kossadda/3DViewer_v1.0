@@ -15,7 +15,7 @@ The Russian version of the README can be found in the repository.
 
 ## [Appearance](#3dviewer-v10)
 
-![Engineer](./misc/images/3d_viewer.gif) <br>
+![Viewer](./misc/images/3d_viewer.gif) <br>
 
 ## [Project description](#3dviewer-v10)
 
