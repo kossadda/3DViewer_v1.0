@@ -15,10 +15,7 @@ The Russian version of the README can be found in the repository.
 
 ## [Appearance](#3dviewer-v10)
 
-<video width="800" height="540" controls>
-  <source src="./misc/images/3d_viewer.mp4" type="video/mp4">
-  Ваш браузер не поддерживает тег видео.
-</video>
+![Engineer](./misc/images/3d_viewer.gif) <br>
 
 ## [Project description](#3dviewer-v10)
 
