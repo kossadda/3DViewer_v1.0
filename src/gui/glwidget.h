@@ -16,7 +16,6 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QOpenGLBuffer>
-#include <QDebug>
 #include <QOpenGLVertexArrayObject>
 #include <QMouseEvent>
 #include <QButtonGroup>

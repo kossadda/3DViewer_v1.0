@@ -14,7 +14,7 @@
 // ============================================================================
 
 START_TEST(parse_test_1) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t data;
   parse(path, &data);
   float v_begin[] = {-1.0f, -1.0f, 2.0f};

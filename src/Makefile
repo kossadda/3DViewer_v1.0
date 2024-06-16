@@ -164,8 +164,9 @@ clean:
 	rm -rf build*
 	rm -rf ~/.config/3DViewer
 	rm -f $(TARGET)
+	rm -f $(GUI_DIR)/*.o $(GUI_DIR)/Makefile $(GUI_DIR)/moc* $(GUI_DIR)/qrc* $(GUI_DIR)/ui_* $(GUI_DIR)/.qmake*
 	rm -f ./CMake*.user
-	rm -f *.a *.o
+	rm -f *.a *.o 
 	rm -f *.gc*
 	rm -f main
 
@@ -238,6 +239,12 @@ docker_build:
 	-docker stop $(PROJECT_NAME)
 	-docker rm -f $(PROJECT_NAME)
 	-docker rmi -f $(PROJECT_NAME):latest
+
+qmake_build: $(LIBRARY)
+	cd $(GUI_DIR) && qmake && make
+	rm -rf $(BUILD)
+	mkdir $(BUILD)
+	mv $(GUI_DIR)/$(PROJECT_NAME) $(BUILD)
 
 dependencies:
 	sudo apt install cppcheck

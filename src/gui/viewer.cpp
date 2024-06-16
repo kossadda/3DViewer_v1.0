@@ -503,10 +503,13 @@ void viewer::setFrontSettings() {
 
   if (ui->GL->dottedLine == 0) {
     ui->no_lines->setChecked(1);
+    ui->GL->dottedLine = 0;
   } else if (ui->GL->dottedLine == 1) {
     ui->default_line->setChecked(1);
+    ui->GL->dottedLine = 1;
   } else {
     ui->dotted_line->setChecked(1);
+    ui->GL->dottedLine = 2;
   }
 
   if (ui->GL->calculationMode == 0) {

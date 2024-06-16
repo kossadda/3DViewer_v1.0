@@ -14,7 +14,7 @@
 // ============================================================================
 
 START_TEST(test_move_x) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
   data_t copy = copy_data(&cube);
@@ -43,7 +43,7 @@ START_TEST(test_move_x) {
 END_TEST
 
 START_TEST(test_move_y) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
   data_t copy = copy_data(&cube);
@@ -71,7 +71,7 @@ START_TEST(test_move_y) {
 END_TEST
 
 START_TEST(test_move_z) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
   data_t copy = copy_data(&cube);
@@ -99,7 +99,7 @@ START_TEST(test_move_z) {
 END_TEST
 
 START_TEST(test_move) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
   data_t copy = copy_data(&cube);
@@ -129,7 +129,7 @@ START_TEST(test_move) {
 END_TEST
 
 START_TEST(test_rotate_x) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
   data_t copy = copy_data(&cube);
@@ -161,7 +161,7 @@ START_TEST(test_rotate_x) {
 END_TEST
 
 START_TEST(test_rotate_y) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
   data_t copy = copy_data(&cube);
@@ -193,7 +193,7 @@ START_TEST(test_rotate_y) {
 END_TEST
 
 START_TEST(test_rotate_z) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
   data_t copy = copy_data(&cube);
@@ -225,7 +225,7 @@ START_TEST(test_rotate_z) {
 END_TEST
 
 START_TEST(test_rotate) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
   data_t copy = copy_data(&cube);
@@ -263,7 +263,7 @@ START_TEST(test_rotate) {
 END_TEST
 
 START_TEST(test_scale) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
   data_t copy = copy_data(&cube);
@@ -294,7 +294,7 @@ START_TEST(test_scale) {
 END_TEST
 
 START_TEST(test_all_transformations) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
   data_t copy = copy_data(&cube);
@@ -336,7 +336,7 @@ START_TEST(test_all_transformations) {
 END_TEST
 
 START_TEST(test_normalize) {
-  char *path = "./../../../data-samples/cube.obj";
+  char *path = "./../data-samples/cube.obj";
   data_t cube;
   parse(path, &cube);
 
